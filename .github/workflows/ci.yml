@@ -1,0 +1,54 @@
+name: ci
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+env:
+  JOBFATHER_CONTRIBUTOR: "1"   # CI runs the generic privacy detectors; maintainers also scan locally with a private denylist
+jobs:
+  privacy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          fetch-depth: 0
+      - run: python3 dev/privacy_scan.py --all-history --ci
+  skill-tests:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python: ["3.9", "3.12"]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: ${{ matrix.python }}
+      - run: python -m unittest discover -s tests -v
+  pdf-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - run: sudo apt-get update && sudo apt-get install -y texlive-latex-extra texlive-fonts-extra poppler-utils
+      - run: python3 -m unittest discover -s tests -p 'test_cv_pipeline.py' -v
+  mcp-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: astral-sh/setup-uv@v6
+      - run: uv run --directory packages/jobfather-mcp python -m unittest discover -s tests -v
+  manifests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22
+      - run: python3 dev/validate_package.py
+      - run: npm install --global @anthropic-ai/claude-code@2.1.150
+      - run: claude plugin validate . --strict
+      - run: claude plugin validate plugins/the-jobfather --strict
+      - run: npx --yes skills@1.5.20 add . --list | tee skills.txt && grep -q "the-jobfather" skills.txt

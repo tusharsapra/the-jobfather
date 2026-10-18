@@ -437,7 +437,10 @@ def main(argv=None) -> int:
                 path = Path(p)
                 files = [f for f in path.rglob('*') if f.is_file()] if path.is_dir() else [path]
                 for f in files:
-                    scanner.scan_blob(str(f), f.read_bytes())
+                    resolved = f.resolve()
+                    # Inside the repo, judge the repo-relative name (the parent folders are not shipped).
+                    name = resolved.relative_to(REPO).as_posix() if REPO in resolved.parents else str(f)
+                    scanner.scan_blob(name, f.read_bytes())
         elif args.commit_msg:
             scanner.scan_text('commit message', Path(args.commit_msg).read_text(encoding='utf-8', errors='replace'))
         elif args.staged:
