@@ -7,7 +7,8 @@ description: Job-hunting copilot for any field. Use when the user wants to set u
 
 Read [core/ROUTER.md](core/ROUTER.md) and route the request that follows the skill name.
 
-- Resolve paths from this file's folder, never from the shell's working directory.
-- The user's data lives in their workspace, not here. Find it with `python3 scripts/jf.py where`.
-- No workspace yet, or setup unfinished: run the onboarding workflow first.
-- Setup or connection tasks: run `python3 scripts/connect.py status --brief` and offer to resume a pending step.
+- Resolve every path from this file's folder (call it SKILL), never from the shell's working
+  directory. Run helpers as `python3 SKILL/scripts/NAME.py …`.
+- The user's data lives in their workspace, not here. First run
+  `python3 SKILL/scripts/jf.py status --brief`: no workspace means onboarding first.
+- Nothing is sent, submitted or messaged without the user's approval of that exact item.
