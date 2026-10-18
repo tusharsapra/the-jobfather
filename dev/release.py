@@ -21,6 +21,8 @@ PLUGIN = REPO / 'plugins' / 'the-jobfather'
 MCP_FILES = (PLUGIN / '.mcp.json', PLUGIN / '.codex-mcp.json', PLUGIN / 'mcp_config.json')
 MANIFESTS = (PLUGIN / '.claude-plugin' / 'plugin.json', PLUGIN / '.codex-plugin' / 'plugin.json',
              PLUGIN / '.cursor-plugin' / 'plugin.json', PLUGIN / 'plugin.json')
+CONNECT = REPO / 'plugins' / 'the-jobfather' / 'skills' / 'the-jobfather' / 'scripts' / 'connect.py'
+PIN_FILES = MCP_FILES + (CONNECT,)  # connect.py's fallback serves skills-folder installs
 PYPROJECT = REPO / 'packages' / 'jobfather-mcp' / 'pyproject.toml'
 INIT = REPO / 'packages' / 'jobfather-mcp' / 'src' / 'jobfather_mcp' / '__init__.py'
 SOURCE = re.compile(r'(git\+https://github\.com/tusharsapra/the-jobfather@)([0-9a-f]{40}|v\d+\.\d+\.\d+)(#subdirectory=packages/jobfather-mcp)')
@@ -61,7 +63,7 @@ def prepare(version):
     replace(PYPROJECT, r'(?m)^version\s*=\s*"[^"]+"', 'version = "%s"' % version)
     replace(INIT, r'__version__\s*=\s*"[^"]+"', '__version__ = "%s"' % version)
     replace(REPO / 'CHANGELOG.md', r'(?m)^## \d+\.\d+\.\d+ \(unreleased\)', '## %s (%s)' % (version, date.today().isoformat()))
-    for path in MCP_FILES:
+    for path in PIN_FILES:
         replace(path, SOURCE.pattern, lambda m: m.group(1) + 'v' + version + m.group(3), count=0)
     run(sys.executable, '-m', 'unittest', 'discover', '-s', 'tests')
     run(sys.executable, 'dev/validate_package.py')
@@ -77,7 +79,7 @@ def pin():
     m = re.fullmatch(r'Release v(\d+\.\d+\.\d+)', subject)
     if not m:
         raise SystemExit('HEAD must be the "Release vX.Y.Z" commit from prepare')
-    for path in MCP_FILES:
+    for path in PIN_FILES:
         replace(path, SOURCE.pattern, lambda mm: mm.group(1) + sha + mm.group(3), count=0)
     run(sys.executable, 'dev/validate_package.py', '--release')
     git('add', '-A')
@@ -88,7 +90,7 @@ def pin():
 
 def verify():
     pins = set()
-    for path in MCP_FILES:
+    for path in PIN_FILES:
         pins |= {m.group(2) for m in SOURCE.finditer(path.read_text(encoding='utf-8'))}
     if len(pins) != 1:
         raise SystemExit('MCP files disagree: %s' % sorted(pins))
