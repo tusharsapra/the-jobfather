@@ -1,6 +1,6 @@
 {
   "name": "the-jobfather",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Open-source job-hunting copilot: onboards your career data, maps your job market, tailors one-page LaTeX CVs, drafts applications in your voice and tracks everything in a local workspace you own. Every outward action needs your approval.",
   "author": {
     "name": "tusharsapra",

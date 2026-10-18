@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "jobfather-mcp"
-version = "0.1.0"
+version = "0.2.0"
 description = "MCP servers for The Jobfather: a Playwright browser launcher, an allowlist proxy and the Naukri server."
 readme = "README.md"
 requires-python = ">=3.10"

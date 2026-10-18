@@ -4,7 +4,7 @@
       "command": "uvx",
       "args": [
         "--from",
-        "git+https://github.com/tusharsapra/the-jobfather@cb114a7e95f6bb5c91af934d1f9b9fadd0d0747f#subdirectory=packages/jobfather-mcp",
+        "git+https://github.com/tusharsapra/the-jobfather@v0.2.0#subdirectory=packages/jobfather-mcp",
         "jobfather-browser"
       ],
       "env": {
@@ -20,7 +20,7 @@
       "command": "uvx",
       "args": [
         "--from",
-        "git+https://github.com/tusharsapra/the-jobfather@cb114a7e95f6bb5c91af934d1f9b9fadd0d0747f#subdirectory=packages/jobfather-mcp",
+        "git+https://github.com/tusharsapra/the-jobfather@v0.2.0#subdirectory=packages/jobfather-mcp",
         "jobfather-naukri"
       ],
       "env": {
