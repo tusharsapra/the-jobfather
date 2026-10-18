@@ -126,7 +126,10 @@ def create(ws, kind, subject, payload, user_statement, created_by, ttl_minutes=1
 
 
 def load(ws, approval_id):
-    record = read_json(_path(ws, approval_id))
+    path = _path(ws, approval_id)
+    if not path.is_file():
+        raise ValueError('Unknown approval id: ' + approval_id)
+    record = read_json(path)
     if not hmac.compare_digest(record.get('mac', ''), _mac(ws, record)):
         raise ValueError('Approval record was modified')
     return record
