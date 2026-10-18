@@ -3,7 +3,7 @@
 All notable changes to The Jobfather. Your own learning history lives in your workspace
 (`learning/CHANGELOG.md`), not here.
 
-## 0.1.0 (unreleased)
+## 0.1.0 (2026-10-19)
 
 First public version.
 
