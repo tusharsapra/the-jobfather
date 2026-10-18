@@ -9,7 +9,9 @@ outcome tracking) are adapted from MadsLorentzen/ai-job-search (MIT).
 
 ## Rank saved jobs
 1. `job_pipeline.py candidates [--limit N] [--focus TEXT]` returns up to ten new or changed
-   eligible jobs (already contacted or applied jobs are excluded unless `--include-sent`).
+   eligible jobs. Applied jobs are always excluded; jobs already contacted (a drafted, sent or
+   bounced outreach record) come back only with `--include-sent`, which never authorises a
+   second message.
 2. Read PROFILE, the relevant EXPERIENCE sections and needed HR fields once. `job_pipeline.py job
    --id JOB-…` gives each stored JD. A title or snippet is not a JD; a blocked page is not a
    closed job.
