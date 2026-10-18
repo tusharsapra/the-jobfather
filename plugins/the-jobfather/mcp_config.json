@@ -5,7 +5,7 @@
       "type": "stdio",
       "args": [
         "--from",
-        "git+https://github.com/tusharsapra/the-jobfather@4e1fb31154e6017e7118598ee22f7b888d03d118#subdirectory=packages/jobfather-mcp",
+        "git+https://github.com/tusharsapra/the-jobfather@v0.2.0#subdirectory=packages/jobfather-mcp",
         "jobfather-browser"
       ],
       "env": {
@@ -17,7 +17,7 @@
       "type": "stdio",
       "args": [
         "--from",
-        "git+https://github.com/tusharsapra/the-jobfather@4e1fb31154e6017e7118598ee22f7b888d03d118#subdirectory=packages/jobfather-mcp",
+        "git+https://github.com/tusharsapra/the-jobfather@v0.2.0#subdirectory=packages/jobfather-mcp",
         "jobfather-naukri"
       ],
       "env": {

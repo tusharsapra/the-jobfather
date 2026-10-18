@@ -3,7 +3,7 @@
 All notable changes to The Jobfather. Your own learning history lives in your workspace
 (`learning/CHANGELOG.md`), not here.
 
-## Unreleased
+## 0.2.0 (2026-10-19)
 
 - Naukri support: The Jobfather's own clean-room MCP server (`jobfather-naukri`), opt-in. Search
   with filters, job details, similar, recommended and saved jobs, a profile summary without contact
