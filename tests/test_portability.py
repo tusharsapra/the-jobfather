@@ -4,7 +4,7 @@ import tempfile
 import unittest
 from unittest import mock
 
-from support import DemoWorkspace
+from support import NO_TZDATA, DemoWorkspace, has_zone
 
 import layout
 import local
@@ -38,6 +38,7 @@ class PortabilityTests(unittest.TestCase):
             path = local.contained(tmp, 'jobs\\applications/APP-0123456789ab')
             self.assertEqual(path.relative_to(Path(tmp).resolve()).as_posix(), 'jobs/applications/APP-0123456789ab')
 
+    @unittest.skipUnless(has_zone(), NO_TZDATA)
     def test_timezone_falls_back_to_fixed_offset_then_utc(self):
         demo = DemoWorkspace(init=False)
         try:

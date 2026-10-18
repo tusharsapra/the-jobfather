@@ -8,7 +8,7 @@ import sys
 import time
 import unittest
 
-from support import SCRIPTS, DemoWorkspace, proposal
+from support import NO_TZDATA, SCRIPTS, DemoWorkspace, has_zone, proposal
 
 import layout
 import managed
@@ -75,6 +75,7 @@ class MemoryTests(unittest.TestCase):
             apply(p, self.ws)
         self.assertEqual(current(self.ws), self.seed)
 
+    @unittest.skipUnless(has_zone(), NO_TZDATA)
     def test_targeted_update_one_event_and_complete_provenance(self):
         e = apply(self.proposal(host='unknown'), self.ws)
         self.assertEqual(e['platform'], 'unknown')

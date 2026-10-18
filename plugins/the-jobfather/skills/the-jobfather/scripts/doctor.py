@@ -21,6 +21,7 @@ if __name__ == '__main__':
     sys.modules['doctor'] = sys.modules[__name__]
 
 import layout
+import local
 import pdf_tools
 from local import (CODE_ROOT, WorkspaceError, add_workspace_arg, atomic_json, machine, machine_file, now, read_json,
                    shared_lock, workspace, workspace_candidates)
@@ -118,6 +119,19 @@ def check_python():
         return check('python', 'Python', 'ok', 'Python %s (%s)' % (version, sys.executable))
     return check('python', 'Python', 'fail', 'Python %s is too old; the scripts need 3.9 or newer' % version,
                  'Install Python 3.9+ and run the scripts with it.')
+
+
+def check_timezone(ws):
+    """Exact local times need the IANA time zone data (Windows Python ships without it)."""
+    name = ((local.identity(ws).get('locale') or {}).get('timezone')) if ws else None
+    if not name:
+        return check('timezone', 'Time zone', 'info', 'No time zone set yet; onboarding asks for it')
+    zone, label, exact = local.tz(ws)
+    if exact:
+        return check('timezone', 'Time zone', 'ok', name)
+    return check('timezone', 'Time zone', 'warn',
+                 'No time zone data for %s, so times use a fixed offset (%s) without daylight saving' % (name, label),
+                 'Run `%s -m pip install tzdata`.' % ('py' if os_kind() == 'windows' else 'python3'))
 
 
 def check_uv(live=False):
@@ -416,6 +430,7 @@ def report(explicit=None, require_pdf=False, live=False, save=False):
     checks.append(check_browser(ws))
     checks += check_pdf(require_pdf, live, tools)
     checks += workspace_checks
+    checks.append(check_timezone(ws))
     checks += check_connections(ws)
     result = {'ready': not any(c['status'] == 'fail' for c in checks), 'generated_at': now(), 'os': os_kind(),
               'machine': platform.machine(), 'require_pdf': require_pdf, 'live': live, 'checks': checks}

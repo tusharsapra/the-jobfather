@@ -75,7 +75,8 @@ class WorkspaceVectorTests(unittest.TestCase):
                 base = Path(tmp).resolve()
                 self.assertEqual(run_case(case, base, skill_resolve), expected(case, base))
                 ran += 1
-        self.assertGreaterEqual(ran, 10)
+        self.assertEqual(ran, sum(1 for case in data['cases'] if applies(case)))
+        self.assertGreaterEqual(ran, 8)
 
 
 if __name__ == '__main__':
