@@ -215,10 +215,19 @@ class SourceTests(ConnectCase):
         self.assertFalse(set(connect.LINKEDIN_DENY) & set(connect.LINKEDIN_ALLOW))
 
 
+def masked(value):
+    """Fingerprints hash the server spec, pinned source included, so a release pin changes them."""
+    if isinstance(value, dict):
+        return {key: '<FP>' if key == 'fingerprint' else masked(item) for key, item in value.items()}
+    if isinstance(value, list):
+        return [masked(item) for item in value]
+    return value
+
+
 def normalise(plan, home, ws):
     text = json.dumps(plan)
     text = text.replace(plan['source']['spec'], '<SRC>').replace(str(ws), '<WS>').replace(str(home), '<HOME>')
-    data = json.loads(text)
+    data = masked(json.loads(text))
     for key in ('plan_id', 'created_at', 'steps_sha256', 'workspace'):
         data.pop(key)
     data['source'] = data['source']['kind']

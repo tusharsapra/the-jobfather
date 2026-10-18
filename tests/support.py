@@ -26,6 +26,9 @@ def _tool_dirs():
     return _TOOL_DIRS
 
 
+EMPTY_FOLDERS = ('cv/variants', 'jobs', 'profile/sources')  # the demo's empty folders
+
+
 class DemoWorkspace:
     """Copy the demo into a temp folder and point every lookup at it.
 
@@ -39,6 +42,8 @@ class DemoWorkspace:
         self.base = base
         self.root = base / 'ws'
         shutil.copytree(str(source), str(self.root), ignore=shutil.ignore_patterns('README.md'))
+        for empty in EMPTY_FOLDERS:  # git keeps no empty folders, so a fresh clone lacks them
+            (self.root / empty).mkdir(parents=True, exist_ok=True)
         home = base / 'home'
         home.mkdir()
         tool_dirs = _tool_dirs()  # resolve real TeX/Poppler before HOME moves

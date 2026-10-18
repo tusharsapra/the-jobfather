@@ -87,6 +87,7 @@ def pin():
         raise SystemExit('HEAD must be the "Release vX.Y.Z" commit from prepare')
     for path in PIN_FILES:
         replace(path, SOURCE.pattern, lambda mm: mm.group(1) + sha + mm.group(3), count=0)
+    run(sys.executable, '-m', 'unittest', 'discover', '-s', 'tests')  # pins feed plan fingerprints
     run(sys.executable, 'dev/validate_package.py', '--release')
     stage(PIN_FILES)
     git('commit', '-q', '-m', 'Pin MCP sources to %s' % sha[:12])
