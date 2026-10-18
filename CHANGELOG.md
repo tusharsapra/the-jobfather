@@ -18,8 +18,9 @@ First public version.
 - Writing in the user's voice: default rules, vendored humanizer checklist, avoid-list lint,
   real email signature handling.
 - Applications with policy modes, per-item approvals and a human final click: Greenhouse autofill
-  with safety rules, guided filling for other systems, opt-in Naukri via a clean-room MCP server.
-- Guided logins for the browser, LinkedIn, Naukri and mail on Claude Code, Codex and Antigravity.
+  with safety rules, guided filling for other systems.
+- Guided logins for the browser, LinkedIn and mail on Claude Code, Codex, Cursor and Antigravity.
+- Naukri support (an independent, clean-room server) follows in 0.2.0.
 - A per-user change journal with rollback, logged outside edits, a pending-learning queue,
   learning from sent-email edits, and a weekly review.
 - Built-in lessons from real use: platform filters are unreliable, a snippet is not a JD, a bounce

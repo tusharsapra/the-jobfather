@@ -50,6 +50,9 @@ CONNECTIONS_SCHEMA = 'the-jobfather/connections@1'
 PLUGIN_ROOT = CODE_ROOT.parents[1]
 PLUGIN_NAME = 'the-jobfather'
 FALLBACK_SOURCE = 'git+https://github.com/tusharsapra/the-jobfather@v0.1.0#subdirectory=packages/jobfather-mcp'
+NAUKRI_SHIPPED = False  # the clean-room Naukri server is not in this release yet
+NAUKRI_LATER = ('Naukri support arrives in The Jobfather v0.2.0. Until then, paste Naukri listings or links and '
+                'job intake reads them like any other job.')
 PLAYWRIGHT_MCP = '@playwright/mcp@0.0.83'
 LINKEDIN_MCP = 'mcp-server-linkedin@4.27.0'
 LINKEDIN_ALLOW = ('search_jobs', 'get_job_details', 'get_saved_jobs', 'get_job_apply_url', 'get_company_profile',
@@ -454,6 +457,12 @@ def build_plan(host, services, linkedin_mode='browser', install=None, ws=None):
     unknown = [s for s in services if s not in SERVICES]
     if unknown or not services:
         raise ValueError('Services must be among: ' + ', '.join(SERVICES))
+    later = []
+    if 'naukri' in services and not NAUKRI_SHIPPED:
+        services.remove('naukri')
+        later.append(NAUKRI_LATER)
+        if not services:
+            raise ValueError(NAUKRI_LATER)
     if linkedin_mode not in ('browser', 'mcp'):
         raise ValueError('LinkedIn mode is browser or mcp')
     info = install_info(host)
@@ -463,7 +472,7 @@ def build_plan(host, services, linkedin_mode='browser', install=None, ws=None):
     method = 'plugin' if mode == 'plugin' else 'cli'
     source = mcp_source()
     platforms = _platforms(ws)
-    steps, warnings = [], []
+    steps, warnings = [], later
     if info.get('warning'):
         warnings.append(info['warning'])
     for name in ('naukri', 'linkedin'):
@@ -1400,6 +1409,8 @@ def undo(ws, step_id, consent=None):
 def enable(ws, name, ack=None, mode=None):
     if name not in PLATFORM_NAMES:
         raise ValueError('Platform must be naukri or linkedin')
+    if name == 'naukri' and not NAUKRI_SHIPPED:
+        raise ValueError(NAUKRI_LATER)
     if mode and name != 'linkedin':
         raise ValueError('--mode applies to LinkedIn only')
     if mode not in (None, 'browser', 'mcp'):
@@ -1441,6 +1452,8 @@ def disable(ws, name):
 def prewarm(services):
     source = mcp_source()
     jobs = []
+    if not NAUKRI_SHIPPED:
+        services = [s for s in services if s != 'naukri']
     if 'browser' in services:
         jobs.append(('playwright-mcp', ['npx', '-y', PLAYWRIGHT_MCP, '--version']))
     if any(s in services for s in ('browser', 'naukri', 'linkedin')):

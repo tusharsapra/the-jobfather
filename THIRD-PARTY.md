@@ -48,7 +48,7 @@ SOFTWARE.
 | Component | Licence | Used for |
 | --- | --- | --- |
 | [@playwright/mcp](https://github.com/microsoft/playwright-mcp) (pinned) | Apache-2.0 | the `browser` MCP server |
-| [Playwright for Python](https://github.com/microsoft/playwright-python) | Apache-2.0 | Naukri server, Greenhouse form filler |
+| [Playwright for Python](https://github.com/microsoft/playwright-python) | Apache-2.0 | Greenhouse form filler (and the Naukri server from 0.2.0) |
 | [MCP Python SDK](https://github.com/modelcontextprotocol/python-sdk) | MIT | the bundled MCP servers |
 | [pydantic](https://github.com/pydantic/pydantic) | MIT | tool schemas |
 | [openpyxl](https://foss.heptapod.net/openpyxl/openpyxl) | MIT | the tracker workbook |

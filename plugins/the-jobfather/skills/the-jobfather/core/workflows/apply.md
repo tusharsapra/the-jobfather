@@ -25,8 +25,9 @@ everything and hand over the link and the files.
    the approval id). After a timeout or a closed window, ask the user whether they submitted; if
    they did, record it as `user-reported`.
 
-## Naukri (opt-in)
-`naukri_prepare_apply` → show the summary (job, resume used: the one already on the user's Naukri
+## Naukri (opt-in, from v0.2.0)
+Until the Naukri server ships, open the job on Naukri for the user, who applies there; record it as
+`user-reported`. From v0.2.0: `naukri_prepare_apply` → show the summary (job, resume used: the one already on the user's Naukri
 profile, answers) → the user approves → `naukri_apply` with the approval id opens a confirm page
 in the Naukri window; **the user clicks Submit there**. Screening questions come back as
 `needs_input`: answer from the profile, ask for unknowns, then prepare again with the answers.

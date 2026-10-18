@@ -146,6 +146,7 @@ class DoctorTests(DoctorCase):
         self.assertTrue(result['ready'])
         self.assertEqual(self.by_id(result)['workspace']['status'], 'warn')
 
+    @mock.patch.object(connect, 'NAUKRI_SHIPPED', True)
     def test_connection_flags(self):
         connect.enable(self.ws, 'naukri', 'Yes, turn Naukri on.')
         flags = self.by_id(doctor.report())['connections']['flags']

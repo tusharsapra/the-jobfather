@@ -54,6 +54,9 @@ model = "other"
 '''
 
 
+SHIPPED = connect.NAUKRI_SHIPPED
+
+
 class ConnectCase(unittest.TestCase):
     def setUp(self):
         self.demo = DemoWorkspace(init=False)
@@ -65,8 +68,11 @@ class ConnectCase(unittest.TestCase):
         os.environ.pop('JOBFATHER_DEV_MCP_SOURCE', None)
         self.machine = mock.patch.object(connect, 'machine_id', return_value='fictional-machine-id')
         self.machine.start()
+        self.naukri = mock.patch.object(connect, 'NAUKRI_SHIPPED', True)  # these tests cover the Naukri wiring too
+        self.naukri.start()
 
     def tearDown(self):
+        self.naukri.stop()
         self.machine.stop()
         self.env.stop()
         self.demo.close()
@@ -159,6 +165,21 @@ class InstallModeTests(ConnectCase):
 
 
 # ------------------------------------------------------------------ sources and plans
+class NaukriLaterTests(ConnectCase):
+    """While the Naukri server is not released, setup leaves it out and says when it arrives."""
+
+    def test_naukri_is_left_out_until_it_ships(self):
+        with mock.patch.object(connect, 'NAUKRI_SHIPPED', False):
+            plan = connect.build_plan('claude-code', ['browser', 'naukri'], 'browser', 'skills', self.ws)
+            self.assertFalse([s for s in plan['steps'] if 'naukri' in s['id']])
+            self.assertIn(connect.NAUKRI_LATER, plan['warnings'])
+            for call in (lambda: connect.build_plan('codex', ['naukri'], 'browser', 'plugin', self.ws),
+                         lambda: connect.enable(self.ws, 'naukri', 'Yes, turn it on.')):
+                with self.assertRaises(ValueError) as ctx:
+                    call()
+                self.assertIn('v0.2.0', str(ctx.exception))
+
+
 class SourceTests(ConnectCase):
     def test_pin_comes_from_the_plugin_manifest_and_fallbacks_match_it(self):
         manifest = json.loads((connect.PLUGIN_ROOT / '.mcp.json').read_text(encoding='utf-8'))
@@ -167,7 +188,9 @@ class SourceTests(ConnectCase):
         self.assertEqual((source['spec'], source['origin']), (args[args.index('--from') + 1], 'plugin .mcp.json'))
         self.assertEqual(connect.FALLBACK_SOURCE, source['spec'])
         codex = json.loads((connect.PLUGIN_ROOT / '.codex-mcp.json').read_text(encoding='utf-8'))['mcpServers']
-        self.assertEqual(list(connect.NAUKRI_TOOLS), codex['jobfather_naukri']['enabled_tools'])
+        self.assertEqual('jobfather_naukri' in codex, SHIPPED)  # the plugin files and the switch agree
+        if SHIPPED:
+            self.assertEqual(list(connect.NAUKRI_TOOLS), codex['jobfather_naukri']['enabled_tools'])
         for service in ('browser', 'naukri'):
             keys, tables = connect.codex_keys(service)
             self.assertEqual((keys, tables), connect.CODEX_FALLBACK[service])

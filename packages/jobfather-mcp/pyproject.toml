@@ -29,7 +29,6 @@ Homepage = "https://github.com/tusharsapra/the-jobfather"
 Repository = "https://github.com/tusharsapra/the-jobfather"
 
 [project.scripts]
-jobfather-naukri = "jobfather_mcp.naukri.server:main"
 jobfather-browser = "jobfather_mcp.browser_launcher:main"
 jobfather-proxy = "jobfather_mcp.proxy:main"
 
