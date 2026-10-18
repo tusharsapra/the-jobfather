@@ -224,10 +224,26 @@ def masked(value):
     return value
 
 
+def placeholders(value, swaps):
+    """Swap real paths for <WS>/<HOME> in every string, with / separators on every OS."""
+    if isinstance(value, dict):
+        return {key: placeholders(item, swaps) for key, item in value.items()}
+    if isinstance(value, list):
+        return [placeholders(item, swaps) for item in value]
+    if isinstance(value, str):
+        for real, mark in swaps:
+            if real in value:
+                value = value.replace(real, mark)
+                head, tail = value.split(mark, 1)
+                value = head + mark + tail.replace('\\', '/')
+        return value
+    return value
+
+
 def normalise(plan, home, ws):
-    text = json.dumps(plan)
-    text = text.replace(plan['source']['spec'], '<SRC>').replace(str(ws), '<WS>').replace(str(home), '<HOME>')
-    data = masked(json.loads(text))
+    swaps = [(plan['source']['spec'], '<SRC>'), (str(ws), '<WS>'), (Path(ws).as_posix(), '<WS>'),
+             (str(home), '<HOME>'), (Path(home).as_posix(), '<HOME>')]
+    data = masked(placeholders(plan, swaps))
     for key in ('plan_id', 'created_at', 'steps_sha256', 'workspace'):
         data.pop(key)
     data['source'] = data['source']['kind']

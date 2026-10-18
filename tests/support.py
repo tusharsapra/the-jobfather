@@ -26,6 +26,17 @@ def _tool_dirs():
     return _TOOL_DIRS
 
 
+def has_zone(name='America/Toronto'):
+    """True when IANA time zone data is available (Windows needs the tzdata package)."""
+    try:
+        from zoneinfo import ZoneInfo
+        ZoneInfo(name)
+        return True
+    except Exception:
+        return False
+
+
+NO_TZDATA = 'needs IANA time zone data: pip install tzdata'
 EMPTY_FOLDERS = ('cv/variants', 'jobs', 'profile/sources')  # the demo's empty folders
 
 

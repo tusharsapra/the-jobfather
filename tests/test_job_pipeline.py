@@ -8,7 +8,7 @@ import sys
 import unittest
 from unittest.mock import patch
 
-from support import SCRIPTS, DemoWorkspace
+from support import NO_TZDATA, SCRIPTS, DemoWorkspace, has_zone
 
 import layout
 from applications import Store
@@ -209,6 +209,7 @@ class PipelineTests(unittest.TestCase):
         self.assertNotIn(draft, ids)
         self.assertIn(self.route_a, ids)
 
+    @unittest.skipUnless(has_zone(), NO_TZDATA)
     def test_due_dates_promises_and_manual_override(self):
         self.assertFalse(self.summary(at='2026-09-10T10:00:00-04:00')[self.route_a]['follow_up_due'])
         self.assertTrue(self.summary(at='2026-09-11T10:00:00-04:00')[self.route_a]['follow_up_due'])
