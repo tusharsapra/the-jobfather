@@ -14,7 +14,7 @@ First public version.
 - Job intake, tracker workbook (keeps your edits), ranking, company research cache, mailbox reply
   tracking, action brief and follow-up timing.
 - One-page LaTeX CV rendered from the profile, tailored per job with full PDF validation and a
-  visual review before saving.
+  visual review before saving; saved starting points per role family.
 - Writing in the user's voice: default rules, vendored humanizer checklist, avoid-list lint,
   real email signature handling.
 - Applications with policy modes, per-item approvals and a human final click: Greenhouse autofill
