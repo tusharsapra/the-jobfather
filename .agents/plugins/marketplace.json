@@ -1,0 +1,20 @@
+{
+  "name": "the-jobfather",
+  "interface": {
+    "displayName": "The Jobfather"
+  },
+  "plugins": [
+    {
+      "name": "the-jobfather",
+      "source": {
+        "source": "local",
+        "path": "./plugins/the-jobfather"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "name": "the-jobfather",
+  "displayName": "The Jobfather",
+  "version": "0.1.0",
+  "description": "Open-source job-hunting copilot: onboards your career data, maps your job market, tailors one-page LaTeX CVs, drafts applications in your voice and tracks everything in a local workspace you own. Every outward action needs your approval.",
+  "logo": "assets/icon.svg",
+  "suggestedPrompts": [
+    "Set up The Jobfather",
+    "Find jobs posted this week that fit my profile",
+    "Tailor my CV to this job description"
+  ],
+  "author": {
+    "name": "tusharsapra",
+    "url": "https://github.com/tusharsapra"
+  },
+  "homepage": "https://github.com/tusharsapra/the-jobfather",
+  "repository": "https://github.com/tusharsapra/the-jobfather",
+  "license": "MIT",
+  "keywords": [
+    "jobs",
+    "job-search",
+    "cv",
+    "resume",
+    "career",
+    "applications",
+    "naukri",
+    "linkedin"
+  ]
+}
