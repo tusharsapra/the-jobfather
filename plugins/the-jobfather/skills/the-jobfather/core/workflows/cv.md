@@ -41,8 +41,13 @@ rendered page before claiming a full review. Give prioritised corrections; no AT
    application. Return the PDF path. A PDF is not a submission.
 
 ## Role-family variants
-For each core role family in market.json, a saved baseline patch in `cv/variants/<family>.json`
-can be the starting point for that family's jobs. Variants are content patches, not new designs.
+For a core role family in market.json, a checked content patch can be saved as the starting point
+for that family's jobs: `cv_content.py save-variant --family ID PATCH.json --notes "…"` (after the
+user likes a CV for that family; `--replace` to update it). For a new job,
+`cv_content.py variant --family ID` returns that patch, or the baseline when there is none or the
+master CV no longer fits it; `master_changed: true` means re-check the wording against the current
+facts. `cv_content.py variants` lists them. Variants are content patches, never new designs, and
+every job's patch is still tailored and checked as above.
 
 ## Changing the master
 New facts or reworded bullets go into EXPERIENCE.md first (update-status.md), then

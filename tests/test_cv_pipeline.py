@@ -2,9 +2,11 @@
 import copy
 import json
 from pathlib import Path
+import subprocess
+import sys
 import unittest
 
-from support import DemoWorkspace, REPO
+from support import DemoWorkspace, REPO, SCRIPTS
 
 import cv_content
 import cv_init
@@ -13,7 +15,7 @@ import layout
 import memory
 import pdf_tools
 from applications import Store
-from local import digest, read_json, read_text, sha_text
+from local import atomic_json, digest, read_json, read_text, sha_text
 
 A4 = REPO / 'tests' / 'fixtures' / 'a4'
 
@@ -108,6 +110,47 @@ class TemplateTests(unittest.TestCase):
         patch = copy.deepcopy(base)
         patch['tools'].append('BigQuery')  # listed in the tools vocabulary
         self.assertTrue(cv_content.validate(patch, self.root)['ok'])
+
+    def test_role_family_variants_are_checked_and_fall_back_to_the_baseline(self):
+        base = cv_content.baseline(self.root)
+        self.assertEqual(cv_content.variant(self.root, 'data-analytics')['source'], 'baseline')
+        patch = copy.deepcopy(base)
+        patch['core_skills'] = list(reversed(base['core_skills']))
+        saved = cv_content.save_variant(self.root, 'data-analytics', patch, notes='Lead with SQL.')
+        self.assertEqual(saved, {'family': 'data-analytics', 'path': 'cv/variants/data-analytics.json',
+                                 'replaced': False})
+        got = cv_content.variant(self.root, 'data-analytics')
+        self.assertEqual((got['source'], got['patch'], got['master_changed'], got['notes']),
+                         ('variant', patch, False, 'Lead with SQL.'))
+        with self.assertRaises(ValueError):  # no silent overwrite
+            cv_content.save_variant(self.root, 'data-analytics', base)
+        self.assertTrue(cv_content.save_variant(self.root, 'data-analytics', patch, replace=True)['replaced'])
+        unknown_tool = copy.deepcopy(base)
+        unknown_tool['tools'].append('Spark')
+        for family, bad in (('astronaut', patch), ('../profile', patch), ('product-analytics', unknown_tool)):
+            with self.subTest(family), self.assertRaises(ValueError):
+                cv_content.save_variant(self.root, family, bad)
+        self.assertFalse((self.root / 'cv/variants/product-analytics.json').exists())
+        path = self.root / 'cv/variants/data-analytics.json'
+        record = read_json(path)
+        record['master_sha256'] = '0' * 64  # the master was re-rendered after saving
+        atomic_json(path, record)
+        got = cv_content.variant(self.root, 'data-analytics')
+        self.assertEqual((got['source'], got['master_changed']), ('variant', True))
+        record['patch']['lkm'] = record['patch']['lkm'][:-1]  # no longer fits the master's slots
+        atomic_json(path, record)
+        got = cv_content.variant(self.root, 'data-analytics')
+        self.assertEqual((got['source'], got['stale'], got['patch']), ('baseline', True, base))
+        self.assertEqual([(v['family'], v['state']) for v in cv_content.variants(self.root)['variants']],
+                         [('data-analytics', 'stale')])
+        patch_file = self.root / 'patch.json'
+        patch_file.write_text(json.dumps(patch), encoding='utf-8')
+        cli = [sys.executable, str(SCRIPTS / 'cv_content.py'), '--workspace', str(self.root)]
+        done = subprocess.run(cli + ['save-variant', '--family', 'data-analytics', str(patch_file), '--replace'],
+                              capture_output=True, text=True)
+        self.assertEqual(done.returncode, 0, done.stderr)
+        done = subprocess.run(cli + ['variant', '--family', 'data-analytics'], capture_output=True, text=True)
+        self.assertEqual(json.loads(done.stdout)['source'], 'variant')
 
     def test_emphasis_rules(self):
         data = cv_template.template(self.root)
