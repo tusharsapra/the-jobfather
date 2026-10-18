@@ -11,6 +11,18 @@
       "env": {
         "UV_HTTP_TIMEOUT": "300"
       }
+    },
+    "naukri": {
+      "command": "uvx",
+      "type": "stdio",
+      "args": [
+        "--from",
+        "git+https://github.com/tusharsapra/the-jobfather@cb114a7e95f6bb5c91af934d1f9b9fadd0d0747f#subdirectory=packages/jobfather-mcp",
+        "jobfather-naukri"
+      ],
+      "env": {
+        "UV_HTTP_TIMEOUT": "300"
+      }
     }
   }
 }

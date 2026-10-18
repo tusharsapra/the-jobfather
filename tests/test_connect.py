@@ -417,7 +417,7 @@ class RunTests(ConnectCase):
                 self.assertEqual(connect.toml_verify(text, 'mcp_servers.jobfather_naukri', {'enabled_tools': []}), [])
                 head, rest = text.split('[mcp_servers.jobfather_naukri.env]', 1)
                 self.assertIn('enabled_tools = ["naukri_status", ', head)
-                self.assertIn('tool_timeout_sec = 300' + newline, head)
+                self.assertIn('tool_timeout_sec = 420' + newline, head)
                 self.assertTrue(head.index('note = """') < head.index('env_vars = ["JOBFATHER_HOME"]'))
                 self.assertTrue(text.endswith('[mcp_servers.jobfather_naukri.tools.naukri_apply]' + newline +
                                               'approval_mode = "prompt"' + newline))

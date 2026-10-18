@@ -50,7 +50,7 @@ CONNECTIONS_SCHEMA = 'the-jobfather/connections@1'
 PLUGIN_ROOT = CODE_ROOT.parents[1]
 PLUGIN_NAME = 'the-jobfather'
 FALLBACK_SOURCE = 'git+https://github.com/tusharsapra/the-jobfather@cb114a7e95f6bb5c91af934d1f9b9fadd0d0747f#subdirectory=packages/jobfather-mcp'
-NAUKRI_SHIPPED = False  # the clean-room Naukri server is not in this release yet
+NAUKRI_SHIPPED = True  # the clean-room Naukri server ships from v0.2.0
 NAUKRI_LATER = ('Naukri support arrives in The Jobfather v0.2.0. Until then, paste Naukri listings or links and '
                 'job intake reads them like any other job.')
 PLAYWRIGHT_MCP = '@playwright/mcp@0.0.83'
@@ -69,7 +69,7 @@ CODEX_GMAIL = 'gmail@openai-curated'
 UV_ENV = {'UV_HTTP_TIMEOUT': '300'}
 CODEX_FALLBACK = {
     'browser': ({'env_vars': ['JOBFATHER_HOME'], 'startup_timeout_sec': 120, 'tool_timeout_sec': 120}, {}),
-    'naukri': ({'env_vars': ['JOBFATHER_HOME'], 'startup_timeout_sec': 120, 'tool_timeout_sec': 300,
+    'naukri': ({'env_vars': ['JOBFATHER_HOME'], 'startup_timeout_sec': 120, 'tool_timeout_sec': 420,
                 'enabled_tools': list(NAUKRI_TOOLS)}, {'tools.naukri_apply': {'approval_mode': 'prompt'}}),
     'linkedin': ({'env_vars': ['JOBFATHER_HOME'], 'startup_timeout_sec': 180, 'tool_timeout_sec': 300,
                   'enabled_tools': list(LINKEDIN_ALLOW)}, {}),

@@ -3,6 +3,14 @@
 All notable changes to The Jobfather. Your own learning history lives in your workspace
 (`learning/CHANGELOG.md`), not here.
 
+## Unreleased
+
+- Naukri support: The Jobfather's own clean-room MCP server (`jobfather-naukri`), opt-in. Search
+  with filters, job details, similar, recommended and saved jobs, a profile summary without contact
+  details, and applying with a per-job approval plus your click on a confirm page. Fixed pacing,
+  daily caps, and a stop at any checkpoint.
+- Windows: time zone data check in `doctor.py`.
+
 ## 0.1.0 (2026-10-19)
 
 First public version.

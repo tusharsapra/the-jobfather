@@ -22,8 +22,8 @@ real posting date. Never widen the date window to reach a number.
   array; read shortlisted ids with `get_job_details`; `get_saved_jobs` on request; `search_posts`
   for hiring posts. `section_errors` means partial extraction, not zero results. There is no
   submission tool: applying is a browser hand-off.
-- **Naukri** (from v0.2.0; until then the user pastes Naukri listings or links and job-intake.md
-  reads them). Only if the user opted in: `naukri_status` first (`inconclusive` is not logged
+- **Naukri** (only if the user opted in; otherwise the user pastes Naukri listings or links and
+  job-intake.md reads them): `naukri_status` first (`inconclusive` is not logged
   out), `naukri_search_jobs`, `naukri_get_job`, `naukri_recommended_jobs`, `naukri_saved_jobs`,
   `naukri_similar_jobs`. The server spaces requests and caps daily use; `rate_limited` means wait.
   `checkpoint` or `blocked` means stop and tell the user; never retry.

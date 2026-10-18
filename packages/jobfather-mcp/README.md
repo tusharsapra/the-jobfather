@@ -7,7 +7,7 @@ from a pinned git source. MIT licence. Python 3.10 or newer.
 | --- | --- |
 | `jobfather-browser` | Starts [Playwright MCP](https://github.com/microsoft/playwright-mcp) (`@playwright/mcp@0.0.83`) on the workspace's own Chrome profile. |
 | `jobfather-proxy` | Puts an allowlist in front of another stdio MCP server (used for the optional LinkedIn server). |
-| `jobfather-naukri` | The clean-room Naukri server, arriving in v0.2.0 (see `dev/CLEANROOM.md` in the repository). |
+| `jobfather-naukri` | The opt-in, clean-room Naukri server (see below and `dev/CLEANROOM.md` in the repository). |
 
 The plugin manifests start them like this (the pin is a release tag or commit):
 
@@ -136,3 +136,18 @@ uv run --directory packages/jobfather-mcp jobfather-browser --print-argv
 
 Set `JOBFATHER_DEV_MCP_SOURCE=<repo>/packages/jobfather-mcp` before `connect.py plan` to register
 `uv run --directory …` commands instead of the pinned git source.
+
+## jobfather-naukri
+
+An opt-in, clean-room Naukri server with 11 tools: `naukri_status`, `naukri_login`,
+`naukri_search_jobs`, `naukri_recommended_jobs`, `naukri_get_job`, `naukri_similar_jobs`,
+`naukri_saved_jobs`, `naukri_my_profile` (never returns contact fields), `naukri_prepare_apply`,
+`naukri_apply` and `naukri_close`. It drives real Google Chrome with its own profile in
+`<workspace>/.state/browser/naukri`, reads only what the pages themselves load, and never reads
+cookies or request headers. Requests are spaced at fixed intervals with daily caps
+(`naukri.limits` in `config/platforms.json`, within hard limits), and it stops at any checkpoint or
+block page. The user signs in by hand in the window. Applying needs policy mode
+`submit-with-approval`, an approval created by `naukri_prepare_apply`, and the user's click on the
+confirm page the server opens; only then does it press Naukri's Apply. Selectors and page patterns
+live in a versioned `site_profile.json`; `dev/naukri_recorder.py` and `dev/sanitize_fixtures.py`
+refresh them when the site changes.
