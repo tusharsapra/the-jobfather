@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Example Corp - Senior Data Analyst (fictional test form)</title>
+<style>
+  body { font-family: sans-serif; margin: 24px; max-width: 760px; }
+  .field-wrapper { margin: 14px 0; }
+  label, .label { display: block; font-weight: 600; margin-bottom: 4px; }
+  input.input, textarea.input { width: 100%; padding: 6px; box-sizing: border-box; }
+  .select__control { border: 1px solid #888; display: flex; min-height: 34px; align-items: center; padding: 0 6px; }
+  .select__value-container { display: flex; flex-wrap: wrap; flex: 1; align-items: center; gap: 4px; }
+  .select__input-container { flex: 1; min-width: 60px; }
+  .select__input { border: 0; outline: 0; width: 100%; padding: 6px 0; font: inherit; }
+  .select__placeholder { color: #777; }
+  .select__multi-value { background: #eee; padding: 2px 6px; }
+  .select__menu { border: 1px solid #888; border-top: 0; }
+  .select__option { padding: 6px; cursor: pointer; }
+  .select__option:hover { background: #def; }
+  .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .hidden { display: none; }
+  .error { color: #b00; }
+</style>
+</head>
+<body>
+<h1>Senior Data Analyst</h1>
+<p>Example Corp is a fictional company. This page imitates a hosted application form for automated tests.</p>
+<div style="display:none">Thank you for applying</div>
+<form id="application-form" class="application--form" method="get" novalidate>
+  <div class="field-wrapper"><label for="first_name">First Name<span aria-hidden="true">*</span></label>
+    <input id="first_name" class="input" type="text" maxlength="255" aria-required="true"></div>
+  <div class="field-wrapper"><label for="last_name">Last Name<span aria-hidden="true">*</span></label>
+    <input id="last_name" class="input" type="text" maxlength="255" aria-required="true"></div>
+  <div class="field-wrapper"><label for="preferred_name">Preferred First Name</label>
+    <input id="preferred_name" class="input" type="text" maxlength="255" aria-required="false"></div>
+  <div class="field-wrapper"><label for="email">Email<span aria-hidden="true">*</span></label>
+    <input id="email" class="input" type="text" maxlength="255" aria-required="true"></div>
+  <fieldset class="phone-input"><legend class="visually-hidden">Phone</legend>
+    <div class="field-wrapper" data-select="country"></div>
+    <div class="field-wrapper"><label for="phone">Phone<span aria-hidden="true">*</span></label>
+      <input id="phone" class="input" type="tel" aria-required="true"></div>
+  </fieldset>
+  <div class="field-wrapper" data-select="candidate-location"></div>
+  <div class="field-wrapper"><div role="group" aria-labelledby="upload-label-resume" aria-required="true" class="file-upload" data-allow-s3="false">
+    <div id="upload-label-resume" class="label">Resume/CV<span>*</span></div>
+    <label class="visually-hidden" for="resume">Attach</label>
+    <input id="resume" class="visually-hidden" type="file" accept=".pdf,.doc,.docx">
+    <span class="file-upload__filename"></span></div></div>
+  <div class="field-wrapper"><div role="group" aria-labelledby="upload-label-cover_letter" aria-required="false" class="file-upload" data-allow-s3="false">
+    <div id="upload-label-cover_letter" class="label">Cover Letter</div>
+    <label class="visually-hidden" for="cover_letter">Attach</label>
+    <input id="cover_letter" class="visually-hidden" type="file" accept=".pdf,.doc,.docx">
+    <span class="file-upload__filename"></span></div></div>
+  <div class="field-wrapper" data-select="school--0"></div>
+  <div class="field-wrapper" data-select="degree--0"></div>
+  <div class="field-wrapper"><label for="question_30000001">LinkedIn Profile</label>
+    <input id="question_30000001" class="input" type="text" aria-required="false"></div>
+  <div class="field-wrapper" data-select="question_30000002"></div>
+  <div class="field-wrapper"><label for="question_30000003">How many years of SQL experience do you have?<span aria-hidden="true">*</span></label>
+    <input id="question_30000003" class="input" type="text" aria-required="true"></div>
+  <div class="field-wrapper" data-select="question_30000004"></div>
+  <div class="field-wrapper" data-select="question_30000005"></div>
+  <div class="field-wrapper" data-select="question_30000006"></div>
+  <div class="field-wrapper"><label for="question_30000007">What are your salary expectations?</label>
+    <input id="question_30000007" class="input" type="text" aria-required="false"></div>
+  <div class="field-wrapper"><label for="question_30000008">What is your notice period?</label>
+    <input id="question_30000008" class="input" type="text" aria-required="false"></div>
+  <div class="field-wrapper"><label for="question_30000009">Why do you want to work at Example Corp?<span aria-hidden="true">*</span></label>
+    <textarea id="question_30000009" class="input" rows="4" aria-required="true"></textarea></div>
+  <fieldset class="field-wrapper"><legend class="label">Which of these tools have you used?</legend>
+    <input type="checkbox" id="question_30000010[]_9001" name="question_30000010[]"><label for="question_30000010[]_9001">SQL</label>
+    <input type="checkbox" id="question_30000010[]_9002" name="question_30000010[]"><label for="question_30000010[]_9002">Python</label>
+    <input type="checkbox" id="question_30000010[]_9003" name="question_30000010[]"><label for="question_30000010[]_9003">dbt</label>
+    <input type="checkbox" id="question_30000010[]_9004" name="question_30000010[]"><label for="question_30000010[]_9004">Tableau</label>
+  </fieldset>
+  <fieldset class="field-wrapper"><legend class="label">Please review and acknowledge the Example Corp candidate privacy notice*</legend>
+    <p>Read the <a href="https://www.example.com/privacy">candidate privacy notice</a> before applying.</p>
+    <input type="checkbox" id="question_30000011[]_9101" name="question_30000011[]" required>
+    <label for="question_30000011[]_9101">I acknowledge the Example Corp candidate privacy notice</label>
+  </fieldset>
+  <div class="field-wrapper" data-select="question_30000012"></div>
+  <h2>Voluntary self-identification</h2>
+  <div class="field-wrapper" data-select="gender"></div>
+  <div class="field-wrapper" data-select="hispanic_ethnicity"></div>
+  <div class="field-wrapper hidden" id="race-wrapper" data-select="race"></div>
+  <div class="field-wrapper" data-select="veteran_status"></div>
+  <h2>Optional fictional survey</h2>
+  <div class="field-wrapper" data-select="5000001"></div>
+  <div class="field-wrapper" data-select="5000002"></div>
+  <div class="field-wrapper">
+    <input type="checkbox" id="gdpr_retention_consent_given_1" name="gdpr_retention_consent_given" checked>
+    <label for="gdpr_retention_consent_given_1">By checking this box, I agree that Example Corp may keep my data for future openings.</label>
+  </div>
+  <p class="error hidden" id="form-error">Please complete the required fields.</p>
+  <button type="submit" class="btn">Submit application</button>
+</form>
+<script>
+const SELECTS = {
+  'country': {label: 'Country', required: true, options: ['Canada +1', 'United States +1', 'United Kingdom +44', 'India +91']},
+  'candidate-location': {label: 'Location (City)', required: true, async: true,
+    options: ['Toronto, Ontario, Canada', 'Toronto, Ohio, United States', 'Vancouver, British Columbia, Canada']},
+  'school--0': {label: 'School', required: false, options: ['Example University', 'Other']},
+  'degree--0': {label: 'Degree', required: false, options: ["Bachelor's Degree", "Master's Degree"]},
+  'question_30000002': {label: 'How did you hear about this role?', required: true,
+    options: ['Company careers page', 'Job board', 'Referral', 'Other']},
+  'question_30000004': {label: 'Are you legally authorized to work in Canada?', required: true, options: ['Yes', 'No']},
+  'question_30000005': {label: 'Will you now or in the future require sponsorship to work in Canada?', required: true,
+    options: ['Yes', 'No']},
+  'question_30000006': {label: 'Are you willing to relocate if the role requires it?', required: false, options: ['Yes', 'No']},
+  'question_30000012': {label: 'Do you opt in to receive text messages about your application?', required: false,
+    options: ['Yes', 'No']},
+  'gender': {label: 'Gender', required: false, options: ['Decline To Self Identify', 'Female', 'Male']},
+  'hispanic_ethnicity': {label: 'Are you Hispanic/Latino?', required: false, options: ['Yes', 'No', 'Decline To Self Identify']},
+  'race': {label: 'Race', required: false, options: ['Decline To Self Identify', 'Two or More Races', 'White', 'Asian']},
+  'veteran_status': {label: 'Veteran Status', required: false,
+    options: ["I don't wish to answer", 'I identify as one or more of the classifications of a protected veteran',
+              'I am not a protected veteran']},
+  '5000001': {label: 'Gender identity', required: false, options: ['Woman', 'Man', 'Non-binary', "I don't wish to answer"]},
+  '5000002': {label: 'Race or ethnicity (optional)', required: false, multi: true,
+    options: ['East Asian', 'White or European', 'Prefer to self-describe', "I don't wish to answer"]},
+};
+const state = {};
+
+function report(kind) {
+  fetch('/__event?kind=' + encodeURIComponent(kind), {method: 'POST', keepalive: true}).catch(() => {});
+}
+
+function el(tag, attrs, text) {
+  const node = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs || {})) node.setAttribute(k, v);
+  if (text !== undefined) node.textContent = text;
+  return node;
+}
+
+function buildSelect(host) {
+  const id = host.dataset.select, spec = SELECTS[id];
+  state[id] = [];
+  const wrap = el('div', {class: 'select'}), container = el('div', {class: 'select__container'});
+  const label = el('label', {id: id + '-label', for: id, class: 'label select__label'}, spec.label);
+  if (spec.required) label.appendChild(el('span', {'aria-hidden': 'true'}, '*'));
+  const control = el('div', {class: 'select__control'}), values = el('div', {class: 'select__value-container'});
+  const placeholder = el('div', {class: 'select__placeholder', id: 'react-select-' + id + '-placeholder'}, 'Select...');
+  const inputBox = el('div', {class: 'select__input-container'});
+  const input = el('input', {class: 'select__input', id: id, type: 'text', role: 'combobox', autocomplete: 'off',
+    'aria-required': spec.required ? 'true' : 'false', 'aria-expanded': 'false'});
+  inputBox.appendChild(input);
+  values.append(placeholder, inputBox);
+  control.appendChild(values);
+  const menu = el('div', {class: 'select__menu hidden'});
+  const list = el('div', {class: 'select__menu-list', role: 'listbox', id: 'react-select-' + id + '-listbox'});
+  menu.appendChild(list);
+  container.append(label, control, menu);
+  if (spec.required) container.appendChild(el('input', {required: '', tabindex: '-1', 'aria-hidden': 'true', class: 'requiredInput', value: ''}));
+  wrap.appendChild(container);
+  host.appendChild(wrap);
+  let timer = null;
+
+  function render(items) {
+    list.innerHTML = '';
+    items.forEach((text, i) => {
+      const option = el('div', {class: 'select__option', role: 'option', id: 'react-select-' + id + '-option-' + i}, text);
+      option.addEventListener('mousedown', (event) => { event.preventDefault(); choose(text); });
+      list.appendChild(option);
+    });
+    menu.classList.toggle('hidden', items.length === 0);
+    input.setAttribute('aria-expanded', items.length ? 'true' : 'false');
+  }
+  function matching() {
+    const typed = input.value.trim().toLowerCase();
+    return spec.options.filter((o) => !typed || o.toLowerCase().includes(typed));
+  }
+  function open() {
+    clearTimeout(timer);
+    if (spec.async) {
+      list.innerHTML = '';
+      menu.classList.add('hidden');
+      if (input.value.trim().length < 2) return;
+      timer = setTimeout(() => render(matching()), 300);
+    } else {
+      render(matching());
+    }
+  }
+  function show() {
+    values.querySelectorAll('.select__single-value, .select__multi-value').forEach((n) => n.remove());
+    placeholder.classList.toggle('hidden', state[id].length > 0);
+    for (const text of state[id]) {
+      if (spec.multi) {
+        const chip = el('div', {class: 'select__multi-value'});
+        chip.appendChild(el('div', {class: 'select__multi-value__label'}, text));
+        values.insertBefore(chip, inputBox);
+      } else {
+        values.insertBefore(el('div', {class: 'select__single-value'}, text), inputBox);
+      }
+    }
+    const required = container.querySelector('.requiredInput');
+    if (required) required.value = state[id].join(',');
+    if (id === 'hispanic_ethnicity') document.getElementById('race-wrapper').classList.toggle('hidden', state[id][0] !== 'No');
+  }
+  function choose(text) {
+    state[id] = spec.multi ? Array.from(new Set(state[id].concat([text]))) : [text];
+    input.value = '';
+    render([]);
+    show();
+  }
+  control.addEventListener('mousedown', () => { setTimeout(open, 0); });
+  input.addEventListener('input', open);
+  input.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') { render([]); }
+    if (event.key === 'ArrowDown' || event.key === 'Enter') {
+      report('keyboard_select');  // the filler must click exact options, never use the keyboard
+      event.preventDefault();
+      const first = list.querySelector('[role="option"]');
+      if (event.key === 'Enter' && first) choose(first.textContent);
+    }
+  });
+  input.addEventListener('blur', () => { setTimeout(() => render([]), 150); });
+}
+
+document.querySelectorAll('[data-select]').forEach(buildSelect);
+document.querySelectorAll('input[type="file"]').forEach((input) => {
+  input.addEventListener('change', () => {
+    input.parentElement.querySelector('.file-upload__filename').textContent = input.files.length ? input.files[0].name : '';
+  });
+});
+
+document.getElementById('application-form').addEventListener('submit', (event) => {
+  event.preventDefault();
+  report('submit_attempt');
+  const missing = [];
+  for (const id of ['first_name', 'last_name', 'email', 'phone', 'question_30000003', 'question_30000009']) {
+    if (!document.getElementById(id).value.trim()) missing.push(id);
+  }
+  for (const [id, spec] of Object.entries(SELECTS)) {
+    if (spec.required && !state[id].length) missing.push(id);
+  }
+  if (!document.getElementById('resume').files.length) missing.push('resume');
+  if (!document.getElementById('question_30000011[]_9101').checked) missing.push('consent');
+  if (missing.length) {
+    document.getElementById('form-error').classList.remove('hidden');
+    report('submit_invalid');
+    return;
+  }
+  report('submitted');
+  history.pushState({}, '', '/examplecorp/jobs/4567890/confirmation');
+  document.body.innerHTML = '<main><h1>Thank you for applying.</h1><p>Your application to Example Corp has been received.</p></main>';
+});
+</script>
+</body>
+</html>

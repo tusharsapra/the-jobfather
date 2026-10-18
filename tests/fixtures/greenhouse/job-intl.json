@@ -1,0 +1,134 @@
+{
+  "absolute_url": "https://careers.example.com/positions/4567900?gh_jid=4567900",
+  "ai_disclaimer": null,
+  "ai_opt_out_request_url": null,
+  "application_deadline": null,
+  "company_name": "Example Travel",
+  "compliance": null,
+  "content": "&lt;p&gt;Fictional analyst role used to test unusual question shapes.&lt;/p&gt;",
+  "data_compliance": [
+    {
+      "type": "gdpr",
+      "requires_consent": true,
+      "requires_processing_consent": true,
+      "requires_retention_consent": true,
+      "retention_period": 1095,
+      "demographic_data_consent_applies": false
+    }
+  ],
+  "demographic_questions": null,
+  "departments": [{"id": 1002, "name": "Insights", "child_ids": [], "parent_id": null}],
+  "education": "education_required",
+  "first_published": "2026-09-20T09:00:00Z",
+  "id": 4567900,
+  "include_ai_disclaimer": null,
+  "internal_job_id": 1234568,
+  "language": "en",
+  "location": {"name": "Berlin, Germany"},
+  "location_questions": [],
+  "metadata": null,
+  "offices": [{"id": 2002, "name": "Berlin", "location": "Berlin, Germany", "child_ids": [], "parent_id": null}],
+  "questions": [
+    {"required": true, "label": "First Name", "fields": [{"name": "first_name", "type": "input_text", "values": []}], "description": null},
+    {"required": true, "label": "Last Name", "fields": [{"name": "last_name", "type": "input_text", "values": []}], "description": null},
+    {"required": true, "label": "Email", "fields": [{"name": "email", "type": "input_text", "values": []}], "description": null},
+    {"required": false, "label": "Phone", "fields": [{"name": "phone", "type": "input_text", "values": []}], "description": null},
+    {
+      "required": true,
+      "label": "Resume/CV",
+      "fields": [{"name": "resume", "type": "input_file", "values": []}, {"name": "resume_text", "type": "textarea", "values": []}],
+      "description": null
+    },
+    {
+      "required": true,
+      "label": "Do you have a valid work permit or EU passport for Germany?",
+      "fields": [{"name": "question_40000001", "type": "multi_value_single_select", "values": [{"label": "Yes", "value": 1}, {"label": "No", "value": 0}]}],
+      "description": null
+    },
+    {
+      "required": true,
+      "label": "Are you legally authorized to work in the country where the job is located?\n",
+      "fields": [
+        {
+          "name": "question_40000002",
+          "type": "multi_value_single_select",
+          "values": [
+            {"label": "Yes, I am currently legally authorized to work in the country where the job is located.", "value": 7001},
+            {"label": "No, I am not currently legally authorized to work in the country where the job is located.", "value": 7002}
+          ]
+        }
+      ],
+      "description": null
+    },
+    {
+      "required": true,
+      "label": "Are you able to work without sponsorship?",
+      "fields": [{"name": "question_40000003", "type": "multi_value_single_select", "values": [{"label": "Yes", "value": 1}, {"label": "No", "value": 0}]}],
+      "description": null
+    },
+    {
+      "required": true,
+      "label": "Are you based in, or willing to relocate to, Berlin?",
+      "fields": [{"name": "question_40000004", "type": "multi_value_single_select", "values": [{"label": "Yes", "value": 1}, {"label": "No", "value": 0}]}],
+      "description": null
+    },
+    {
+      "required": true,
+      "label": "What are your salary expectations?",
+      "fields": [
+        {
+          "name": "question_40000005",
+          "type": "multi_value_single_select",
+          "values": [{"label": "Below 60,000 EUR", "value": 7101}, {"label": "60,000 - 80,000 EUR", "value": 7102}, {"label": "Above 80,000 EUR", "value": 7103}]
+        }
+      ],
+      "description": "<p>Gross yearly base salary.</p>"
+    },
+    {
+      "required": true,
+      "label": "Gender",
+      "fields": [
+        {
+          "name": "question_40000006",
+          "type": "multi_value_single_select",
+          "values": [{"label": "Woman", "value": 7201}, {"label": "Man", "value": 7202}, {"label": "Non-binary", "value": 7203}, {"label": "Prefer not to say", "value": 7204}]
+        }
+      ],
+      "description": null
+    },
+    {
+      "required": false,
+      "label": "Pronouns",
+      "fields": [
+        {
+          "name": "question_40000007",
+          "type": "multi_value_single_select",
+          "values": [{"label": "She/her", "value": 7301}, {"label": "He/him", "value": 7302}, {"label": "They/them", "value": 7303}]
+        }
+      ],
+      "description": null
+    },
+    {
+      "required": true,
+      "label": "Candidate AI Usage Attestation:",
+      "fields": [{"name": "question_40000008", "type": "multi_value_single_select", "values": [{"label": "I agree", "value": 7401}]}],
+      "description": "<p><em>By applying, I agree not to use generative AI tools during interviews unless invited to.</em></p>"
+    },
+    {
+      "required": true,
+      "label": "How did you hear about Example Travel?",
+      "fields": [
+        {
+          "name": "question_40000009[]",
+          "type": "multi_value_multi_select",
+          "values": [{"label": "LinkedIn post", "value": 7501}, {"label": "Newsletter", "value": 7502}, {"label": "Meetup", "value": 7503}]
+        }
+      ],
+      "description": null
+    },
+    {"required": false, "label": "Portfolio (upload)", "fields": [{"name": "question_40000010", "type": "input_file", "values": []}], "description": null}
+  ],
+  "requisition_id": "REQ-2077",
+  "title": "Insights Analyst",
+  "updated_at": "2026-10-05T08:00:00Z"
+}

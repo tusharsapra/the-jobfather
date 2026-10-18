@@ -1,0 +1,229 @@
+{
+  "absolute_url": "https://job-boards.greenhouse.io/examplecorp/jobs/4567890",
+  "ai_disclaimer": null,
+  "ai_opt_out_request_url": null,
+  "application_deadline": null,
+  "company_name": "Example Corp",
+  "compliance": [
+    {
+      "type": "eeoc",
+      "description": "<p>Fictional voluntary self-identification notice for tests.</p>",
+      "questions": [
+        {
+          "required": false,
+          "label": "VeteranStatus",
+          "fields": [
+            {
+              "name": "veteran_status",
+              "type": "multi_value_single_select",
+              "values": [
+                {"label": "I don't wish to answer", "value": 3},
+                {"label": "I identify as one or more of the classifications of a protected veteran", "value": 2},
+                {"label": "I am not a protected veteran", "value": 1}
+              ]
+            }
+          ],
+          "description": null
+        }
+      ]
+    },
+    {
+      "type": "eeoc",
+      "description": "<p>Fictional notice about gender and ethnicity questions.</p>",
+      "questions": [
+        {
+          "required": false,
+          "label": "Race",
+          "fields": [
+            {
+              "name": "race",
+              "type": "multi_value_single_select",
+              "values": [
+                {"label": "Decline To Self Identify", "value": 8},
+                {"label": "Two or More Races", "value": 7},
+                {"label": "White", "value": 5},
+                {"label": "Asian", "value": 2}
+              ]
+            }
+          ],
+          "description": null
+        },
+        {
+          "required": false,
+          "label": "Gender",
+          "fields": [
+            {
+              "name": "gender",
+              "type": "multi_value_single_select",
+              "values": [
+                {"label": "Decline To Self Identify", "value": 3},
+                {"label": "Female", "value": 2},
+                {"label": "Male", "value": 1}
+              ]
+            }
+          ],
+          "description": null
+        }
+      ]
+    }
+  ],
+  "content": "&lt;p&gt;Example Corp is hiring a fictional Senior Data Analyst for tests.&lt;/p&gt;",
+  "data_compliance": [
+    {
+      "type": "gdpr",
+      "requires_consent": false,
+      "requires_processing_consent": false,
+      "requires_retention_consent": true,
+      "retention_period": 365,
+      "demographic_data_consent_applies": false
+    }
+  ],
+  "demographic_questions": {
+    "header": "Optional fictional survey",
+    "description": "<p>Answers are voluntary.</p>",
+    "questions": [
+      {
+        "id": 5000001,
+        "label": "Gender identity",
+        "required": false,
+        "type": "multi_value_single_select",
+        "answer_options": [
+          {"id": 5100001, "label": "Woman", "free_form": false, "decline_to_answer": false},
+          {"id": 5100002, "label": "Man", "free_form": false, "decline_to_answer": false},
+          {"id": 5100003, "label": "Non-binary", "free_form": false, "decline_to_answer": false},
+          {"id": 5100004, "label": "I don't wish to answer", "free_form": false, "decline_to_answer": true}
+        ]
+      },
+      {
+        "id": 5000002,
+        "label": "Race or ethnicity (optional)",
+        "required": false,
+        "type": "multi_value_multi_select",
+        "answer_options": [
+          {"id": 5100011, "label": "East Asian", "free_form": false, "decline_to_answer": false},
+          {"id": 5100012, "label": "White or European", "free_form": false, "decline_to_answer": false},
+          {"id": 5100013, "label": "Prefer to self-describe", "free_form": true, "decline_to_answer": false},
+          {"id": 5100014, "label": "I don't wish to answer", "free_form": false, "decline_to_answer": false}
+        ]
+      }
+    ]
+  },
+  "departments": [{"id": 1001, "name": "Analytics", "child_ids": [], "parent_id": null}],
+  "education": "education_optional",
+  "first_published": "2026-10-01T09:00:00-04:00",
+  "id": 4567890,
+  "include_ai_disclaimer": false,
+  "internal_job_id": 1234567,
+  "language": "en",
+  "location": {"name": "Toronto, Ontario, Canada"},
+  "location_questions": [
+    {"required": true, "label": "Longitude", "fields": [{"name": "longitude", "type": "input_hidden", "values": []}], "description": null},
+    {"required": true, "label": "Latitude", "fields": [{"name": "latitude", "type": "input_hidden", "values": []}], "description": null},
+    {"required": true, "label": "Location", "fields": [{"name": "location", "type": "input_text", "values": []}], "description": null}
+  ],
+  "metadata": null,
+  "offices": [{"id": 2001, "name": "Toronto", "location": "Toronto, Ontario, Canada", "child_ids": [], "parent_id": null}],
+  "questions": [
+    {"required": true, "label": "First Name", "fields": [{"name": "first_name", "type": "input_text", "values": []}], "description": null},
+    {"required": true, "label": "Last Name", "fields": [{"name": "last_name", "type": "input_text", "values": []}], "description": null},
+    {"required": false, "label": "Preferred First Name", "fields": [{"name": "preferred_name", "type": "input_text", "values": []}], "description": null},
+    {"required": true, "label": "Email", "fields": [{"name": "email", "type": "input_text", "values": []}], "description": null},
+    {"required": true, "label": "Phone", "fields": [{"name": "phone", "type": "input_text", "values": []}], "description": null},
+    {
+      "required": true,
+      "label": "Resume/CV",
+      "fields": [
+        {"name": "resume", "type": "input_file", "values": []},
+        {"name": "resume_text", "type": "textarea", "values": []}
+      ],
+      "description": null
+    },
+    {
+      "required": false,
+      "label": "Cover Letter",
+      "fields": [
+        {"name": "cover_letter", "type": "input_file", "values": []},
+        {"name": "cover_letter_text", "type": "textarea", "values": []}
+      ],
+      "description": null
+    },
+    {"required": false, "label": "LinkedIn Profile", "fields": [{"name": "question_30000001", "type": "input_text", "values": []}], "description": null},
+    {
+      "required": true,
+      "label": "How did you hear about this role?",
+      "fields": [
+        {
+          "name": "question_30000002",
+          "type": "multi_value_single_select",
+          "values": [
+            {"label": "Company careers page", "value": 9201},
+            {"label": "Job board", "value": 9202},
+            {"label": "Referral", "value": 9203},
+            {"label": "Other", "value": 9204}
+          ]
+        }
+      ],
+      "description": null
+    },
+    {"required": true, "label": "How many years of SQL experience do you have?", "fields": [{"name": "question_30000003", "type": "input_text", "values": []}], "description": null},
+    {
+      "required": true,
+      "label": "Are you legally authorized to work in Canada?",
+      "fields": [{"name": "question_30000004", "type": "multi_value_single_select", "values": [{"label": "Yes", "value": 1}, {"label": "No", "value": 0}]}],
+      "description": null
+    },
+    {
+      "required": true,
+      "label": "Will you now or in the future require sponsorship to work in Canada?",
+      "fields": [{"name": "question_30000005", "type": "multi_value_single_select", "values": [{"label": "Yes", "value": 1}, {"label": "No", "value": 0}]}],
+      "description": null
+    },
+    {
+      "required": false,
+      "label": "Are you willing to relocate if the role requires it?",
+      "fields": [{"name": "question_30000006", "type": "multi_value_single_select", "values": [{"label": "Yes", "value": 1}, {"label": "No", "value": 0}]}],
+      "description": null
+    },
+    {"required": false, "label": "What are your salary expectations?", "fields": [{"name": "question_30000007", "type": "input_text", "values": []}], "description": null},
+    {"required": false, "label": "What is your notice period?", "fields": [{"name": "question_30000008", "type": "input_text", "values": []}], "description": null},
+    {"required": true, "label": "Why do you want to work at Example Corp?", "fields": [{"name": "question_30000009", "type": "textarea", "values": []}], "description": "<p>A few sentences are enough.</p>"},
+    {
+      "required": false,
+      "label": "Which of these tools have you used?",
+      "fields": [
+        {
+          "name": "question_30000010[]",
+          "type": "multi_value_multi_select",
+          "values": [
+            {"label": "SQL", "value": 9001},
+            {"label": "Python", "value": 9002},
+            {"label": "dbt", "value": 9003},
+            {"label": "Tableau", "value": 9004}
+          ]
+        }
+      ],
+      "description": null
+    },
+    {
+      "required": true,
+      "label": "Please review and acknowledge the Example Corp candidate privacy notice",
+      "fields": [
+        {
+          "name": "question_30000011[]",
+          "type": "multi_value_multi_select",
+          "values": [{"label": "I acknowledge the Example Corp candidate privacy notice", "value": 9101}]
+        }
+      ],
+      "description": "<p>Read the <a href=\"https://www.example.com/privacy\">candidate privacy notice</a> before applying.</p>"
+    },
+    {
+      "required": false,
+      "label": "Do you opt in to receive text messages about your application?",
+      "fields": [{"name": "question_30000012", "type": "multi_value_single_select", "values": [{"label": "Yes", "value": 1}, {"label": "No", "value": 0}]}],
+      "description": null
+    }
+  ],
+  "requisition_id": "REQ-1042",
+  "title": "Senior Data Analyst",
+  "updated_at": "2026-10-10T12:00:00-04:00"
+}
