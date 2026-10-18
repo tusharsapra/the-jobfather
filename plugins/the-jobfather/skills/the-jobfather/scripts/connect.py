@@ -49,7 +49,7 @@ PLAN_SCHEMA = 'the-jobfather/connect-plan@1'
 CONNECTIONS_SCHEMA = 'the-jobfather/connections@1'
 PLUGIN_ROOT = CODE_ROOT.parents[1]
 PLUGIN_NAME = 'the-jobfather'
-FALLBACK_SOURCE = 'git+https://github.com/tusharsapra/the-jobfather@v0.2.0#subdirectory=packages/jobfather-mcp'
+FALLBACK_SOURCE = 'git+https://github.com/tusharsapra/the-jobfather@76a778b8b18ac2c61c189f95f994724c785d5abb#subdirectory=packages/jobfather-mcp'
 NAUKRI_SHIPPED = True  # the clean-room Naukri server ships from v0.2.0
 NAUKRI_LATER = ('Naukri support arrives in The Jobfather v0.2.0. Until then, paste Naukri listings or links and '
                 'job intake reads them like any other job.')
