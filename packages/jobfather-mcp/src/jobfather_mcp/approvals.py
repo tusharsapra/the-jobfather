@@ -289,6 +289,18 @@ def _exclusive(ws: str | os.PathLike[str], timeout: float = 10.0) -> Iterator[No
         os.close(fd)
 
 
+def claim(ws: str | os.PathLike[str], approval_id: str | None, kind: str, payload: Any,
+          detail: Any = None) -> dict[str, Any]:
+    """Verify a pending approval and mark it confirmed under one lock (the user's final click).
+
+    Exactly one caller can claim an approval; every later claim fails, so two processes holding the
+    same approval can never both proceed to the outward action.
+    """
+    with _exclusive(ws):
+        verify(ws, approval_id, kind, payload, allowed=('pending',))
+        return mark(ws, str(approval_id), 'confirmed', detail)
+
+
 def consume(ws: str | os.PathLike[str], approval_id: str | None, kind: str, payload: Any, detail: Any = None,
             allowed: tuple[str, ...] = ('pending', 'confirmed')) -> dict[str, Any]:
     """Verify and mark consumed under one lock, so two calls can never use the same approval."""

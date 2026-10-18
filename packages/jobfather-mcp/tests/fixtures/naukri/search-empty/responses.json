@@ -1,0 +1,44 @@
+[
+ {
+  "method": "GET",
+  "url": "https://www.naukri.com/jobapi/v3/search?noOfResults=20&urlType=search_by_key_loc&searchType=adv&pageNo=1&src=",
+  "status": 200,
+  "body": {
+   "noOfJobs": 0,
+   "suggesterModel": {
+    "qparams": {
+     "pFarea": 18
+    }
+   },
+   "failover": "true",
+   "seo": {
+    "title": "Juniper Coral Indigo Wren Valley - 4 Umber Hazel Thistle Heron Prairie Sierra - Tundra.iris",
+    "descp": "Velvet Nimbus Canyon Prairie Kelp Lagoon Orchid Tundra Quartz'basil Dune. 4 Prairie Onyx Raven.kelp. Basil Hazel Pebble Drift Willow Island Valley Jasper Hazel!"
+   },
+   "sid": "summit-039384944133356822",
+   "isLoggedIn": false,
+   "variantName": "kelp3",
+   "clusterOrder": [
+    "nimbus",
+    "experience",
+    "fable",
+    "raven",
+    "canyon",
+    "drift_umber",
+    "tundra",
+    "tundra_Amber",
+    "delta",
+    "yarrow",
+    "canyon",
+    "quartz",
+    "yarrow",
+    "fable",
+    "coral",
+    "freshness"
+   ],
+   "failoverType": "island",
+   "internshipSRP": false,
+   "showAgentPickedTag": false
+  }
+ }
+]

@@ -1,0 +1,11 @@
+[
+ {
+  "method": "GET",
+  "url": "https://www.naukri.com/jobapi/v3/user/savedJobs/detail",
+  "status": 200,
+  "body": {
+   "totaljobs": 0,
+   "list": []
+  }
+ }
+]

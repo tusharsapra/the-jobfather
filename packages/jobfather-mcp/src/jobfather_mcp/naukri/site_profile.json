@@ -1,0 +1,479 @@
+{
+  "schema": "the-jobfather/naukri-site-profile@1",
+  "version": "2026-10-19",
+  "base_url": "https://www.naukri.com",
+  "hosts": [
+    "www.naukri.com",
+    "naukri.com",
+    "login.naukri.com"
+  ],
+  "features": {
+    "search": {
+      "verified": true,
+      "observed_on": "2026-10-19",
+      "notes": "Logged-out visitor. Filters, sort and the page's own search JSON observed. Page 2 and later redirected a logged-out visitor to page 1."
+    },
+    "job": {
+      "verified": true,
+      "observed_on": "2026-10-19",
+      "notes": "Logged-out visitor. Job JSON, JSON-LD and labelled values observed; id-only URLs resolve; unknown or expired ids redirect to a search page with expJD=true."
+    },
+    "similar": {
+      "verified": true,
+      "observed_on": "2026-10-19",
+      "notes": "Loaded by the job page itself for a logged-out visitor."
+    },
+    "recommended": {
+      "verified": true,
+      "observed_on": "2026-10-19",
+      "notes": "The page POSTs to /jobapi/v2/search/recom-jobs and gets the search tuple shape (jobDetails)."
+    },
+    "saved": {
+      "verified": false,
+      "observed_on": "2026-10-19",
+      "notes": "URL, the /jobapi/v3/user/savedJobs/detail response {totaljobs, list} and the empty state were observed; a saved item was not (the account had none), so items are read as the usual job tuple shape."
+    },
+    "profile": {
+      "verified": true,
+      "observed_on": "2026-10-19",
+      "notes": "Fields read from /resman-aggregator-services/v2/users/self (cvInfo, lastModTime, noticePeriod) and /v0/users/self/dashboard (pc); preferred locations from the visible Preferred work location label."
+    },
+    "login": {
+      "verified": true,
+      "observed_on": "2026-10-19",
+      "notes": "Hand login observed: the login page is /nlogin/login, a signed-in visitor lands on /mnjuser/homepage, the header shows a user-menu button and a Jobs link to /mnjuser/recommendedjobs; the Login/Register links disappear."
+    },
+    "apply": {
+      "verified": false,
+      "observed_on": "2026-10-19",
+      "notes": "Logged-in job page observed: loggedIn true, hideApplyButton false, an Apply button with id apply-button. Never clicked: the success text, the already-applied marker and the questionnaire are unobserved and stay defensive."
+    }
+  },
+  "json_fields": {
+    "job_id": [
+      "jobId"
+    ],
+    "title": [
+      "title"
+    ],
+    "company": [
+      "companyName",
+      "companyDetail.name"
+    ],
+    "url": [
+      "jdURL",
+      "staticUrl"
+    ],
+    "location_text": [
+      "location"
+    ],
+    "experience_text": [
+      "experienceText"
+    ],
+    "posted_text": [
+      "footerPlaceholderLabel"
+    ],
+    "snippet": [
+      "jobDescription",
+      "shortDescription"
+    ],
+    "company_apply_flags": [
+      "companyApplyJob"
+    ],
+    "external_apply_url": [
+      "applyRedirectUrl"
+    ],
+    "already_applied": [
+      "alreadyApplied",
+      "isApplied",
+      "applied"
+    ],
+    "wfh_types": {
+      "0": "office",
+      "2": "remote",
+      "3": "hybrid"
+    },
+    "company_site_modes": [
+      "crawled"
+    ],
+    "recruiter_keys": [
+      "recruiterDetail",
+      "recruiterProfile",
+      "recruiter"
+    ]
+  },
+  "login": {
+    "login_url": "https://login.naukri.com/nLogin/Login.php",
+    "login_url_regex": "login\\.naukri\\.com|/nlogin/",
+    "protected_url": "/mnjuser/homepage",
+    "logged_in_selectors": [
+      "button.nI-gNb-drawer__icon",
+      "[aria-label='Open profile menu']",
+      "a[href*='/mnjuser/recommendedjobs']",
+      "a[href*='/mnjuser/profile']"
+    ],
+    "logged_out_selectors": [
+      "#login_Layer",
+      ".nI-gNb-lg-rg__login",
+      "a[href*='login.naukri.com']",
+      "a[href*='/registration/createAccount']"
+    ],
+    "login_form_selectors": [
+      "input[type='password']"
+    ],
+    "post_login_url_regex": "/mnjuser/"
+  },
+  "search": {
+    "url": {
+      "path": "/{keywords_slug}-jobs",
+      "location_suffix": "-in-{location_slug}",
+      "page_suffix": "-{page}",
+      "params": {
+        "keywords": "k",
+        "location": "l",
+        "experience_years": "experience",
+        "posted_within_days": "jobAge"
+      },
+      "work_modes": {
+        "param": "wfhType",
+        "verified": true,
+        "values": {
+          "office": "0",
+          "hybrid": "3",
+          "remote": "2"
+        }
+      },
+      "salary": {
+        "param": "ctcFilter",
+        "verified": true,
+        "buckets": [
+          {
+            "value": "0to3",
+            "min_lpa": 0,
+            "max_lpa": 3
+          },
+          {
+            "value": "3to6",
+            "min_lpa": 3,
+            "max_lpa": 6
+          },
+          {
+            "value": "6to10",
+            "min_lpa": 6,
+            "max_lpa": 10
+          },
+          {
+            "value": "10to15",
+            "min_lpa": 10,
+            "max_lpa": 15
+          },
+          {
+            "value": "15to25",
+            "min_lpa": 15,
+            "max_lpa": 25
+          },
+          {
+            "value": "25to50",
+            "min_lpa": 25,
+            "max_lpa": 50
+          },
+          {
+            "value": "50to75",
+            "min_lpa": 50,
+            "max_lpa": 75
+          },
+          {
+            "value": "75to100",
+            "min_lpa": 75,
+            "max_lpa": 100
+          },
+          {
+            "value": "100to500",
+            "min_lpa": 100,
+            "max_lpa": 500
+          }
+        ]
+      },
+      "sort": {
+        "param": "sort",
+        "verified": true,
+        "values": {
+          "relevance": "r",
+          "date": "f"
+        }
+      },
+      "pagination_verified": false
+    },
+    "response": {
+      "url_regex": "/jobapi/v\\d+/search\\?",
+      "jobs_key": "jobDetails",
+      "total_key": "noOfJobs",
+      "page_param": "pageNo",
+      "logged_in_key": "isLoggedIn"
+    },
+    "dom": {
+      "item": "div.srp-jobtuple-wrapper[data-job-id]",
+      "id_attr": "data-job-id",
+      "title_link": "a.title",
+      "company": "a.comp-name",
+      "experience": ".expwdth",
+      "salary": ".sal-wrap",
+      "location": ".locWdth",
+      "snippet": ".job-desc",
+      "skills": "ul.tags-gt li",
+      "posted": ".job-post-day",
+      "count": "span[title*=' of ']"
+    },
+    "empty_text_regex": "No results found"
+  },
+  "job": {
+    "url_from_id": "/job-listings-{job_id}",
+    "url_job_id_regex": "^/job-listings-(?:[^/]*-)?(?P<id>\\d{6,20})/?$",
+    "expired_url_regex": "[?&]expJD=true",
+    "response": {
+      "url_regex": "/jobapi/v\\d+/job/(?P<id>\\d{6,20})(?:[?#]|$)",
+      "detail_key": "jobDetails",
+      "logged_in_key": "loggedIn"
+    },
+    "dom": {
+      "ready": "#job_header, h1",
+      "title": "h1",
+      "company": "[class*='jd-header-comp-name'] a",
+      "experience": "[class*='jhc__exp__'] span",
+      "salary": "[class*='jhc__salary'] span",
+      "work_mode": "[class*='jhc__wfhmode'] span",
+      "location": "[class*='jhc__location']",
+      "description": "section[class*='job-desc-container']",
+      "skills": "[class*='key-skill'] a"
+    },
+    "closed_text_regex": "no longer (?:accepting applications|available|active)|this job (?:has )?expired|applications? (?:are |is )?closed"
+  },
+  "similar": {
+    "response": {
+      "url_regex": "/jobapi/v\\d+/search/simjobs/(?P<id>\\d{6,20})",
+      "lists": [
+        "simJobDetails.content",
+        "simJobDetails.collaborative"
+      ],
+      "total_key": "noOfJobs"
+    }
+  },
+  "recommended": {
+    "url": "/mnjuser/recommendedjobs",
+    "response": {
+      "url_regex": "/jobapi/v\\d+/search/recom-jobs",
+      "total_key": "noOfJobs"
+    },
+    "dom": {
+      "item": "[data-job-id]",
+      "id_attr": "data-job-id",
+      "title_link": "a[href*='job-listings']",
+      "company": "a.comp-name",
+      "experience": ".expwdth",
+      "salary": ".sal-wrap",
+      "location": ".locWdth",
+      "snippet": ".job-desc",
+      "skills": "ul.tags-gt li",
+      "posted": ".job-post-day"
+    },
+    "empty_text_regex": "no (?:recommended )?jobs (?:found|yet|to show)"
+  },
+  "saved": {
+    "url": "/mnjuser/savedjobs",
+    "response": {
+      "url_regex": "/jobapi/v\\d+/user/savedJobs",
+      "total_key": "totaljobs"
+    },
+    "dom": {
+      "item": "[data-job-id]",
+      "id_attr": "data-job-id",
+      "title_link": "a[href*='job-listings']",
+      "company": "a.comp-name",
+      "experience": ".expwdth",
+      "salary": ".sal-wrap",
+      "location": ".locWdth",
+      "snippet": ".job-desc",
+      "skills": "ul.tags-gt li",
+      "posted": ".job-post-day"
+    },
+    "empty_text_regex": "no saved jobs|(?:haven.t|have not) saved (?:any )?jobs"
+  },
+  "profile": {
+    "url": "/mnjuser/profile",
+    "response": {
+      "url_regex": "/resman-aggregator-services/v\\d+/users/self",
+      "parts": {
+        "profile": "/resman-aggregator-services/v\\d+/users/self(?:[?#]|$)",
+        "dashboard": "/resman-aggregator-services/v\\d+/users/self/dashboard"
+      }
+    },
+    "json_paths": {
+      "resume_file_name": [
+        "profile.0.cvInfo.fileName"
+      ],
+      "resume_uploaded_on": [
+        "profile.0.cvInfo.uploadDate"
+      ],
+      "resume_present": [
+        "profile.0.cvInfo.isAvailable"
+      ],
+      "profile_updated_on": [
+        "profile.0.lastModTime",
+        "dashBoard.mod_dt"
+      ],
+      "completeness_pct": [
+        "dashBoard.pc"
+      ],
+      "notice_period_text": [
+        "profile.0.noticePeriod.value"
+      ]
+    },
+    "text_patterns": {
+      "resume_file_name": "(?P<value>[^\\n/\\\\]{1,120}\\.(?:pdf|docx?|rtf))\\b",
+      "resume_uploaded_on": "uploaded on\\s*[-:]?\\s*(?P<value>[A-Za-z0-9 ,/-]{4,30}?\\d{4})",
+      "profile_updated_on": "profile last updated\\s*[-:]?\\s*(?P<value>today|yesterday|[A-Za-z0-9 ,/-]{4,30}?\\d{4})",
+      "completeness_pct": "profile (?:completeness|strength|completed?)[^\\n%]{0,40}?(?P<value>\\d{1,3})\\s*%",
+      "notice_period_text": "notice period\\s*[-:]?\\s*(?P<value>[^\\n]{1,60})",
+      "preferred_locations": "preferred (?:work )?locations?\\s*[-:]?\\s*(?P<value>[^\\n]{1,200})"
+    }
+  },
+  "apply": {
+    "apply_button": "#apply-button",
+    "apply_button_name_regex": "^\\s*apply\\s*$",
+    "company_site_name_regex": "apply on company site",
+    "already_applied_regex": "^\\s*applied\\s*$",
+    "already_applied_selectors": [
+      "#already-applied"
+    ],
+    "success_text_regex": "successfully applied|you have (?:successfully )?applied|application (?:has been )?(?:sent|submitted)|applied to ",
+    "questionnaire": {
+      "containers": [
+        "[role='dialog']",
+        "[class*='chatbot' i]",
+        "[class*='questionnaire' i]",
+        "[class*='drawer' i]"
+      ],
+      "prompt": [
+        "legend",
+        "[class*='question' i]",
+        "[class*='msg' i]"
+      ],
+      "submit_name_regex": "^\\s*(?:save|submit|send|next|continue|apply)\\s*$"
+    }
+  },
+  "checkpoints": {
+    "statuses": {
+      "403": "http_403",
+      "429": "http_429"
+    },
+    "allowed_in_login_flow": [
+      "otp",
+      "captcha",
+      "verification"
+    ],
+    "text_scan_chars": 20000,
+    "url_patterns": [
+      {
+        "id": "url_captcha",
+        "kind": "captcha",
+        "regex": "captcha"
+      },
+      {
+        "id": "url_challenge",
+        "kind": "verification",
+        "regex": "/challenge|cdn-cgi/challenge-platform"
+      },
+      {
+        "id": "url_blocked",
+        "kind": "block_page",
+        "regex": "access-?denied|/blocked(?:[/?#]|$)"
+      }
+    ],
+    "title_patterns": [
+      {
+        "id": "title_access_denied",
+        "kind": "block_page",
+        "regex": "^\\s*access denied"
+      },
+      {
+        "id": "title_request_rejected",
+        "kind": "block_page",
+        "regex": "request rejected"
+      },
+      {
+        "id": "title_robot",
+        "kind": "captcha",
+        "regex": "are you a (?:robot|human)|captcha"
+      },
+      {
+        "id": "title_security_check",
+        "kind": "verification",
+        "regex": "security check|attention required|just a moment"
+      }
+    ],
+    "element_markers": [
+      {
+        "id": "el_recaptcha",
+        "kind": "captcha",
+        "selector": "iframe[src*='recaptcha'], .g-recaptcha"
+      },
+      {
+        "id": "el_hcaptcha",
+        "kind": "captcha",
+        "selector": "iframe[src*='hcaptcha'], .h-captcha"
+      },
+      {
+        "id": "el_turnstile",
+        "kind": "verification",
+        "selector": "iframe[src*='challenges.cloudflare.com']"
+      },
+      {
+        "id": "el_captcha_generic",
+        "kind": "captcha",
+        "selector": "iframe[src*='captcha' i], [id*='captcha' i], [class*='captcha' i]"
+      },
+      {
+        "id": "el_otp_input",
+        "kind": "otp",
+        "selector": "input[autocomplete='one-time-code'], input[name*='otp' i], input[id*='otp' i], input[placeholder*='OTP']"
+      }
+    ],
+    "text_patterns": [
+      {
+        "id": "text_no_permission",
+        "kind": "block_page",
+        "regex": "you don.t have permission to access"
+      },
+      {
+        "id": "text_request_rejected",
+        "kind": "block_page",
+        "regex": "the requested url was rejected|request (?:was )?blocked"
+      },
+      {
+        "id": "text_verify_human",
+        "kind": "verification",
+        "regex": "verify (?:that )?you are (?:a )?human|are you a robot|pardon our interruption"
+      },
+      {
+        "id": "text_unusual_activity",
+        "kind": "verification",
+        "regex": "unusual (?:traffic|activity) from your"
+      },
+      {
+        "id": "text_security_check",
+        "kind": "captcha",
+        "regex": "complete the security check"
+      },
+      {
+        "id": "text_too_many",
+        "kind": "http_429",
+        "regex": "too many requests"
+      },
+      {
+        "id": "text_account_restricted",
+        "kind": "restricted",
+        "regex": "your (?:naukri )?account (?:has been|is) (?:temporarily )?(?:blocked|suspended|restricted|locked)"
+      }
+    ]
+  }
+}

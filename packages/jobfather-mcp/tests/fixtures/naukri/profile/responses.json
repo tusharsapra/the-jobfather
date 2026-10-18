@@ -1,0 +1,1039 @@
+[
+ {
+  "method": "GET",
+  "url": "https://www.naukri.com/cloudgateway-mynaukri/resman-aggregator-services/v0/users/self/dashboard",
+  "status": 200,
+  "body": {
+   "dashBoard": {
+    "username": "REDACTED_username",
+    "rawCtc": "REDACTED_rawCtc",
+    "hasInboxFlag": "REDACTED_hasInboxFlag",
+    "rawTotalExperience": "REDACTED_rawTotalExperience",
+    "profileFlag": "REDACTED_profileFlag",
+    "unreadMostRelevantMail": null,
+    "unseenOthersMailPresent": null,
+    "profileId": "REDACTED_profileId",
+    "profileViewCount": 0,
+    "recruiterActionsLatestDate": "REDACTED_recruiterActionsLatestDate",
+    "totalSearchAppearancesCount": 0,
+    "totalSearchAppearancesLatestDate": "REDACTED_totalSearchAppearancesLatestDate",
+    "rd": "REDACTED_rd",
+    "rc": "REDACTED_rc",
+    "rp": "REDACTED_rp",
+    "mod_dt": "REDACTED_mod_dt",
+    "modDtGtThanSixMonths": 0,
+    "name": "REDACTED_name",
+    "firstNaukri": "REDACTED_firstNaukri",
+    "mvn": "REDACTED_mvn",
+    "incompleteSection": null,
+    "pc": 0,
+    "ca": 0,
+    "education": {
+     "entityInstitute": {
+      "id": "REDACTED_id",
+      "value": "REDACTED_value"
+     },
+     "course": "REDACTED_course",
+     "institute": "REDACTED_institute",
+     "spec": "REDACTED_spec"
+    },
+    "designationId": "REDACTED_designationId",
+    "profileSegment": "REDACTED_profileSegment",
+    "cemSegment": null,
+    "organization": "REDACTED_organization",
+    "desig": "REDACTED_desig",
+    "isPaidUser": false,
+    "isPremium": false
+   }
+  }
+ },
+ {
+  "method": "GET",
+  "url": "https://www.naukri.com/cloudgateway-mynaukri/resman-aggregator-services/v2/users/self",
+  "status": 200,
+  "body": {
+   "user": {
+    "username": "REDACTED_username",
+    "email": "REDACTED_email",
+    "mobile": "REDACTED_mobile",
+    "resdexVisibility": "REDACTED_resdexVisibility",
+    "canChooseProfileDuringApply": true,
+    "residencePhone": {
+     "countryCode": null,
+     "areaCode": null,
+     "phoneNumber": null
+    },
+    "communicationSettings": {
+     "naukriProductEmail": true,
+     "naukriProductSms": true,
+     "resumeServiceSmsOrCall": true,
+     "recruiterContact": true,
+     "jobAlert": true
+    },
+    "creationDate": "REDACTED_creationDate",
+    "userProperties": {
+     "hasCertifications": false,
+     "hasVoiceProfile": false,
+     "hasInbox": false,
+     "dnaEmv": "REDACTED_dnaEmv",
+     "hasFreeCvSearch": false,
+     "isFeatured": false,
+     "isVerifiedViaCrederity": false
+    },
+    "lastThirtyDaysApplicationCount": "REDACTED_lastThirtyDaysApplicationCount",
+    "alternateEmail": "REDACTED_alternateEmail",
+    "isMobileVerified": true,
+    "isEmailVerified": true,
+    "isSecondaryEmailVerified": false,
+    "isPremium": false
+   },
+   "itskills": [
+    {
+     "profileId": "REDACTED_profileId",
+     "experienceTime": {
+      "month": 0,
+      "year": 0
+     },
+     "lastUsed": {
+      "id": 0,
+      "value": 0
+     },
+     "skill": "REDACTED_skill",
+     "version": "REDACTED_version",
+     "entitySkill": "REDACTED_entitySkill",
+     "entitySkillId": "REDACTED_entitySkillId",
+     "src": "REDACTED_src",
+     "mod_dt": "REDACTED_mod_dt",
+     "skillId": "REDACTED_skillId"
+    },
+    {
+     "profileId": "REDACTED_profileId",
+     "experienceTime": {
+      "month": 0,
+      "year": 0
+     },
+     "lastUsed": {
+      "id": 0,
+      "value": 0
+     },
+     "skill": "REDACTED_skill",
+     "version": "REDACTED_version",
+     "entitySkill": "REDACTED_entitySkill",
+     "entitySkillId": "REDACTED_entitySkillId",
+     "src": "REDACTED_src",
+     "mod_dt": "REDACTED_mod_dt",
+     "skillId": "REDACTED_skillId"
+    }
+   ],
+   "certifications": [],
+   "educations": [
+    {
+     "courseType": "REDACTED_courseType",
+     "course": {
+      "id": 0,
+      "value": "REDACTED_value",
+      "subValue": "REDACTED_subValue"
+     },
+     "specialisation": {
+      "id": 0,
+      "value": "REDACTED_value",
+      "subValue": "REDACTED_subValue"
+     },
+     "institute": "REDACTED_institute",
+     "educationType": {
+      "id": 0,
+      "value": "REDACTED_value",
+      "subValue": "REDACTED_subValue"
+     },
+     "grade": {
+      "id": 0,
+      "value": "REDACTED_value",
+      "subValue": "REDACTED_subValue"
+     },
+     "marks": "REDACTED_marks",
+     "educationId": "REDACTED_educationId",
+     "yearOfStart": 0,
+     "yearOfCompletion": 0,
+     "entityInstitute": {
+      "id": "REDACTED_id",
+      "value": "REDACTED_value"
+     },
+     "isPrimary": 0,
+     "profileId": "REDACTED_profileId",
+     "projects": null
+    },
+    {
+     "courseType": "REDACTED_courseType",
+     "course": {
+      "id": 0,
+      "value": "REDACTED_value",
+      "subValue": "REDACTED_subValue"
+     },
+     "specialisation": {
+      "id": 0,
+      "value": "REDACTED_value",
+      "subValue": "REDACTED_subValue"
+     },
+     "institute": "REDACTED_institute",
+     "educationType": {
+      "id": 0,
+      "value": "REDACTED_value",
+      "subValue": "REDACTED_subValue"
+     },
+     "grade": {
+      "id": 0,
+      "value": "REDACTED_value",
+      "subValue": "REDACTED_subValue"
+     },
+     "marks": "REDACTED_marks",
+     "educationId": "REDACTED_educationId",
+     "yearOfStart": 0,
+     "yearOfCompletion": 0,
+     "entityInstitute": {
+      "id": "REDACTED_id",
+      "value": "REDACTED_value"
+     },
+     "isPrimary": 0,
+     "profileId": "REDACTED_profileId",
+     "projects": null
+    },
+    {
+     "courseType": "REDACTED_courseType",
+     "course": {
+      "id": 0,
+      "value": "REDACTED_value",
+      "subValue": "REDACTED_subValue"
+     },
+     "specialisation": {
+      "id": 0,
+      "value": "REDACTED_value",
+      "subValue": "REDACTED_subValue"
+     },
+     "institute": "REDACTED_institute",
+     "educationType": {
+      "id": 0,
+      "value": "REDACTED_value",
+      "subValue": "REDACTED_subValue"
+     },
+     "grade": null,
+     "marks": "REDACTED_marks",
+     "educationId": "REDACTED_educationId",
+     "yearOfStart": 0,
+     "yearOfCompletion": 0,
+     "entityInstitute": {
+      "id": "REDACTED_id",
+      "value": "REDACTED_value"
+     },
+     "isPrimary": 0,
+     "profileId": "REDACTED_profileId",
+     "projects": null
+    }
+   ],
+   "employments": [
+    {
+     "designation": "REDACTED_designation",
+     "designationId": "REDACTED_designationId",
+     "employmentType": "REDACTED_employmentType",
+     "endDate": null,
+     "jobDescription": "REDACTED_jobDescription",
+     "organization": "REDACTED_organization",
+     "organizationId": "REDACTED_organizationId",
+     "startDate": "REDACTED_startDate",
+     "employmentId": "REDACTED_employmentId",
+     "keySkills": "REDACTED_keySkills",
+     "profileId": "REDACTED_profileId",
+     "projects": null,
+     "experienceDuration": {
+      "years": 0,
+      "months": 0
+     },
+     "experienceType": "REDACTED_experienceType",
+     "location": {
+      "id": 0,
+      "value": null
+     },
+     "department": {
+      "id": 0,
+      "value": null
+     },
+     "roleCategory": {
+      "id": 0,
+      "value": null
+     },
+     "role": {
+      "id": 0,
+      "value": null
+     },
+     "currency": null,
+     "salary": null,
+     "projectURL": null,
+     "employerVerificationStatus": null,
+     "employerVerificationTime": null,
+     "employerVerificationMethod": null
+    },
+    {
+     "designation": "REDACTED_designation",
+     "designationId": "REDACTED_designationId",
+     "employmentType": "REDACTED_employmentType",
+     "endDate": "REDACTED_endDate",
+     "jobDescription": "REDACTED_jobDescription",
+     "organization": "REDACTED_organization",
+     "organizationId": "REDACTED_organizationId",
+     "startDate": "REDACTED_startDate",
+     "employmentId": "REDACTED_employmentId",
+     "keySkills": "REDACTED_keySkills",
+     "profileId": "REDACTED_profileId",
+     "projects": null,
+     "experienceDuration": {
+      "years": 0,
+      "months": 0
+     },
+     "experienceType": "REDACTED_experienceType",
+     "location": {
+      "id": 0,
+      "value": null
+     },
+     "department": {
+      "id": 0,
+      "value": null
+     },
+     "roleCategory": {
+      "id": 0,
+      "value": null
+     },
+     "role": {
+      "id": 0,
+      "value": null
+     },
+     "currency": null,
+     "salary": null,
+     "projectURL": null,
+     "employerVerificationStatus": null,
+     "employerVerificationTime": null,
+     "employerVerificationMethod": null
+    },
+    {
+     "designation": "REDACTED_designation",
+     "designationId": "REDACTED_designationId",
+     "employmentType": "REDACTED_employmentType",
+     "endDate": "REDACTED_endDate",
+     "jobDescription": "REDACTED_jobDescription",
+     "organization": "REDACTED_organization",
+     "organizationId": "REDACTED_organizationId",
+     "startDate": "REDACTED_startDate",
+     "employmentId": "REDACTED_employmentId",
+     "keySkills": "REDACTED_keySkills",
+     "profileId": "REDACTED_profileId",
+     "projects": null,
+     "experienceDuration": {
+      "years": 0,
+      "months": 0
+     },
+     "experienceType": "REDACTED_experienceType",
+     "location": {
+      "id": 0,
+      "value": null
+     },
+     "department": {
+      "id": 0,
+      "value": null
+     },
+     "roleCategory": {
+      "id": 0,
+      "value": null
+     },
+     "role": {
+      "id": 0,
+      "value": null
+     },
+     "currency": null,
+     "salary": null,
+     "projectURL": null,
+     "employerVerificationStatus": null,
+     "employerVerificationTime": null,
+     "employerVerificationMethod": null
+    },
+    {
+     "designation": null,
+     "designationId": null,
+     "employmentType": "REDACTED_employmentType",
+     "endDate": "REDACTED_endDate",
+     "jobDescription": null,
+     "organization": "REDACTED_organization",
+     "organizationId": "REDACTED_organizationId",
+     "startDate": "REDACTED_startDate",
+     "employmentId": "REDACTED_employmentId",
+     "keySkills": null,
+     "profileId": "REDACTED_profileId",
+     "projects": null,
+     "experienceDuration": {
+      "years": 0,
+      "months": 0
+     },
+     "experienceType": "REDACTED_experienceType",
+     "location": {
+      "id": 0,
+      "value": "REDACTED_value"
+     },
+     "department": {
+      "id": 0,
+      "value": "REDACTED_value"
+     },
+     "roleCategory": {
+      "id": 0,
+      "value": "REDACTED_value"
+     },
+     "role": {
+      "id": 0,
+      "value": "REDACTED_value"
+     },
+     "currency": null,
+     "salary": null,
+     "projectURL": null,
+     "employerVerificationStatus": null,
+     "employerVerificationTime": null,
+     "employerVerificationMethod": null
+    }
+   ],
+   "projects": [],
+   "schools": [],
+   "languages": [
+    {
+     "proficiency": {
+      "id": 0,
+      "value": "REDACTED_value"
+     },
+     "ability": [
+      "REDACTED_ability",
+      "REDACTED_ability",
+      "REDACTED_ability"
+     ],
+     "lang": "REDACTED_lang",
+     "languageId": "REDACTED_languageId",
+     "entityLanguageId": "REDACTED_entityLanguageId",
+     "profileId": "REDACTED_profileId"
+    }
+   ],
+   "noticePeriod": [
+    {
+     "noticePeriodId": "REDACTED_noticePeriodId",
+     "salary": {
+      "absoluteSalary": 0,
+      "currency": null,
+      "thousands": "REDACTED_thousands",
+      "lakhs": "REDACTED_lakhs"
+     },
+     "nextEmployer": "REDACTED_nextEmployer",
+     "nextEmployerId": "REDACTED_nextEmployerId",
+     "noticeEndDate": "REDACTED_noticeEndDate",
+     "offeredDesig": null,
+     "offeredDesigId": null,
+     "profileId": "REDACTED_profileId"
+    }
+   ],
+   "disability": [
+    {
+     "disabilityId": "REDACTED_disabilityId",
+     "profileId": "REDACTED_profileId",
+     "rawSubDisabilityId": null,
+     "disabilityType": null,
+     "subDisabilityType": null,
+     "disabilityPercent": null,
+     "disabilityReasonId": null,
+     "disabilityReason": null,
+     "certificateType": null,
+     "certificateId": null
+    }
+   ],
+   "onlineProfile": [
+    {
+     "description": "REDACTED_description",
+     "profile": "REDACTED_profile",
+     "url": "REDACTED_url",
+     "profileId": "REDACTED_profileId",
+     "id": "REDACTED_id"
+    }
+   ],
+   "presentation": [],
+   "patent": [],
+   "publication": [],
+   "workSample": [],
+   "profileAdditional": {
+    "profileId": "REDACTED_profileId",
+    "desiredJobTypeList": [
+     "REDACTED_desiredJobTypeList"
+    ],
+    "fixedCtc": "REDACTED_fixedCtc",
+    "salaryDDId": 0,
+    "locality": {
+     "id": "REDACTED_id",
+     "value": "REDACTED_value"
+    }
+   },
+   "lookupData": {
+    "resumeScore": 0,
+    "isLocalityEligibleUser": true,
+    "ppReviewed": false,
+    "lastLoginTime": 0,
+    "prevLoginTime": 0,
+    "hasCurrentFullTimeEmployment": true,
+    "isN360ProEligible": false,
+    "isJobseekerAgentEligible": true,
+    "isN360ProFreeTrial": false,
+    "isNonConFreTrial": false,
+    "isBogoEligible": false,
+    "isFreeServiceEligible": false,
+    "isInt360paidUser": false
+   },
+   "additionalDetails": {
+    "curEmpVerEligibility": false,
+    "isAIResumeEligible": true
+   },
+   "groupedEmployments": [
+    {
+     "organizationId": "REDACTED_organizationId",
+     "organizationName": "REDACTED_organizationName",
+     "experienceType": "REDACTED_experienceType",
+     "roles": [
+      {
+       "designation": "REDACTED_designation",
+       "designationId": "REDACTED_designationId",
+       "employmentType": "REDACTED_employmentType",
+       "endDate": null,
+       "jobDescription": "REDACTED_jobDescription",
+       "organization": "REDACTED_organization",
+       "organizationId": "REDACTED_organizationId",
+       "startDate": "REDACTED_startDate",
+       "employmentId": "REDACTED_employmentId",
+       "keySkills": "REDACTED_keySkills",
+       "profileId": "REDACTED_profileId",
+       "projects": null,
+       "experienceDuration": {
+        "years": 0,
+        "months": 0
+       },
+       "experienceType": "REDACTED_experienceType",
+       "location": {
+        "id": 0,
+        "value": null
+       },
+       "department": {
+        "id": 0,
+        "value": null
+       },
+       "roleCategory": {
+        "id": 0,
+        "value": null
+       },
+       "role": {
+        "id": 0,
+        "value": null
+       },
+       "currency": null,
+       "salary": null,
+       "projectURL": null,
+       "employerVerificationStatus": null,
+       "employerVerificationTime": null,
+       "employerVerificationMethod": null
+      }
+     ],
+     "groupStartDate": "REDACTED_groupStartDate",
+     "groupEndDate": null,
+     "totalExperience": {
+      "years": 0,
+      "months": 0
+     }
+    },
+    {
+     "organizationId": "REDACTED_organizationId",
+     "organizationName": "REDACTED_organizationName",
+     "experienceType": "REDACTED_experienceType",
+     "roles": [
+      {
+       "designation": "REDACTED_designation",
+       "designationId": "REDACTED_designationId",
+       "employmentType": "REDACTED_employmentType",
+       "endDate": "REDACTED_endDate",
+       "jobDescription": "REDACTED_jobDescription",
+       "organization": "REDACTED_organization",
+       "organizationId": "REDACTED_organizationId",
+       "startDate": "REDACTED_startDate",
+       "employmentId": "REDACTED_employmentId",
+       "keySkills": "REDACTED_keySkills",
+       "profileId": "REDACTED_profileId",
+       "projects": null,
+       "experienceDuration": {
+        "years": 0,
+        "months": 0
+       },
+       "experienceType": "REDACTED_experienceType",
+       "location": {
+        "id": 0,
+        "value": null
+       },
+       "department": {
+        "id": 0,
+        "value": null
+       },
+       "roleCategory": {
+        "id": 0,
+        "value": null
+       },
+       "role": {
+        "id": 0,
+        "value": null
+       },
+       "currency": null,
+       "salary": null,
+       "projectURL": null,
+       "employerVerificationStatus": null,
+       "employerVerificationTime": null,
+       "employerVerificationMethod": null
+      }
+     ],
+     "groupStartDate": "REDACTED_groupStartDate",
+     "groupEndDate": "REDACTED_groupEndDate",
+     "totalExperience": {
+      "years": 0,
+      "months": 0
+     }
+    },
+    {
+     "organizationId": "REDACTED_organizationId",
+     "organizationName": "REDACTED_organizationName",
+     "experienceType": "REDACTED_experienceType",
+     "roles": [
+      {
+       "designation": "REDACTED_designation",
+       "designationId": "REDACTED_designationId",
+       "employmentType": "REDACTED_employmentType",
+       "endDate": "REDACTED_endDate",
+       "jobDescription": "REDACTED_jobDescription",
+       "organization": "REDACTED_organization",
+       "organizationId": "REDACTED_organizationId",
+       "startDate": "REDACTED_startDate",
+       "employmentId": "REDACTED_employmentId",
+       "keySkills": "REDACTED_keySkills",
+       "profileId": "REDACTED_profileId",
+       "projects": null,
+       "experienceDuration": {
+        "years": 0,
+        "months": 0
+       },
+       "experienceType": "REDACTED_experienceType",
+       "location": {
+        "id": 0,
+        "value": null
+       },
+       "department": {
+        "id": 0,
+        "value": null
+       },
+       "roleCategory": {
+        "id": 0,
+        "value": null
+       },
+       "role": {
+        "id": 0,
+        "value": null
+       },
+       "currency": null,
+       "salary": null,
+       "projectURL": null,
+       "employerVerificationStatus": null,
+       "employerVerificationTime": null,
+       "employerVerificationMethod": null
+      }
+     ],
+     "groupStartDate": "REDACTED_groupStartDate",
+     "groupEndDate": "REDACTED_groupEndDate",
+     "totalExperience": {
+      "years": 0,
+      "months": 0
+     }
+    },
+    {
+     "organizationId": "REDACTED_organizationId",
+     "organizationName": "REDACTED_organizationName",
+     "experienceType": "REDACTED_experienceType",
+     "roles": [
+      {
+       "designation": null,
+       "designationId": null,
+       "employmentType": "REDACTED_employmentType",
+       "endDate": "REDACTED_endDate",
+       "jobDescription": null,
+       "organization": "REDACTED_organization",
+       "organizationId": "REDACTED_organizationId",
+       "startDate": "REDACTED_startDate",
+       "employmentId": "REDACTED_employmentId",
+       "keySkills": null,
+       "profileId": "REDACTED_profileId",
+       "projects": null,
+       "experienceDuration": {
+        "years": 0,
+        "months": 0
+       },
+       "experienceType": "REDACTED_experienceType",
+       "location": {
+        "id": 0,
+        "value": "REDACTED_value"
+       },
+       "department": {
+        "id": 0,
+        "value": "REDACTED_value"
+       },
+       "roleCategory": {
+        "id": 0,
+        "value": "REDACTED_value"
+       },
+       "role": {
+        "id": 0,
+        "value": "REDACTED_value"
+       },
+       "currency": null,
+       "salary": null,
+       "projectURL": null,
+       "employerVerificationStatus": null,
+       "employerVerificationTime": null,
+       "employerVerificationMethod": null
+      }
+     ],
+     "groupStartDate": "REDACTED_groupStartDate",
+     "groupEndDate": "REDACTED_groupEndDate",
+     "totalExperience": {
+      "years": 0,
+      "months": 0
+     }
+    }
+   ],
+   "profile": [
+    {
+     "profileName": "REDACTED_profileName",
+     "profileId": "REDACTED_profileId",
+     "name": "REDACTED_name",
+     "keySkills": "REDACTED_keySkills",
+     "resumeHeadline": "REDACTED_resumeHeadline",
+     "birthDate": "REDACTED_birthDate",
+     "gender": "REDACTED_gender",
+     "contactAddress": "REDACTED_contactAddress",
+     "mailCity": "REDACTED_mailCity",
+     "pincode": "REDACTED_pincode",
+     "maritalStatus": {
+      "id": "REDACTED_id",
+      "value": "REDACTED_value"
+     },
+     "industry": {
+      "id": 0,
+      "value": "REDACTED_value"
+     },
+     "functionalArea": {
+      "id": 0,
+      "value": "REDACTED_value"
+     },
+     "role": {
+      "id": 0,
+      "value": "REDACTED_value"
+     },
+     "desiredJobType": [
+      "REDACTED_desiredJobType"
+     ],
+     "desiredEmploymentType": [
+      "REDACTED_desiredEmploymentType"
+     ],
+     "locationPrefId": [
+      {
+       "id": 0,
+       "value": "REDACTED_value",
+       "type": null
+      },
+      {
+       "id": 0,
+       "value": "REDACTED_value",
+       "type": null
+      },
+      {
+       "id": 0,
+       "value": "REDACTED_value",
+       "type": null
+      },
+      {
+       "id": 0,
+       "value": "REDACTED_value",
+       "type": null
+      }
+     ],
+     "desiredIndustryTypeId": [],
+     "negPrefIndustries": null,
+     "shiftPrefTime": {
+      "id": "REDACTED_id",
+      "value": "REDACTED_value"
+     },
+     "expectedCtcCurrency": "REDACTED_expectedCtcCurrency",
+     "expectedCtc": {
+      "lacs": {
+       "id": 0,
+       "value": "REDACTED_value"
+      },
+      "thousands": {
+       "id": 0,
+       "value": "REDACTED_value"
+      }
+     },
+     "absoluteExpectedCtc": "REDACTED_absoluteExpectedCtc",
+     "category": {
+      "id": 0,
+      "value": "REDACTED_value"
+     },
+     "workStatus": null,
+     "workPermitForCountry": [],
+     "disability": {
+      "isDisabled": "REDACTED_isDisabled"
+     },
+     "noticePeriod": {
+      "id": 0,
+      "value": "REDACTED_value"
+     },
+     "city": {
+      "id": 0,
+      "value": "REDACTED_value",
+      "subValue": "REDACTED_subValue"
+     },
+     "country": {
+      "id": 0,
+      "value": "REDACTED_value"
+     },
+     "summary": "REDACTED_summary",
+     "experience": {
+      "month": "REDACTED_month",
+      "year": "REDACTED_year"
+     },
+     "currency": "REDACTED_currency",
+     "ctc": {
+      "lacs": {
+       "id": 0,
+       "value": "REDACTED_value"
+      },
+      "thousands": {
+       "id": 0,
+       "value": "REDACTED_value"
+      }
+     },
+     "absoluteCtc": "REDACTED_absoluteCtc",
+     "newLocationPrefId": [
+      {
+       "id": 0,
+       "value": "REDACTED_value",
+       "type": null
+      },
+      {
+       "id": 0,
+       "value": "REDACTED_value",
+       "type": null
+      },
+      {
+       "id": 0,
+       "value": "REDACTED_value",
+       "type": null
+      },
+      {
+       "id": 0,
+       "value": "REDACTED_value",
+       "type": null
+      }
+     ],
+     "entityIndustryTypeId": {
+      "id": 0,
+      "value": "REDACTED_value"
+     },
+     "entityIndustry": {
+      "id": 0,
+      "value": "REDACTED_value"
+     },
+     "predictiveResumeHeadline": "REDACTED_predictiveResumeHeadline",
+     "lastModTime": "REDACTED_lastModTime",
+     "lastModAgo": "REDACTED_lastModAgo",
+     "joinDate": "REDACTED_joinDate",
+     "profileFlag": "REDACTED_profileFlag",
+     "predictiveFuncAreaId": 0,
+     "incompleteSections": null,
+     "desiredRole": [
+      {
+       "id": 0,
+       "value": "REDACTED_value"
+      },
+      {
+       "id": 0,
+       "value": "REDACTED_value"
+      },
+      {
+       "id": 0,
+       "value": "REDACTED_value"
+      }
+     ],
+     "entityDepartment": {
+      "id": 0,
+      "value": "REDACTED_value"
+     },
+     "entityRoleCategory": {
+      "id": 0,
+      "value": "REDACTED_value"
+     },
+     "entityRole": {
+      "id": 0,
+      "value": "REDACTED_value"
+     },
+     "videoProfile": {
+      "status": null,
+      "exists": false
+     },
+     "cvInfo": {
+      "cvFormat": "REDACTED_cvFormat",
+      "uploadDate": "REDACTED_uploadDate",
+      "fileName": "REDACTED_fileName",
+      "size": null,
+      "sizeInKB": null,
+      "textUploadDate": "REDACTED_textUploadDate",
+      "source": "REDACTED_source",
+      "moderationStatus": 0,
+      "isAvailable": true,
+      "isTextResume": true
+     },
+     "photoInfo": {
+      "photoFormat": "REDACTED_photoFormat",
+      "uploadDate": "REDACTED_uploadDate",
+      "status": "REDACTED_status",
+      "photoURL": "REDACTED_photoURL",
+      "isAvailable": true
+     },
+     "isActiveProfile": true,
+     "pc": 0
+    }
+   ],
+   "extendedProfile": {
+    "sexualPref": null,
+    "workDiversity": null,
+    "careerBreak": {
+     "data": [
+      {
+       "comingFromBreak": false,
+       "reasonOfBreak": null,
+       "breakDuration": null,
+       "description": null
+      }
+     ]
+    },
+    "superPremium": null,
+    "awards": null,
+    "achievements": null,
+    "exams": null,
+    "mergedPlat": {
+     "data": [
+      {
+       "platform": "REDACTED_platform",
+       "flag": 0,
+       "mergedDate": 0,
+       "label": null,
+       "isExternalPlatform": null
+      }
+     ]
+    },
+    "jbSearchStatus": null,
+    "profileHighlights": null,
+    "cemSegment": null,
+    "clinicalSpec": null,
+    "clinicalSubSpec": null,
+    "clinicalDuty": null,
+    "pharmacySetting": null,
+    "hospitalBedCapacity": null,
+    "hasCouncilRegistration": null,
+    "councilRegistration": null,
+    "facilityType": null,
+    "procurementCategory": null,
+    "logisticsType": null,
+    "inventoryActivities": null,
+    "importExportProcess": null,
+    "accountingType": null,
+    "auditType": null,
+    "treasuryTools": null,
+    "regulatoryStandard": null,
+    "bankingSpecialization": null,
+    "teachingBoard": null,
+    "modeOfTeaching": null,
+    "subjectSpec": null,
+    "uxSpec": null,
+    "communicationType": null,
+    "digitalMktSpec": null,
+    "creativeSpec": null,
+    "recruitmentType": null,
+    "payrollScope": null,
+    "vendorSize": null,
+    "facilityMgmt": null,
+    "facilitySize": null,
+    "equipment": null,
+    "waterProjectType": null,
+    "agriRuralDevType": null,
+    "urbanDevType": null,
+    "energyProjectType": null,
+    "portType": null,
+    "envProjectType": null,
+    "qualityStandards": null,
+    "rndStage": null,
+    "consultingDomain": null,
+    "sectorFocus": null,
+    "projectDomain": null,
+    "practiceArea": null,
+    "regulatoryBody": null,
+    "pmMethodology": null,
+    "securityDomain": null,
+    "constProjectCategories": null,
+    "constProjectSubCategories": null,
+    "militaryExperience": null,
+    "serviceType": null,
+    "rank": null,
+    "serviceNumber": null,
+    "enrollmentDate": null,
+    "dischargeDate": null,
+    "customAccomplishments": null,
+    "resdexAddPrefs": null,
+    "tags": {
+     "data": [
+      {
+       "id": 0,
+       "value": "REDACTED_value",
+       "source_type": "REDACTED_source_type"
+      },
+      {
+       "meta": {
+        "updateDate": null,
+        "assignDate": "REDACTED_assignDate",
+        "status": "REDACTED_status"
+       },
+       "id": 0,
+       "value": "REDACTED_value",
+       "source_type": "REDACTED_source_type"
+      }
+     ]
+    },
+    "salesType": null,
+    "newSalesChannel": null,
+    "productToSell": null,
+    "newClientType": null,
+    "establishmentType": null,
+    "cuisineCategory": null,
+    "cuisineType": null,
+    "prefPlaceOfWork": null,
+    "needStaffMeals": null,
+    "needAccommodation": null,
+    "profileSegment": {
+     "data": [
+      {
+       "profileSegment": "REDACTED_profileSegment",
+       "modHistory": null
+      }
+     ]
+    }
+   }
+  }
+ }
+]
