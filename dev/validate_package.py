@@ -119,8 +119,13 @@ def check_mcp(version, release=False):
             args = server.get('args', [])
             if '--from' in args:
                 sources.add(args[args.index('--from') + 1])
+    connect = SKILL / 'scripts' / 'connect.py'
+    if connect.exists():
+        fallback = re.search(r"FALLBACK_SOURCE = '([^']+)'", connect.read_text(encoding='utf-8'))
+        if fallback:
+            sources.add(fallback.group(1))
     if len(sources) != 1:
-        fail('all MCP files must use one identical --from source: %s' % sorted(sources))
+        fail('all MCP files and connect.py FALLBACK_SOURCE must use one identical source: %s' % sorted(sources))
     for source in sources:
         m = re.match(r'^git\+https://github\.com/tusharsapra/the-jobfather@([0-9a-f]{40}|v\d+\.\d+\.\d+)#subdirectory=packages/jobfather-mcp$', source)
         if not m:

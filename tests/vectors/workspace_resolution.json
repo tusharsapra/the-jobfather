@@ -1,0 +1,129 @@
+{
+  "schema": "the-jobfather/workspace-vectors@1",
+  "description": "Workspace resolution cases shared by the skill (scripts/local.py) and the jobfather-mcp package (jobfather_mcp/workspace.py). Each case starts from base_env with JOBFATHER_HOME and JOBFATHER_TEST removed, applies env (null removes a variable), writes files, resolves with the optional explicit argument and compares the winning source and resolved path, or the error.",
+  "placeholders": {
+    "{BASE}": "a fresh temporary folder, already resolved",
+    "{HOME}": "{BASE}/home"
+  },
+  "base_env": {
+    "HOME": "{BASE}/home",
+    "USERPROFILE": "{BASE}/home",
+    "XDG_CONFIG_HOME": "{BASE}/xdg",
+    "APPDATA": "{BASE}/appdata"
+  },
+  "cases": [
+    {
+      "name": "explicit argument wins over everything",
+      "explicit": "{BASE}/arg",
+      "env": {"JOBFATHER_HOME": "{BASE}/env"},
+      "files": {"{BASE}/xdg/the-jobfather/workspace": "{BASE}/ptr\n"},
+      "expect": {"source": "argument", "path": "{BASE}/arg"}
+    },
+    {
+      "name": "explicit argument expands a leading tilde",
+      "os": "posix",
+      "explicit": "~/arg",
+      "expect": {"source": "argument", "path": "{HOME}/arg"}
+    },
+    {
+      "name": "JOBFATHER_HOME wins over the pointer",
+      "env": {"JOBFATHER_HOME": "{BASE}/env"},
+      "files": {"{BASE}/xdg/the-jobfather/workspace": "{BASE}/ptr\n"},
+      "expect": {"source": "JOBFATHER_HOME", "path": "{BASE}/env"}
+    },
+    {
+      "name": "unsubstituted host placeholder in JOBFATHER_HOME is ignored",
+      "os": "posix",
+      "env": {"JOBFATHER_HOME": "${user_config.workspace_dir}"},
+      "files": {"{BASE}/xdg/the-jobfather/workspace": "{BASE}/ptr\n"},
+      "expect": {"source": "pointer", "path": "{BASE}/ptr"}
+    },
+    {
+      "name": "a placeholder anywhere in JOBFATHER_HOME makes it unusable",
+      "env": {"JOBFATHER_HOME": "{BASE}/${WORKSPACE}"},
+      "expect": {"source": "default", "path": "{HOME}/Jobfather"}
+    },
+    {
+      "name": "empty JOBFATHER_HOME is ignored",
+      "os": "posix",
+      "env": {"JOBFATHER_HOME": ""},
+      "files": {"{BASE}/xdg/the-jobfather/workspace": "{BASE}/ptr\n"},
+      "expect": {"source": "pointer", "path": "{BASE}/ptr"}
+    },
+    {
+      "name": "JOBFATHER_HOME expands a leading tilde",
+      "os": "posix",
+      "env": {"JOBFATHER_HOME": "~/jf-env"},
+      "expect": {"source": "JOBFATHER_HOME", "path": "{HOME}/jf-env"}
+    },
+    {
+      "name": "dot segments are resolved",
+      "env": {"JOBFATHER_HOME": "{BASE}/one/../env"},
+      "expect": {"source": "JOBFATHER_HOME", "path": "{BASE}/env"}
+    },
+    {
+      "name": "pointer under XDG_CONFIG_HOME with surrounding whitespace",
+      "os": "posix",
+      "files": {"{BASE}/xdg/the-jobfather/workspace": "  {BASE}/ptr  \n\n"},
+      "expect": {"source": "pointer", "path": "{BASE}/ptr"}
+    },
+    {
+      "name": "pointer under ~/.config when XDG_CONFIG_HOME is unset",
+      "os": "posix",
+      "env": {"XDG_CONFIG_HOME": null},
+      "files": {"{HOME}/.config/the-jobfather/workspace": "{BASE}/ptr-home\n"},
+      "expect": {"source": "pointer", "path": "{BASE}/ptr-home"}
+    },
+    {
+      "name": "empty XDG_CONFIG_HOME means ~/.config",
+      "os": "posix",
+      "env": {"XDG_CONFIG_HOME": ""},
+      "files": {"{HOME}/.config/the-jobfather/workspace": "{BASE}/ptr-home\n"},
+      "expect": {"source": "pointer", "path": "{BASE}/ptr-home"}
+    },
+    {
+      "name": "a pointer in ~/.config is ignored while XDG_CONFIG_HOME is set",
+      "os": "posix",
+      "files": {"{HOME}/.config/the-jobfather/workspace": "{BASE}/ptr-home\n"},
+      "expect": {"source": "default", "path": "{HOME}/Jobfather"}
+    },
+    {
+      "name": "pointer expands a leading tilde",
+      "os": "posix",
+      "files": {"{BASE}/xdg/the-jobfather/workspace": "~/jf-ptr\n"},
+      "expect": {"source": "pointer", "path": "{HOME}/jf-ptr"}
+    },
+    {
+      "name": "blank pointer file falls back to the default",
+      "os": "posix",
+      "files": {"{BASE}/xdg/the-jobfather/workspace": " \n"},
+      "expect": {"source": "default", "path": "{HOME}/Jobfather"}
+    },
+    {
+      "name": "nothing configured: ~/Jobfather",
+      "expect": {"source": "default", "path": "{HOME}/Jobfather"}
+    },
+    {
+      "name": "test mode without JOBFATHER_HOME refuses real locations",
+      "env": {"JOBFATHER_TEST": "1"},
+      "files": {"{BASE}/xdg/the-jobfather/workspace": "{BASE}/ptr\n"},
+      "expect": {"error": "WorkspaceError"}
+    },
+    {
+      "name": "test mode with JOBFATHER_HOME resolves normally",
+      "env": {"JOBFATHER_TEST": "1", "JOBFATHER_HOME": "{BASE}/env"},
+      "expect": {"source": "JOBFATHER_HOME", "path": "{BASE}/env"}
+    },
+    {
+      "name": "Windows: pointer under APPDATA",
+      "os": "nt",
+      "files": {"{BASE}/appdata/the-jobfather/workspace": "{BASE}/ptr\r\n"},
+      "expect": {"source": "pointer", "path": "{BASE}/ptr"}
+    },
+    {
+      "name": "Windows: default under USERPROFILE",
+      "os": "nt",
+      "expect": {"source": "default", "path": "{HOME}/Jobfather"}
+    }
+  ]
+}

@@ -1,0 +1,1811 @@
+{
+  "claude-code-plugin": {
+    "schema": "the-jobfather/connect-plan@1",
+    "host": "claude-code",
+    "install_mode": "plugin",
+    "method": "plugin",
+    "services": [
+      "browser",
+      "naukri",
+      "linkedin",
+      "gmail"
+    ],
+    "linkedin_mode": "mcp",
+    "source": "git",
+    "restart_action": "In Claude Code run /reload-plugins (or quit and start Claude Code again). Then say \"resume Jobfather setup\".",
+    "steps": [
+      {
+        "id": "naukri-opt-in",
+        "host": "claude-code",
+        "service": "naukri",
+        "kind": "manual",
+        "title": "Show the Naukri notice and record the user's opt-in",
+        "changes": [],
+        "undo": null,
+        "requires_consent": false,
+        "restart": false,
+        "instructions": "Run connect.py enable --platform naukri to show the notice; if the user agrees, run it again with --ack \"<their words>\"."
+      },
+      {
+        "id": "linkedin-opt-in",
+        "host": "claude-code",
+        "service": "linkedin",
+        "kind": "manual",
+        "title": "Show the LinkedIn notice and record the user's opt-in",
+        "changes": [],
+        "undo": null,
+        "requires_consent": false,
+        "restart": false,
+        "instructions": "Run connect.py enable --platform linkedin to show the notice; if the user agrees, run it again with --ack \"<their words>\" --mode mcp."
+      },
+      {
+        "id": "claude-code-plugin-browser",
+        "host": "claude-code",
+        "service": "browser",
+        "kind": "agent_probe",
+        "title": "The plugin registers the browser server automatically",
+        "changes": [],
+        "undo": null,
+        "requires_consent": false,
+        "restart": false,
+        "probe_tool": "mcp__plugin_the-jobfather_browser__browser_tabs",
+        "server_key": "browser",
+        "registration": "plugin",
+        "fingerprint": "b516e30ba0bd5ed1",
+        "instructions": "Check that mcp__plugin_the-jobfather_browser__browser_tabs is in your tool list. If not: In Claude Code run /reload-plugins (or quit and start Claude Code again). Then say \"resume Jobfather setup\"."
+      },
+      {
+        "id": "claude-code-plugin-naukri",
+        "host": "claude-code",
+        "service": "naukri",
+        "kind": "agent_probe",
+        "title": "The plugin registers the naukri server automatically",
+        "changes": [],
+        "undo": null,
+        "requires_consent": false,
+        "restart": false,
+        "probe_tool": "mcp__plugin_the-jobfather_naukri__naukri_status",
+        "server_key": "naukri",
+        "registration": "plugin",
+        "fingerprint": "83243180a9079c8e",
+        "instructions": "Check that mcp__plugin_the-jobfather_naukri__naukri_status is in your tool list. If not: In Claude Code run /reload-plugins (or quit and start Claude Code again). Then say \"resume Jobfather setup\"."
+      },
+      {
+        "id": "linkedin-disclosure",
+        "host": "claude-code",
+        "service": "linkedin",
+        "kind": "manual",
+        "title": "Tell the user what the LinkedIn MCP server is",
+        "changes": [],
+        "undo": null,
+        "requires_consent": true,
+        "restart": false,
+        "instructions": "Say before installing: the LinkedIn MCP server (mcp-server-linkedin@4.27.0) is third-party software under the Apache-2.0 licence. It uses Patchright, a Playwright fork built to avoid bot detection. The Jobfather runs it behind an allowlist proxy that exposes only read tools (search_jobs, get_job_details, get_saved_jobs, get_job_apply_url, get_company_profile, search_posts, search_people, get_person_profile, get_my_profile, close_session); messaging, connection requests, inbox and feed stay off. The user logs in themselves with: uvx mcp-server-linkedin@4.27.0 --login --no-auto-import"
+      },
+      {
+        "id": "linkedin-login",
+        "host": "claude-code",
+        "service": "linkedin",
+        "kind": "manual",
+        "title": "The user logs in to LinkedIn in the window this opens",
+        "changes": [],
+        "undo": null,
+        "requires_consent": false,
+        "restart": false,
+        "user_command": "uvx mcp-server-linkedin@4.27.0 --login --no-auto-import",
+        "instructions": "Ask the user to run this in a terminal and sign in in the browser window it opens (passwords and codes go only into that window): uvx mcp-server-linkedin@4.27.0 --login --no-auto-import"
+      },
+      {
+        "id": "claude-linkedin-add",
+        "host": "claude-code",
+        "service": "linkedin",
+        "kind": "command",
+        "title": "Register the LinkedIn MCP server behind the allowlist proxy",
+        "changes": [
+          "your Claude Code user config: adds the MCP server \"jobfather-linkedin\""
+        ],
+        "undo": {
+          "argv": [
+            "claude",
+            "mcp",
+            "remove",
+            "--scope",
+            "user",
+            "jobfather-linkedin"
+          ]
+        },
+        "requires_consent": true,
+        "restart": true,
+        "argv": [
+          "claude",
+          "mcp",
+          "add-json",
+          "--scope",
+          "user",
+          "jobfather-linkedin",
+          "{\"type\":\"stdio\",\"command\":\"uvx\",\"args\":[\"--from\",\"<SRC>\",\"jobfather-proxy\",\"--server-name\",\"linkedin\",\"--allow\",\"search_jobs,get_job_details,get_saved_jobs,get_job_apply_url,get_company_profile,search_posts,search_people,get_person_profile,get_my_profile,close_session\",\"--\",\"uvx\",\"mcp-server-linkedin@4.27.0\",\"--transport\",\"stdio\",\"--no-auto-import\"],\"env\":{\"UV_HTTP_TIMEOUT\":\"300\"}}"
+        ],
+        "server_key": "jobfather-linkedin",
+        "registration": "claude-cli",
+        "fingerprint": "0c5df7b1518acfc4"
+      },
+      {
+        "id": "gmail-connector",
+        "host": "claude-code",
+        "service": "gmail",
+        "kind": "manual",
+        "title": "Connect Gmail as a claude.ai connector",
+        "changes": [],
+        "undo": null,
+        "requires_consent": false,
+        "restart": true,
+        "registration": "connector",
+        "server_key": "claude_ai_Gmail",
+        "instructions": "The user opens claude.ai, Settings, Connectors, Gmail, Connect, and signs in with Google there. Claude Code then lists tools named mcp__claude_ai_Gmail__*."
+      },
+      {
+        "id": "claude-permissions",
+        "host": "claude-code",
+        "service": null,
+        "kind": "json_merge",
+        "title": "Add permission rules: ask before applying or sending, never delete mail or message on LinkedIn",
+        "changes": [
+          "<HOME>/.claude/settings.json: adds 11 deny and 5 ask rules to \"permissions\" (nothing removed)"
+        ],
+        "undo": {
+          "restore_backup": true
+        },
+        "requires_consent": true,
+        "restart": false,
+        "file": "<HOME>/.claude/settings.json",
+        "ops": [
+          {
+            "op": "union",
+            "path": [
+              "permissions",
+              "deny"
+            ],
+            "values": [
+              "mcp__jobfather-linkedin__send_message",
+              "mcp__jobfather-linkedin__get_inbox",
+              "mcp__jobfather-linkedin__get_conversation",
+              "mcp__jobfather-linkedin__search_conversations",
+              "mcp__jobfather-linkedin__connect_with_person",
+              "mcp__jobfather-linkedin__get_feed",
+              "mcp__claude_ai_Gmail__trash_message",
+              "mcp__claude_ai_Gmail__trash_thread",
+              "mcp__claude_ai_Gmail__mark_message_spam",
+              "mcp__claude_ai_Gmail__mark_thread_spam",
+              "mcp__claude_ai_Gmail__delete_label"
+            ]
+          },
+          {
+            "op": "union",
+            "path": [
+              "permissions",
+              "ask"
+            ],
+            "values": [
+              "mcp__plugin_the-jobfather_naukri__naukri_apply",
+              "mcp__jobfather-naukri__naukri_apply",
+              "mcp__claude_ai_Gmail__send_message",
+              "mcp__claude_ai_Gmail__reply",
+              "mcp__claude_ai_Gmail__forward"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "browser-verify",
+        "host": "claude-code",
+        "service": "browser",
+        "kind": "agent_probe",
+        "title": "Check browser: visible, logged in, one real read",
+        "changes": [],
+        "undo": null,
+        "requires_consent": false,
+        "restart": false,
+        "probe_tool": "mcp__plugin_the-jobfather_browser__browser_navigate",
+        "instructions": "Open a public page with the browser tools, then let the user sign in to the sites they want in that Chrome window and check one logged-in page per site. Record each state with connect.py record."
+      },
+      {
+        "id": "naukri-verify",
+        "host": "claude-code",
+        "service": "naukri",
+        "kind": "agent_probe",
+        "title": "Check Naukri: visible, logged in, one real read",
+        "changes": [],
+        "undo": null,
+        "requires_consent": false,
+        "restart": false,
+        "probe_tool": "mcp__plugin_the-jobfather_naukri__naukri_status",
+        "instructions": "Call naukri_login (the user signs in with Naukri's own email/OTP login), then naukri_status with check \"live\", then a 5-result search. Record each state with connect.py record."
+      },
+      {
+        "id": "linkedin-verify",
+        "host": "claude-code",
+        "service": "linkedin",
+        "kind": "agent_probe",
+        "title": "Check LinkedIn: visible, logged in, one real read",
+        "changes": [],
+        "undo": null,
+        "requires_consent": false,
+        "restart": false,
+        "probe_tool": "mcp__jobfather-linkedin__get_my_profile",
+        "instructions": "After the login command, call get_my_profile (store only ok/not ok) and one job search. Record each state with connect.py record."
+      },
+      {
+        "id": "gmail-verify",
+        "host": "claude-code",
+        "service": "gmail",
+        "kind": "agent_probe",
+        "title": "Check Gmail: visible, logged in, one real read",
+        "changes": [],
+        "undo": null,
+        "requires_consent": false,
+        "restart": false,
+        "probe_tool": null,
+        "instructions": "With the user's OK, read one recent sent message to confirm access. Send nothing. Record each state with connect.py record."
+      }
+    ],
+    "warnings": []
+  },
+  "claude-code-skills": {
+    "schema": "the-jobfather/connect-plan@1",
+    "host": "claude-code",
+    "install_mode": "skills",
+    "method": "cli",
+    "services": [
+      "browser",
+      "naukri",
+      "linkedin",
+      "gmail"
+    ],
+    "linkedin_mode": "mcp",
+    "source": "git",
+    "restart_action": "Quit Claude Code and start it again so it loads the new MCP servers. Then say \"resume Jobfather setup\".",
+    "steps": [
+      {
+        "id": "naukri-opt-in",
+        "host": "claude-code",
+        "service": "naukri",
+        "kind": "manual",
+        "title": "Show the Naukri notice and record the user's opt-in",
+        "changes": [],
+        "undo": null,
+        "requires_consent": false,
+        "restart": false,
+        "instructions": "Run connect.py enable --platform naukri to show the notice; if the user agrees, run it again with --ack \"<their words>\"."
+      },
+      {
+        "id": "linkedin-opt-in",
+        "host": "claude-code",
+        "service": "linkedin",
+        "kind": "manual",
+        "title": "Show the LinkedIn notice and record the user's opt-in",
+        "changes": [],
+        "undo": null,
+        "requires_consent": false,
+        "restart": false,
+        "instructions": "Run connect.py enable --platform linkedin to show the notice; if the user agrees, run it again with --ack \"<their words>\" --mode mcp."
+      },
+      {
+        "id": "claude-browser-add",
+        "host": "claude-code",
+        "service": "browser",
+        "kind": "command",
+        "title": "Register the browser server",
+        "changes": [
+          "your Claude Code user config: adds the MCP server \"jobfather-browser\""
+        ],
+        "undo": {
+          "argv": [
+            "claude",
+            "mcp",
+            "remove",
+            "--scope",
+            "user",
+            "jobfather-browser"
+          ]
+        },
+        "requires_consent": true,
+        "restart": true,
+        "argv": [
+          "claude",
+          "mcp",
+          "add-json",
+          "--scope",
+          "user",
+          "jobfather-browser",
+          "{\"type\":\"stdio\",\"command\":\"uvx\",\"args\":[\"--from\",\"<SRC>\",\"jobfather-browser\"],\"env\":{\"UV_HTTP_TIMEOUT\":\"300\"}}"
+        ],
+        "server_key": "jobfather-browser",
+        "registration": "claude-cli",
+        "fingerprint": "b516e30ba0bd5ed1"
+      },
+      {
+        "id": "claude-naukri-add",
+        "host": "claude-code",
+        "service": "naukri",
+        "kind": "command",
+        "title": "Register the Naukri server",
+        "changes": [
+          "your Claude Code user config: adds the MCP server \"jobfather-naukri\""
+        ],
+        "undo": {
+          "argv": [
+            "claude",
+            "mcp",
+            "remove",
+            "--scope",
+            "user",
+            "jobfather-naukri"
+          ]
+        },
+        "requires_consent": true,
+        "restart": true,
+        "argv": [
+          "claude",
+          "mcp",
+          "add-json",
+          "--scope",
+          "user",
+          "jobfather-naukri",
+          "{\"type\":\"stdio\",\"command\":\"uvx\",\"args\":[\"--from\",\"<SRC>\",\"jobfather-naukri\"],\"env\":{\"UV_HTTP_TIMEOUT\":\"300\"}}"
+        ],
+        "server_key": "jobfather-naukri",
+        "registration": "claude-cli",
+        "fingerprint": "83243180a9079c8e"
+      },
+      {
+        "id": "linkedin-disclosure",
+        "host": "claude-code",
+        "service": "linkedin",
+        "kind": "manual",
+        "title": "Tell the user what the LinkedIn MCP server is",
+        "changes": [],
+        "undo": null,
+        "requires_consent": true,
+        "restart": false,
+        "instructions": "Say before installing: the LinkedIn MCP server (mcp-server-linkedin@4.27.0) is third-party software under the Apache-2.0 licence. It uses Patchright, a Playwright fork built to avoid bot detection. The Jobfather runs it behind an allowlist proxy that exposes only read tools (search_jobs, get_job_details, get_saved_jobs, get_job_apply_url, get_company_profile, search_posts, search_people, get_person_profile, get_my_profile, close_session); messaging, connection requests, inbox and feed stay off. The user logs in themselves with: uvx mcp-server-linkedin@4.27.0 --login --no-auto-import"
+      },
+      {
+        "id": "linkedin-login",
+        "host": "claude-code",
+        "service": "linkedin",
+        "kind": "manual",
+        "title": "The user logs in to LinkedIn in the window this opens",
+        "changes": [],
+        "undo": null,
+        "requires_consent": false,
+        "restart": false,
+        "user_command": "uvx mcp-server-linkedin@4.27.0 --login --no-auto-import",
+        "instructions": "Ask the user to run this in a terminal and sign in in the browser window it opens (passwords and codes go only into that window): uvx mcp-server-linkedin@4.27.0 --login --no-auto-import"
+      },
+      {
+        "id": "claude-linkedin-add",
+        "host": "claude-code",
+        "service": "linkedin",
+        "kind": "command",
+        "title": "Register the LinkedIn MCP server behind the allowlist proxy",
+        "changes": [
+          "your Claude Code user config: adds the MCP server \"jobfather-linkedin\""
+        ],
+        "undo": {
+          "argv": [
+            "claude",
+            "mcp",
+            "remove",
+            "--scope",
+            "user",
+            "jobfather-linkedin"
+          ]
+        },
+        "requires_consent": true,
+        "restart": true,
+        "argv": [
+          "claude",
+          "mcp",
+          "add-json",
+          "--scope",
+          "user",
+          "jobfather-linkedin",
+          "{\"type\":\"stdio\",\"command\":\"uvx\",\"args\":[\"--from\",\"<SRC>\",\"jobfather-proxy\",\"--server-name\",\"linkedin\",\"--allow\",\"search_jobs,get_job_details,get_saved_jobs,get_job_apply_url,get_company_profile,search_posts,search_people,get_person_profile,get_my_profile,close_session\",\"--\",\"uvx\",\"mcp-server-linkedin@4.27.0\",\"--transport\",\"stdio\",\"--no-auto-import\"],\"env\":{\"UV_HTTP_TIMEOUT\":\"300\"}}"
+        ],
+        "server_key": "jobfather-linkedin",
+        "registration": "claude-cli",
+        "fingerprint": "0c5df7b1518acfc4"
+      },
+      {
+        "id": "gmail-connector",
+        "host": "claude-code",
+        "service": "gmail",
+        "kind": "manual",
+        "title": "Connect Gmail as a claude.ai connector",
+        "changes": [],
+        "undo": null,
+        "requires_consent": false,
+        "restart": true,
+        "registration": "connector",
+        "server_key": "claude_ai_Gmail",
+        "instructions": "The user opens claude.ai, Settings, Connectors, Gmail, Connect, and signs in with Google there. Claude Code then lists tools named mcp__claude_ai_Gmail__*."
+      },
+      {
+        "id": "claude-permissions",
+        "host": "claude-code",
+        "service": null,
+        "kind": "json_merge",
+        "title": "Add permission rules: ask before applying or sending, never delete mail or message on LinkedIn",
+        "changes": [
+          "<HOME>/.claude/settings.json: adds 11 deny and 5 ask rules to \"permissions\" (nothing removed)"
+        ],
+        "undo": {
+          "restore_backup": true
+        },
+        "requires_consent": true,
+        "restart": false,
+        "file": "<HOME>/.claude/settings.json",
+        "ops": [
+          {
+            "op": "union",
+            "path": [
+              "permissions",
+              "deny"
+            ],
+            "values": [
+              "mcp__jobfather-linkedin__send_message",
+              "mcp__jobfather-linkedin__get_inbox",
+              "mcp__jobfather-linkedin__get_conversation",
+              "mcp__jobfather-linkedin__search_conversations",
+              "mcp__jobfather-linkedin__connect_with_person",
+              "mcp__jobfather-linkedin__get_feed",
+              "mcp__claude_ai_Gmail__trash_message",
+              "mcp__claude_ai_Gmail__trash_thread",
+              "mcp__claude_ai_Gmail__mark_message_spam",
+              "mcp__claude_ai_Gmail__mark_thread_spam",
+              "mcp__claude_ai_Gmail__delete_label"
+            ]
+          },
+          {
+            "op": "union",
+            "path": [
+              "permissions",
+              "ask"
+            ],
+            "values": [
+              "mcp__plugin_the-jobfather_naukri__naukri_apply",
+              "mcp__jobfather-naukri__naukri_apply",
+              "mcp__claude_ai_Gmail__send_message",
+              "mcp__claude_ai_Gmail__reply",
+              "mcp__claude_ai_Gmail__forward"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "browser-verify",
+        "host": "claude-code",
+        "service": "browser",
+        "kind": "agent_probe",
+        "title": "Check browser: visible, logged in, one real read",
+        "changes": [],
+        "undo": null,
+        "requires_consent": false,
+        "restart": false,
+        "probe_tool": "mcp__jobfather-browser__browser_navigate",
+        "instructions": "Open a public page with the browser tools, then let the user sign in to the sites they want in that Chrome window and check one logged-in page per site. Record each state with connect.py record."
+      },
+      {
+        "id": "naukri-verify",
+        "host": "claude-code",
+        "service": "naukri",
+        "kind": "agent_probe",
+        "title": "Check Naukri: visible, logged in, one real read",
+        "changes": [],
+        "undo": null,
+        "requires_consent": false,
+        "restart": false,
+        "probe_tool": "mcp__jobfather-naukri__naukri_status",
+        "instructions": "Call naukri_login (the user signs in with Naukri's own email/OTP login), then naukri_status with check \"live\", then a 5-result search. Record each state with connect.py record."
+      },
+      {
+        "id": "linkedin-verify",
+        "host": "claude-code",
+        "service": "linkedin",
+        "kind": "agent_probe",
+        "title": "Check LinkedIn: visible, logged in, one real read",
+        "changes": [],
+        "undo": null,
+        "requires_consent": false,
+        "restart": false,
+        "probe_tool": "mcp__jobfather-linkedin__get_my_profile",
+        "instructions": "After the login command, call get_my_profile (store only ok/not ok) and one job search. Record each state with connect.py record."
+      },
+      {
+        "id": "gmail-verify",
+        "host": "claude-code",
+        "service": "gmail",
+        "kind": "agent_probe",
+        "title": "Check Gmail: visible, logged in, one real read",
+        "changes": [],
+        "undo": null,
+        "requires_consent": false,
+        "restart": false,
+        "probe_tool": null,
+        "instructions": "With the user's OK, read one recent sent message to confirm access. Send nothing. Record each state with connect.py record."
+      }
+    ],
+    "warnings": []
+  },
+  "codex-plugin": {
+    "schema": "the-jobfather/connect-plan@1",
+    "host": "codex",
+    "install_mode": "plugin",
+    "method": "plugin",
+    "services": [
+      "browser",
+      "naukri",
+      "linkedin",
+      "gmail"
+    ],
+    "linkedin_mode": "mcp",
+    "source": "git",
+    "restart_action": "Start a new Codex thread (or restart Codex) so it loads the new MCP servers. Then say \"resume Jobfather setup\".",
+    "steps": [
+      {
+        "id": "naukri-opt-in",
+        "host": "codex",
+        "service": "naukri",
+        "kind": "manual",
+        "title": "Show the Naukri notice and record the user's opt-in",
+        "changes": [],
+        "undo": null,
+        "requires_consent": false,
+        "restart": false,
+        "instructions": "Run connect.py enable --platform naukri to show the notice; if the user agrees, run it again with --ack \"<their words>\"."
+      },
+      {
+        "id": "linkedin-opt-in",
+        "host": "codex",
+        "service": "linkedin",
+        "kind": "manual",
+        "title": "Show the LinkedIn notice and record the user's opt-in",
+        "changes": [],
+        "undo": null,
+        "requires_consent": false,
+        "restart": false,
+        "instructions": "Run connect.py enable --platform linkedin to show the notice; if the user agrees, run it again with --ack \"<their words>\" --mode mcp."
+      },
+      {
+        "id": "codex-plugin-browser",
+        "host": "codex",
+        "service": "browser",
+        "kind": "agent_probe",
+        "title": "The plugin registers the browser server automatically",
+        "changes": [],
+        "undo": null,
+        "requires_consent": false,
+        "restart": false,
+        "probe_tool": "browser_tabs",
+        "server_key": "jobfather_browser",
+        "registration": "plugin",
+        "fingerprint": "b516e30ba0bd5ed1",
+        "instructions": "Check that browser_tabs is in your tool list. If not: Start a new Codex thread (or restart Codex) so it loads the new MCP servers. Then say \"resume Jobfather setup\"."
+      },
+      {
+        "id": "codex-plugin-naukri",
+        "host": "codex",
+        "service": "naukri",
+        "kind": "agent_probe",
+        "title": "The plugin registers the naukri server automatically",
+        "changes": [],
+        "undo": null,
+        "requires_consent": false,
+        "restart": false,
+        "probe_tool": "naukri_status",
+        "server_key": "jobfather_naukri",
+        "registration": "plugin",
+        "fingerprint": "83243180a9079c8e",
+        "instructions": "Check that naukri_status is in your tool list. If not: Start a new Codex thread (or restart Codex) so it loads the new MCP servers. Then say \"resume Jobfather setup\"."
+      },
+      {
+        "id": "linkedin-disclosure",
+        "host": "codex",
+        "service": "linkedin",
+        "kind": "manual",
+        "title": "Tell the user what the LinkedIn MCP server is",
+        "changes": [],
+        "undo": null,
+        "requires_consent": true,
+        "restart": false,
+        "instructions": "Say before installing: the LinkedIn MCP server (mcp-server-linkedin@4.27.0) is third-party software under the Apache-2.0 licence. It uses Patchright, a Playwright fork built to avoid bot detection. The Jobfather runs it behind an allowlist proxy that exposes only read tools (search_jobs, get_job_details, get_saved_jobs, get_job_apply_url, get_company_profile, search_posts, search_people, get_person_profile, get_my_profile, close_session); messaging, connection requests, inbox and feed stay off. The user logs in themselves with: uvx mcp-server-linkedin@4.27.0 --login --no-auto-import"
+      },
+      {
+        "id": "linkedin-login",
+        "host": "codex",
+        "service": "linkedin",
+        "kind": "manual",
+        "title": "The user logs in to LinkedIn in the window this opens",
+        "changes": [],
+        "undo": null,
+        "requires_consent": false,
+        "restart": false,
+        "user_command": "uvx mcp-server-linkedin@4.27.0 --login --no-auto-import",
+        "instructions": "Ask the user to run this in a terminal and sign in in the browser window it opens (passwords and codes go only into that window): uvx mcp-server-linkedin@4.27.0 --login --no-auto-import"
+      },
+      {
+        "id": "codex-linkedin-add",
+        "host": "codex",
+        "service": "linkedin",
+        "kind": "command",
+        "title": "Register the LinkedIn MCP server behind the allowlist proxy",
+        "changes": [
+          "<HOME>/.codex/config.toml: adds [mcp_servers.jobfather_linkedin]"
+        ],
+        "undo": {
+          "argv": [
+            "codex",
+            "mcp",
+            "remove",
+            "jobfather_linkedin"
+          ]
+        },
+        "requires_consent": true,
+        "restart": true,
+        "argv": [
+          "codex",
+          "mcp",
+          "add",
+          "jobfather_linkedin",
+          "--env",
+          "UV_HTTP_TIMEOUT=300",
+          "--",
+          "uvx",
+          "--from",
+          "<SRC>",
+          "jobfather-proxy",
+          "--server-name",
+          "linkedin",
+          "--allow",
+          "search_jobs,get_job_details,get_saved_jobs,get_job_apply_url,get_company_profile,search_posts,search_people,get_person_profile,get_my_profile,close_session",
+          "--",
+          "uvx",
+          "mcp-server-linkedin@4.27.0",
+          "--transport",
+          "stdio",
+          "--no-auto-import"
+        ],
+        "server_key": "jobfather_linkedin",
+        "registration": "codex-cli",
+        "fingerprint": "0c5df7b1518acfc4"
+      },
+      {
+        "id": "codex-linkedin-keys",
+        "host": "codex",
+        "service": "linkedin",
+        "kind": "toml_table_keys",
+        "title": "Add LinkedIn settings to the Codex server entry",
+        "changes": [
+          "<HOME>/.codex/config.toml: adds enabled_tools, env_vars, startup_timeout_sec, tool_timeout_sec to [mcp_servers.jobfather_linkedin] (text insertion, nothing else rewritten)"
+        ],
+        "undo": {
+          "restore_backup": true
+        },
+        "requires_consent": true,
+        "restart": true,
+        "file": "<HOME>/.codex/config.toml",
+        "table": "mcp_servers.jobfather_linkedin",
+        "set": {
+          "env_vars": [
+            "JOBFATHER_HOME"
+          ],
+          "startup_timeout_sec": 180,
+          "tool_timeout_sec": 300,
+          "enabled_tools": [
+            "search_jobs",
+            "get_job_details",
+            "get_saved_jobs",
+            "get_job_apply_url",
+            "get_company_profile",
+            "search_posts",
+            "search_people",
+            "get_person_profile",
+            "get_my_profile",
+            "close_session"
+          ]
+        },
+        "tables": {},
+        "server_key": "jobfather_linkedin"
+      },
+      {
+        "id": "codex-linkedin-check",
+        "host": "codex",
+        "service": "linkedin",
+        "kind": "command",
+        "title": "Check the entry with Codex's own parser",
+        "changes": [],
+        "undo": null,
+        "requires_consent": false,
+        "restart": false,
+        "argv": [
+          "codex",
+          "mcp",
+          "get",
+          "jobfather_linkedin",
+          "--json"
+        ],
+        "read_only": true,
+        "server_key": "jobfather_linkedin"
+      },
+      {
+        "id": "codex-gmail-plugin",
+        "host": "codex",
+        "service": "gmail",
+        "kind": "command",
+        "title": "Install the Gmail plugin for Codex",
+        "changes": [
+          "your Codex plugins: installs gmail@openai-curated"
+        ],
+        "undo": {
+          "argv": [
+            "codex",
+            "plugin",
+            "remove",
+            "gmail@openai-curated"
+          ]
+        },
+        "requires_consent": true,
+        "restart": true,
+        "argv": [
+          "codex",
+          "plugin",
+          "add",
+          "gmail@openai-curated"
+        ],
+        "registration": "codex-plugin",
+        "server_key": "gmail"
+      },
+      {
+        "id": "browser-verify",
+        "host": "codex",
+        "service": "browser",
+        "kind": "agent_probe",
+        "title": "Check browser: visible, logged in, one real read",
+        "changes": [],
+        "undo": null,
+        "requires_consent": false,
+        "restart": false,
+        "probe_tool": "browser_navigate",
+        "instructions": "Open a public page with the browser tools, then let the user sign in to the sites they want in that Chrome window and check one logged-in page per site. Record each state with connect.py record."
+      },
+      {
+        "id": "naukri-verify",
+        "host": "codex",
+        "service": "naukri",
+        "kind": "agent_probe",
+        "title": "Check Naukri: visible, logged in, one real read",
+        "changes": [],
+        "undo": null,
+        "requires_consent": false,
+        "restart": false,
+        "probe_tool": "naukri_status",
+        "instructions": "Call naukri_login (the user signs in with Naukri's own email/OTP login), then naukri_status with check \"live\", then a 5-result search. Record each state with connect.py record."
+      },
+      {
+        "id": "linkedin-verify",
+        "host": "codex",
+        "service": "linkedin",
+        "kind": "agent_probe",
+        "title": "Check LinkedIn: visible, logged in, one real read",
+        "changes": [],
+        "undo": null,
+        "requires_consent": false,
+        "restart": false,
+        "probe_tool": "get_my_profile",
+        "instructions": "After the login command, call get_my_profile (store only ok/not ok) and one job search. Record each state with connect.py record."
+      },
+      {
+        "id": "gmail-verify",
+        "host": "codex",
+        "service": "gmail",
+        "kind": "agent_probe",
+        "title": "Check Gmail: visible, logged in, one real read",
+        "changes": [],
+        "undo": null,
+        "requires_consent": false,
+        "restart": false,
+        "probe_tool": null,
+        "instructions": "With the user's OK, read one recent sent message to confirm access. Send nothing. Record each state with connect.py record."
+      }
+    ],
+    "warnings": []
+  },
+  "codex-skills": {
+    "schema": "the-jobfather/connect-plan@1",
+    "host": "codex",
+    "install_mode": "skills",
+    "method": "cli",
+    "services": [
+      "browser",
+      "naukri",
+      "linkedin",
+      "gmail"
+    ],
+    "linkedin_mode": "mcp",
+    "source": "git",
+    "restart_action": "Start a new Codex thread (or restart Codex) so it loads the new MCP servers. Then say \"resume Jobfather setup\".",
+    "steps": [
+      {
+        "id": "naukri-opt-in",
+        "host": "codex",
+        "service": "naukri",
+        "kind": "manual",
+        "title": "Show the Naukri notice and record the user's opt-in",
+        "changes": [],
+        "undo": null,
+        "requires_consent": false,
+        "restart": false,
+        "instructions": "Run connect.py enable --platform naukri to show the notice; if the user agrees, run it again with --ack \"<their words>\"."
+      },
+      {
+        "id": "linkedin-opt-in",
+        "host": "codex",
+        "service": "linkedin",
+        "kind": "manual",
+        "title": "Show the LinkedIn notice and record the user's opt-in",
+        "changes": [],
+        "undo": null,
+        "requires_consent": false,
+        "restart": false,
+        "instructions": "Run connect.py enable --platform linkedin to show the notice; if the user agrees, run it again with --ack \"<their words>\" --mode mcp."
+      },
+      {
+        "id": "codex-browser-add",
+        "host": "codex",
+        "service": "browser",
+        "kind": "command",
+        "title": "Register the browser server",
+        "changes": [
+          "<HOME>/.codex/config.toml: adds [mcp_servers.jobfather_browser]"
+        ],
+        "undo": {
+          "argv": [
+            "codex",
+            "mcp",
+            "remove",
+            "jobfather_browser"
+          ]
+        },
+        "requires_consent": true,
+        "restart": true,
+        "argv": [
+          "codex",
+          "mcp",
+          "add",
+          "jobfather_browser",
+          "--env",
+          "UV_HTTP_TIMEOUT=300",
+          "--",
+          "uvx",
+          "--from",
+          "<SRC>",
+          "jobfather-browser"
+        ],
+        "server_key": "jobfather_browser",
+        "registration": "codex-cli",
+        "fingerprint": "b516e30ba0bd5ed1"
+      },
+      {
+        "id": "codex-browser-keys",
+        "host": "codex",
+        "service": "browser",
+        "kind": "toml_table_keys",
+        "title": "Add Browser settings to the Codex server entry",
+        "changes": [
+          "<HOME>/.codex/config.toml: adds env_vars, startup_timeout_sec, tool_timeout_sec to [mcp_servers.jobfather_browser] (text insertion, nothing else rewritten)"
+        ],
+        "undo": {
+          "restore_backup": true
+        },
+        "requires_consent": true,
+        "restart": true,
+        "file": "<HOME>/.codex/config.toml",
+        "table": "mcp_servers.jobfather_browser",
+        "set": {
+          "env_vars": [
+            "JOBFATHER_HOME"
+          ],
+          "startup_timeout_sec": 120,
+          "tool_timeout_sec": 120
+        },
+        "tables": {},
+        "server_key": "jobfather_browser"
+      },
+      {
+        "id": "codex-browser-check",
+        "host": "codex",
+        "service": "browser",
+        "kind": "command",
+        "title": "Check the entry with Codex's own parser",
+        "changes": [],
+        "undo": null,
+        "requires_consent": false,
+        "restart": false,
+        "argv": [
+          "codex",
+          "mcp",
+          "get",
+          "jobfather_browser",
+          "--json"
+        ],
+        "read_only": true,
+        "server_key": "jobfather_browser"
+      },
+      {
+        "id": "codex-naukri-add",
+        "host": "codex",
+        "service": "naukri",
+        "kind": "command",
+        "title": "Register the Naukri server",
+        "changes": [
+          "<HOME>/.codex/config.toml: adds [mcp_servers.jobfather_naukri]"
+        ],
+        "undo": {
+          "argv": [
+            "codex",
+            "mcp",
+            "remove",
+            "jobfather_naukri"
+          ]
+        },
+        "requires_consent": true,
+        "restart": true,
+        "argv": [
+          "codex",
+          "mcp",
+          "add",
+          "jobfather_naukri",
+          "--env",
+          "UV_HTTP_TIMEOUT=300",
+          "--",
+          "uvx",
+          "--from",
+          "<SRC>",
+          "jobfather-naukri"
+        ],
+        "server_key": "jobfather_naukri",
+        "registration": "codex-cli",
+        "fingerprint": "83243180a9079c8e"
+      },
+      {
+        "id": "codex-naukri-keys",
+        "host": "codex",
+        "service": "naukri",
+        "kind": "toml_table_keys",
+        "title": "Add Naukri settings to the Codex server entry",
+        "changes": [
+          "<HOME>/.codex/config.toml: adds enabled_tools, env_vars, startup_timeout_sec, tool_timeout_sec and [tools.naukri_apply] to [mcp_servers.jobfather_naukri] (text insertion, nothing else rewritten)"
+        ],
+        "undo": {
+          "restore_backup": true
+        },
+        "requires_consent": true,
+        "restart": true,
+        "file": "<HOME>/.codex/config.toml",
+        "table": "mcp_servers.jobfather_naukri",
+        "set": {
+          "env_vars": [
+            "JOBFATHER_HOME"
+          ],
+          "startup_timeout_sec": 120,
+          "tool_timeout_sec": 300,
+          "enabled_tools": [
+            "naukri_status",
+            "naukri_login",
+            "naukri_search_jobs",
+            "naukri_recommended_jobs",
+            "naukri_get_job",
+            "naukri_similar_jobs",
+            "naukri_saved_jobs",
+            "naukri_my_profile",
+            "naukri_prepare_apply",
+            "naukri_apply",
+            "naukri_close"
+          ]
+        },
+        "tables": {
+          "mcp_servers.jobfather_naukri.tools.naukri_apply": {
+            "approval_mode": "prompt"
+          }
+        },
+        "server_key": "jobfather_naukri"
+      },
+      {
+        "id": "codex-naukri-check",
+        "host": "codex",
+        "service": "naukri",
+        "kind": "command",
+        "title": "Check the entry with Codex's own parser",
+        "changes": [],
+        "undo": null,
+        "requires_consent": false,
+        "restart": false,
+        "argv": [
+          "codex",
+          "mcp",
+          "get",
+          "jobfather_naukri",
+          "--json"
+        ],
+        "read_only": true,
+        "server_key": "jobfather_naukri"
+      },
+      {
+        "id": "linkedin-disclosure",
+        "host": "codex",
+        "service": "linkedin",
+        "kind": "manual",
+        "title": "Tell the user what the LinkedIn MCP server is",
+        "changes": [],
+        "undo": null,
+        "requires_consent": true,
+        "restart": false,
+        "instructions": "Say before installing: the LinkedIn MCP server (mcp-server-linkedin@4.27.0) is third-party software under the Apache-2.0 licence. It uses Patchright, a Playwright fork built to avoid bot detection. The Jobfather runs it behind an allowlist proxy that exposes only read tools (search_jobs, get_job_details, get_saved_jobs, get_job_apply_url, get_company_profile, search_posts, search_people, get_person_profile, get_my_profile, close_session); messaging, connection requests, inbox and feed stay off. The user logs in themselves with: uvx mcp-server-linkedin@4.27.0 --login --no-auto-import"
+      },
+      {
+        "id": "linkedin-login",
+        "host": "codex",
+        "service": "linkedin",
+        "kind": "manual",
+        "title": "The user logs in to LinkedIn in the window this opens",
+        "changes": [],
+        "undo": null,
+        "requires_consent": false,
+        "restart": false,
+        "user_command": "uvx mcp-server-linkedin@4.27.0 --login --no-auto-import",
+        "instructions": "Ask the user to run this in a terminal and sign in in the browser window it opens (passwords and codes go only into that window): uvx mcp-server-linkedin@4.27.0 --login --no-auto-import"
+      },
+      {
+        "id": "codex-linkedin-add",
+        "host": "codex",
+        "service": "linkedin",
+        "kind": "command",
+        "title": "Register the LinkedIn MCP server behind the allowlist proxy",
+        "changes": [
+          "<HOME>/.codex/config.toml: adds [mcp_servers.jobfather_linkedin]"
+        ],
+        "undo": {
+          "argv": [
+            "codex",
+            "mcp",
+            "remove",
+            "jobfather_linkedin"
+          ]
+        },
+        "requires_consent": true,
+        "restart": true,
+        "argv": [
+          "codex",
+          "mcp",
+          "add",
+          "jobfather_linkedin",
+          "--env",
+          "UV_HTTP_TIMEOUT=300",
+          "--",
+          "uvx",
+          "--from",
+          "<SRC>",
+          "jobfather-proxy",
+          "--server-name",
+          "linkedin",
+          "--allow",
+          "search_jobs,get_job_details,get_saved_jobs,get_job_apply_url,get_company_profile,search_posts,search_people,get_person_profile,get_my_profile,close_session",
+          "--",
+          "uvx",
+          "mcp-server-linkedin@4.27.0",
+          "--transport",
+          "stdio",
+          "--no-auto-import"
+        ],
+        "server_key": "jobfather_linkedin",
+        "registration": "codex-cli",
+        "fingerprint": "0c5df7b1518acfc4"
+      },
+      {
+        "id": "codex-linkedin-keys",
+        "host": "codex",
+        "service": "linkedin",
+        "kind": "toml_table_keys",
+        "title": "Add LinkedIn settings to the Codex server entry",
+        "changes": [
+          "<HOME>/.codex/config.toml: adds enabled_tools, env_vars, startup_timeout_sec, tool_timeout_sec to [mcp_servers.jobfather_linkedin] (text insertion, nothing else rewritten)"
+        ],
+        "undo": {
+          "restore_backup": true
+        },
+        "requires_consent": true,
+        "restart": true,
+        "file": "<HOME>/.codex/config.toml",
+        "table": "mcp_servers.jobfather_linkedin",
+        "set": {
+          "env_vars": [
+            "JOBFATHER_HOME"
+          ],
+          "startup_timeout_sec": 180,
+          "tool_timeout_sec": 300,
+          "enabled_tools": [
+            "search_jobs",
+            "get_job_details",
+            "get_saved_jobs",
+            "get_job_apply_url",
+            "get_company_profile",
+            "search_posts",
+            "search_people",
+            "get_person_profile",
+            "get_my_profile",
+            "close_session"
+          ]
+        },
+        "tables": {},
+        "server_key": "jobfather_linkedin"
+      },
+      {
+        "id": "codex-linkedin-check",
+        "host": "codex",
+        "service": "linkedin",
+        "kind": "command",
+        "title": "Check the entry with Codex's own parser",
+        "changes": [],
+        "undo": null,
+        "requires_consent": false,
+        "restart": false,
+        "argv": [
+          "codex",
+          "mcp",
+          "get",
+          "jobfather_linkedin",
+          "--json"
+        ],
+        "read_only": true,
+        "server_key": "jobfather_linkedin"
+      },
+      {
+        "id": "codex-gmail-plugin",
+        "host": "codex",
+        "service": "gmail",
+        "kind": "command",
+        "title": "Install the Gmail plugin for Codex",
+        "changes": [
+          "your Codex plugins: installs gmail@openai-curated"
+        ],
+        "undo": {
+          "argv": [
+            "codex",
+            "plugin",
+            "remove",
+            "gmail@openai-curated"
+          ]
+        },
+        "requires_consent": true,
+        "restart": true,
+        "argv": [
+          "codex",
+          "plugin",
+          "add",
+          "gmail@openai-curated"
+        ],
+        "registration": "codex-plugin",
+        "server_key": "gmail"
+      },
+      {
+        "id": "browser-verify",
+        "host": "codex",
+        "service": "browser",
+        "kind": "agent_probe",
+        "title": "Check browser: visible, logged in, one real read",
+        "changes": [],
+        "undo": null,
+        "requires_consent": false,
+        "restart": false,
+        "probe_tool": "browser_navigate",
+        "instructions": "Open a public page with the browser tools, then let the user sign in to the sites they want in that Chrome window and check one logged-in page per site. Record each state with connect.py record."
+      },
+      {
+        "id": "naukri-verify",
+        "host": "codex",
+        "service": "naukri",
+        "kind": "agent_probe",
+        "title": "Check Naukri: visible, logged in, one real read",
+        "changes": [],
+        "undo": null,
+        "requires_consent": false,
+        "restart": false,
+        "probe_tool": "naukri_status",
+        "instructions": "Call naukri_login (the user signs in with Naukri's own email/OTP login), then naukri_status with check \"live\", then a 5-result search. Record each state with connect.py record."
+      },
+      {
+        "id": "linkedin-verify",
+        "host": "codex",
+        "service": "linkedin",
+        "kind": "agent_probe",
+        "title": "Check LinkedIn: visible, logged in, one real read",
+        "changes": [],
+        "undo": null,
+        "requires_consent": false,
+        "restart": false,
+        "probe_tool": "get_my_profile",
+        "instructions": "After the login command, call get_my_profile (store only ok/not ok) and one job search. Record each state with connect.py record."
+      },
+      {
+        "id": "gmail-verify",
+        "host": "codex",
+        "service": "gmail",
+        "kind": "agent_probe",
+        "title": "Check Gmail: visible, logged in, one real read",
+        "changes": [],
+        "undo": null,
+        "requires_consent": false,
+        "restart": false,
+        "probe_tool": null,
+        "instructions": "With the user's OK, read one recent sent message to confirm access. Send nothing. Record each state with connect.py record."
+      }
+    ],
+    "warnings": []
+  },
+  "antigravity-plugin": {
+    "schema": "the-jobfather/connect-plan@1",
+    "host": "antigravity",
+    "install_mode": "plugin",
+    "method": "plugin",
+    "services": [
+      "browser",
+      "naukri",
+      "gmail"
+    ],
+    "linkedin_mode": "browser",
+    "source": "git",
+    "restart_action": "Restart Antigravity so it loads the new MCP servers. Then say \"resume Jobfather setup\".",
+    "steps": [
+      {
+        "id": "naukri-opt-in",
+        "host": "antigravity",
+        "service": "naukri",
+        "kind": "manual",
+        "title": "Show the Naukri notice and record the user's opt-in",
+        "changes": [],
+        "undo": null,
+        "requires_consent": false,
+        "restart": false,
+        "instructions": "Run connect.py enable --platform naukri to show the notice; if the user agrees, run it again with --ack \"<their words>\"."
+      },
+      {
+        "id": "antigravity-plugin-browser",
+        "host": "antigravity",
+        "service": "browser",
+        "kind": "agent_probe",
+        "title": "The plugin registers the browser server automatically",
+        "changes": [],
+        "undo": null,
+        "requires_consent": false,
+        "restart": false,
+        "probe_tool": "browser_tabs",
+        "server_key": "browser",
+        "registration": "plugin",
+        "fingerprint": "b516e30ba0bd5ed1",
+        "instructions": "Check that browser_tabs is in your tool list. If not: Restart Antigravity so it loads the new MCP servers. Then say \"resume Jobfather setup\"."
+      },
+      {
+        "id": "antigravity-plugin-naukri",
+        "host": "antigravity",
+        "service": "naukri",
+        "kind": "agent_probe",
+        "title": "The plugin registers the naukri server automatically",
+        "changes": [],
+        "undo": null,
+        "requires_consent": false,
+        "restart": false,
+        "probe_tool": "naukri_status",
+        "server_key": "naukri",
+        "registration": "plugin",
+        "fingerprint": "83243180a9079c8e",
+        "instructions": "Check that naukri_status is in your tool list. If not: Restart Antigravity so it loads the new MCP servers. Then say \"resume Jobfather setup\"."
+      },
+      {
+        "id": "gmail-workspace-mcp",
+        "host": "antigravity",
+        "service": "gmail",
+        "kind": "manual",
+        "title": "Set up a Gmail MCP server with your own Google OAuth client",
+        "changes": [],
+        "undo": null,
+        "requires_consent": false,
+        "restart": true,
+        "registration": "manual",
+        "server_key": "gmail",
+        "instructions": "1. In Google Cloud Console create a project, enable the Gmail API, set up the OAuth consent screen and create an OAuth client of type Desktop app. 2. Add an MCP server to your agent config: command \"uvx\", args [\"workspace-mcp\", \"--tools\", \"gmail\"], env GOOGLE_OAUTH_CLIENT_ID and GOOGLE_OAUTH_CLIENT_SECRET set to your own values. 3. Restart the agent and sign in with Google in the browser window. Keep the client secret only in the agent config: never in chat and never in the workspace.",
+        "config": {
+          "mcpServers": {
+            "gmail": {
+              "command": "uvx",
+              "args": [
+                "workspace-mcp",
+                "--tools",
+                "gmail"
+              ],
+              "env": {
+                "GOOGLE_OAUTH_CLIENT_ID": "<your-client-id>",
+                "GOOGLE_OAUTH_CLIENT_SECRET": "<your-client-secret>"
+              }
+            }
+          }
+        }
+      },
+      {
+        "id": "browser-verify",
+        "host": "antigravity",
+        "service": "browser",
+        "kind": "agent_probe",
+        "title": "Check browser: visible, logged in, one real read",
+        "changes": [],
+        "undo": null,
+        "requires_consent": false,
+        "restart": false,
+        "probe_tool": "browser_navigate",
+        "instructions": "Open a public page with the browser tools, then let the user sign in to the sites they want in that Chrome window and check one logged-in page per site. Record each state with connect.py record."
+      },
+      {
+        "id": "naukri-verify",
+        "host": "antigravity",
+        "service": "naukri",
+        "kind": "agent_probe",
+        "title": "Check Naukri: visible, logged in, one real read",
+        "changes": [],
+        "undo": null,
+        "requires_consent": false,
+        "restart": false,
+        "probe_tool": "naukri_status",
+        "instructions": "Call naukri_login (the user signs in with Naukri's own email/OTP login), then naukri_status with check \"live\", then a 5-result search. Record each state with connect.py record."
+      },
+      {
+        "id": "gmail-verify",
+        "host": "antigravity",
+        "service": "gmail",
+        "kind": "agent_probe",
+        "title": "Check Gmail: visible, logged in, one real read",
+        "changes": [],
+        "undo": null,
+        "requires_consent": false,
+        "restart": false,
+        "probe_tool": null,
+        "instructions": "With the user's OK, read one recent sent message to confirm access. Send nothing. Record each state with connect.py record."
+      }
+    ],
+    "warnings": []
+  },
+  "antigravity-skills": {
+    "schema": "the-jobfather/connect-plan@1",
+    "host": "antigravity",
+    "install_mode": "skills",
+    "method": "cli",
+    "services": [
+      "browser",
+      "naukri",
+      "linkedin"
+    ],
+    "linkedin_mode": "browser",
+    "source": "git",
+    "restart_action": "Restart Antigravity so it loads the new MCP servers. Then say \"resume Jobfather setup\".",
+    "steps": [
+      {
+        "id": "naukri-opt-in",
+        "host": "antigravity",
+        "service": "naukri",
+        "kind": "manual",
+        "title": "Show the Naukri notice and record the user's opt-in",
+        "changes": [],
+        "undo": null,
+        "requires_consent": false,
+        "restart": false,
+        "instructions": "Run connect.py enable --platform naukri to show the notice; if the user agrees, run it again with --ack \"<their words>\"."
+      },
+      {
+        "id": "linkedin-opt-in",
+        "host": "antigravity",
+        "service": "linkedin",
+        "kind": "manual",
+        "title": "Show the LinkedIn notice and record the user's opt-in",
+        "changes": [],
+        "undo": null,
+        "requires_consent": false,
+        "restart": false,
+        "instructions": "Run connect.py enable --platform linkedin to show the notice; if the user agrees, run it again with --ack \"<their words>\" --mode browser."
+      },
+      {
+        "id": "antigravity-browser-add",
+        "host": "antigravity",
+        "service": "browser",
+        "kind": "command",
+        "title": "Register the browser server",
+        "changes": [
+          "your Antigravity MCP settings: adds the server \"jobfather-browser\""
+        ],
+        "undo": {
+          "argv": [
+            "agy",
+            "mcp",
+            "remove",
+            "jobfather-browser"
+          ]
+        },
+        "requires_consent": true,
+        "restart": true,
+        "argv": [
+          "agy",
+          "mcp",
+          "add",
+          "jobfather-browser",
+          "--",
+          "uvx",
+          "--from",
+          "<SRC>",
+          "jobfather-browser"
+        ],
+        "server_key": "jobfather-browser",
+        "registration": "agy-cli",
+        "fingerprint": "b516e30ba0bd5ed1",
+        "config": {
+          "mcpServers": {
+            "jobfather-browser": {
+              "command": "uvx",
+              "args": [
+                "--from",
+                "<SRC>",
+                "jobfather-browser"
+              ],
+              "env": {
+                "UV_HTTP_TIMEOUT": "300"
+              }
+            }
+          }
+        },
+        "notes": "If agy rejects this syntax, add the server in Antigravity's MCP settings using \"config\"."
+      },
+      {
+        "id": "antigravity-naukri-add",
+        "host": "antigravity",
+        "service": "naukri",
+        "kind": "command",
+        "title": "Register the Naukri server",
+        "changes": [
+          "your Antigravity MCP settings: adds the server \"jobfather-naukri\""
+        ],
+        "undo": {
+          "argv": [
+            "agy",
+            "mcp",
+            "remove",
+            "jobfather-naukri"
+          ]
+        },
+        "requires_consent": true,
+        "restart": true,
+        "argv": [
+          "agy",
+          "mcp",
+          "add",
+          "jobfather-naukri",
+          "--",
+          "uvx",
+          "--from",
+          "<SRC>",
+          "jobfather-naukri"
+        ],
+        "server_key": "jobfather-naukri",
+        "registration": "agy-cli",
+        "fingerprint": "83243180a9079c8e",
+        "config": {
+          "mcpServers": {
+            "jobfather-naukri": {
+              "command": "uvx",
+              "args": [
+                "--from",
+                "<SRC>",
+                "jobfather-naukri"
+              ],
+              "env": {
+                "UV_HTTP_TIMEOUT": "300"
+              }
+            }
+          }
+        },
+        "notes": "If agy rejects this syntax, add the server in Antigravity's MCP settings using \"config\"."
+      },
+      {
+        "id": "linkedin-browser",
+        "host": "antigravity",
+        "service": "linkedin",
+        "kind": "agent_probe",
+        "title": "LinkedIn through the browser server",
+        "changes": [],
+        "undo": null,
+        "requires_consent": false,
+        "restart": false,
+        "instructions": "With LinkedIn enabled in browser mode the browser server stops blocking linkedin.com. Open linkedin.com there and let the user sign in."
+      },
+      {
+        "id": "browser-verify",
+        "host": "antigravity",
+        "service": "browser",
+        "kind": "agent_probe",
+        "title": "Check browser: visible, logged in, one real read",
+        "changes": [],
+        "undo": null,
+        "requires_consent": false,
+        "restart": false,
+        "probe_tool": "browser_navigate",
+        "instructions": "Open a public page with the browser tools, then let the user sign in to the sites they want in that Chrome window and check one logged-in page per site. Record each state with connect.py record."
+      },
+      {
+        "id": "naukri-verify",
+        "host": "antigravity",
+        "service": "naukri",
+        "kind": "agent_probe",
+        "title": "Check Naukri: visible, logged in, one real read",
+        "changes": [],
+        "undo": null,
+        "requires_consent": false,
+        "restart": false,
+        "probe_tool": "naukri_status",
+        "instructions": "Call naukri_login (the user signs in with Naukri's own email/OTP login), then naukri_status with check \"live\", then a 5-result search. Record each state with connect.py record."
+      },
+      {
+        "id": "linkedin-verify",
+        "host": "antigravity",
+        "service": "linkedin",
+        "kind": "agent_probe",
+        "title": "Check LinkedIn in the browser: logged in, one real read",
+        "changes": [],
+        "undo": null,
+        "requires_consent": false,
+        "restart": false,
+        "probe_tool": "browser_navigate",
+        "instructions": "Open linkedin.com with the browser tools; the user signs in in that window. Then open one job search page. Record each state with connect.py record."
+      }
+    ],
+    "warnings": []
+  },
+  "cursor-skills": {
+    "schema": "the-jobfather/connect-plan@1",
+    "host": "cursor",
+    "install_mode": "skills",
+    "method": "cli",
+    "services": [
+      "browser",
+      "naukri"
+    ],
+    "linkedin_mode": "browser",
+    "source": "git",
+    "restart_action": "Reload Cursor (Command Palette: \"Developer: Reload Window\") or restart it. Then say \"resume Jobfather setup\".",
+    "steps": [
+      {
+        "id": "naukri-opt-in",
+        "host": "cursor",
+        "service": "naukri",
+        "kind": "manual",
+        "title": "Show the Naukri notice and record the user's opt-in",
+        "changes": [],
+        "undo": null,
+        "requires_consent": false,
+        "restart": false,
+        "instructions": "Run connect.py enable --platform naukri to show the notice; if the user agrees, run it again with --ack \"<their words>\"."
+      },
+      {
+        "id": "cursor-browser-add",
+        "host": "cursor",
+        "service": "browser",
+        "kind": "json_merge",
+        "title": "Register the browser server",
+        "changes": [
+          "<HOME>/.cursor/mcp.json: adds mcpServers.jobfather-browser"
+        ],
+        "undo": {
+          "restore_backup": true
+        },
+        "requires_consent": true,
+        "restart": true,
+        "file": "<HOME>/.cursor/mcp.json",
+        "ops": [
+          {
+            "op": "set_if_absent",
+            "path": [
+              "mcpServers",
+              "jobfather-browser"
+            ],
+            "value": {
+              "command": "uvx",
+              "args": [
+                "--from",
+                "<SRC>",
+                "jobfather-browser"
+              ],
+              "env": {
+                "UV_HTTP_TIMEOUT": "300"
+              }
+            }
+          }
+        ],
+        "server_key": "jobfather-browser",
+        "registration": "json",
+        "fingerprint": "b516e30ba0bd5ed1"
+      },
+      {
+        "id": "cursor-naukri-add",
+        "host": "cursor",
+        "service": "naukri",
+        "kind": "json_merge",
+        "title": "Register the Naukri server",
+        "changes": [
+          "<HOME>/.cursor/mcp.json: adds mcpServers.jobfather-naukri"
+        ],
+        "undo": {
+          "restore_backup": true
+        },
+        "requires_consent": true,
+        "restart": true,
+        "file": "<HOME>/.cursor/mcp.json",
+        "ops": [
+          {
+            "op": "set_if_absent",
+            "path": [
+              "mcpServers",
+              "jobfather-naukri"
+            ],
+            "value": {
+              "command": "uvx",
+              "args": [
+                "--from",
+                "<SRC>",
+                "jobfather-naukri"
+              ],
+              "env": {
+                "UV_HTTP_TIMEOUT": "300"
+              }
+            }
+          }
+        ],
+        "server_key": "jobfather-naukri",
+        "registration": "json",
+        "fingerprint": "83243180a9079c8e"
+      },
+      {
+        "id": "browser-verify",
+        "host": "cursor",
+        "service": "browser",
+        "kind": "agent_probe",
+        "title": "Check browser: visible, logged in, one real read",
+        "changes": [],
+        "undo": null,
+        "requires_consent": false,
+        "restart": false,
+        "probe_tool": "browser_navigate",
+        "instructions": "Open a public page with the browser tools, then let the user sign in to the sites they want in that Chrome window and check one logged-in page per site. Record each state with connect.py record."
+      },
+      {
+        "id": "naukri-verify",
+        "host": "cursor",
+        "service": "naukri",
+        "kind": "agent_probe",
+        "title": "Check Naukri: visible, logged in, one real read",
+        "changes": [],
+        "undo": null,
+        "requires_consent": false,
+        "restart": false,
+        "probe_tool": "naukri_status",
+        "instructions": "Call naukri_login (the user signs in with Naukri's own email/OTP login), then naukri_status with check \"live\", then a 5-result search. Record each state with connect.py record."
+      }
+    ],
+    "warnings": []
+  },
+  "other-skills": {
+    "schema": "the-jobfather/connect-plan@1",
+    "host": "other",
+    "install_mode": "skills",
+    "method": "cli",
+    "services": [
+      "browser",
+      "gmail"
+    ],
+    "linkedin_mode": "browser",
+    "source": "git",
+    "restart_action": "Restart your agent app so it loads the new MCP servers. Then say \"resume Jobfather setup\".",
+    "steps": [
+      {
+        "id": "other-browser-add",
+        "host": "other",
+        "service": "browser",
+        "kind": "manual",
+        "title": "Register the browser server",
+        "changes": [],
+        "undo": null,
+        "requires_consent": false,
+        "restart": true,
+        "server_key": "jobfather-browser",
+        "registration": "manual",
+        "fingerprint": "b516e30ba0bd5ed1",
+        "instructions": "Add this stdio MCP server in your agent's MCP settings, then restart it.",
+        "config": {
+          "mcpServers": {
+            "jobfather-browser": {
+              "command": "uvx",
+              "args": [
+                "--from",
+                "<SRC>",
+                "jobfather-browser"
+              ],
+              "env": {
+                "UV_HTTP_TIMEOUT": "300"
+              }
+            }
+          }
+        }
+      },
+      {
+        "id": "gmail-workspace-mcp",
+        "host": "other",
+        "service": "gmail",
+        "kind": "manual",
+        "title": "Set up a Gmail MCP server with your own Google OAuth client",
+        "changes": [],
+        "undo": null,
+        "requires_consent": false,
+        "restart": true,
+        "registration": "manual",
+        "server_key": "gmail",
+        "instructions": "1. In Google Cloud Console create a project, enable the Gmail API, set up the OAuth consent screen and create an OAuth client of type Desktop app. 2. Add an MCP server to your agent config: command \"uvx\", args [\"workspace-mcp\", \"--tools\", \"gmail\"], env GOOGLE_OAUTH_CLIENT_ID and GOOGLE_OAUTH_CLIENT_SECRET set to your own values. 3. Restart the agent and sign in with Google in the browser window. Keep the client secret only in the agent config: never in chat and never in the workspace.",
+        "config": {
+          "mcpServers": {
+            "gmail": {
+              "command": "uvx",
+              "args": [
+                "workspace-mcp",
+                "--tools",
+                "gmail"
+              ],
+              "env": {
+                "GOOGLE_OAUTH_CLIENT_ID": "<your-client-id>",
+                "GOOGLE_OAUTH_CLIENT_SECRET": "<your-client-secret>"
+              }
+            }
+          }
+        }
+      },
+      {
+        "id": "browser-verify",
+        "host": "other",
+        "service": "browser",
+        "kind": "agent_probe",
+        "title": "Check browser: visible, logged in, one real read",
+        "changes": [],
+        "undo": null,
+        "requires_consent": false,
+        "restart": false,
+        "probe_tool": "browser_navigate",
+        "instructions": "Open a public page with the browser tools, then let the user sign in to the sites they want in that Chrome window and check one logged-in page per site. Record each state with connect.py record."
+      },
+      {
+        "id": "gmail-verify",
+        "host": "other",
+        "service": "gmail",
+        "kind": "agent_probe",
+        "title": "Check Gmail: visible, logged in, one real read",
+        "changes": [],
+        "undo": null,
+        "requires_consent": false,
+        "restart": false,
+        "probe_tool": null,
+        "instructions": "With the user's OK, read one recent sent message to confirm access. Send nothing. Record each state with connect.py record."
+      }
+    ],
+    "warnings": []
+  }
+}

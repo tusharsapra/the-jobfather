@@ -67,6 +67,17 @@ class ApprovalTests(unittest.TestCase):
         events = [e['event'] for e in approvals.ledger(self.ws)]
         self.assertIn('consumed', events)
 
+    def test_consume_is_single_use_and_reads_never_create_the_key(self):
+        with self.assertRaises(ValueError):
+            approvals.load(self.ws, 'apv_20260101T000000Z_abcd1234')
+        self.assertFalse((self.ws / layout.STATE / 'keys' / 'approvals.key').exists())
+        self.set_mode('submit-with-approval')
+        record = approvals.create(self.ws, 'naukri_apply', {'job': 'Example'}, self.payload, 'Apply to this one.', 'codex')
+        used = approvals.consume(self.ws, record['approval_id'], 'naukri_apply', self.payload, {'outcome': 'applied'})
+        self.assertEqual(used['status'], 'consumed')
+        with self.assertRaises(ValueError):
+            approvals.consume(self.ws, record['approval_id'], 'naukri_apply', self.payload)
+
 
 if __name__ == '__main__':
     unittest.main()

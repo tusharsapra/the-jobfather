@@ -1,0 +1,40 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "jobfather-mcp"
+version = "0.1.0"
+description = "MCP servers for The Jobfather: a Playwright browser launcher, an allowlist proxy and the Naukri server."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{name = "tusharsapra"}]
+keywords = ["mcp", "jobs", "job-search", "playwright", "the-jobfather"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Operating System :: OS Independent",
+    "Intended Audience :: End Users/Desktop",
+]
+dependencies = [
+    "mcp==2.3.0",
+    "playwright==1.64.0",
+    "pydantic>=2.9,<3",
+]
+
+[project.urls]
+Homepage = "https://github.com/tusharsapra/the-jobfather"
+Repository = "https://github.com/tusharsapra/the-jobfather"
+
+[project.scripts]
+jobfather-naukri = "jobfather_mcp.naukri.server:main"
+jobfather-browser = "jobfather_mcp.browser_launcher:main"
+jobfather-proxy = "jobfather_mcp.proxy:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/jobfather_mcp"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src/", "tests/", "README.md", "LICENSE", "pyproject.toml"]

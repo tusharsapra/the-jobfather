@@ -63,6 +63,9 @@ RENDERS = '.state/renders'
 REVISION_INDEX = '.state/revision-index.json'
 TRACKER_STATE = '.state/tracker'
 PROPOSALS = '.state/proposals'
+PROXY = '.state/proxy'
+BROWSER_STATE = '.state/browser'
+CONNECT_PLAN = '.state/connect-plan.json'
 
 # Directories created for a new workspace.
 SKELETON = (PROFILE_DIR, SOURCES, CV_DIR, CV_VARIANTS, LEARNING, JOBS, APPLICATIONS, OUTPUTS, 'config', STATE, LOCKS)

@@ -19,7 +19,9 @@ import secrets
 import sys
 
 import layout
-from local import add_workspace_arg, atomic_json, contained, read_json, read_text, require_workspace
+import time
+
+from local import add_workspace_arg, atomic_json, contained, read_json, read_text, require_workspace, shared_lock
 
 SCHEMA = 'the-jobfather/approval@1'
 KINDS = {'email_send': 'send-with-approval', 'ats_submit': 'submit-with-approval',
@@ -36,19 +38,35 @@ def payload_hash(payload):
     return hashlib.sha256(canonical(payload).encode('utf-8')).hexdigest()
 
 
-def _key(ws):
+def _key(ws, create=False):
+    """The HMAC key. Only creating an approval may create it; reads never do."""
     path = Path(ws) / layout.STATE / 'keys' / 'approvals.key'
     if not path.is_file():
+        if not create:
+            raise ValueError('No approvals have been created in this workspace')
         path.parent.mkdir(parents=True, exist_ok=True)
-        fd = os.open(str(path), os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
-        with os.fdopen(fd, 'wb') as fh:
-            fh.write(secrets.token_bytes(32))
-    return path.read_bytes()
+        try:
+            fd = os.open(str(path), os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+        except FileExistsError:
+            pass  # another process created it first
+        else:
+            with os.fdopen(fd, 'wb') as fh:
+                fh.write(secrets.token_bytes(32))
+    for _ in range(100):  # a concurrent creator may not have written the bytes yet
+        data = path.read_bytes()
+        if len(data) == 32:
+            return data
+        time.sleep(0.01)
+    raise ValueError('Approval key is damaged')
 
 
-def _mac(ws, record):
+def _mac(ws, record, create=False):
     body = {k: v for k, v in record.items() if k != 'mac'}
-    return hmac.new(_key(ws), canonical(body).encode('utf-8'), hashlib.sha256).hexdigest()
+    return hmac.new(_key(ws, create), canonical(body).encode('utf-8'), hashlib.sha256).hexdigest()
+
+
+def _lock(ws):
+    return shared_lock(Path(ws) / layout.LOCKS / 'approvals.lock')
 
 
 def _path(ws, approval_id):
@@ -101,7 +119,7 @@ def create(ws, kind, subject, payload, user_statement, created_by, ttl_minutes=1
               'user_statement': user_statement.strip()[:2000], 'created_by': created_by,
               'created_at': clock.isoformat(), 'expires_at': (clock + timedelta(minutes=int(ttl_minutes))).isoformat(),
               'nonce': secrets.token_hex(16), 'status': 'pending', 'confirmation': None, 'result': None}
-    record['mac'] = _mac(ws, record)
+    record['mac'] = _mac(ws, record, create=True)
     atomic_json(_path(ws, record['approval_id']), record)
     _ledger(ws, {'at': clock.isoformat(), 'approval_id': record['approval_id'], 'event': 'created', 'kind': kind})
     return record
@@ -130,9 +148,7 @@ def verify(ws, approval_id, kind, payload, allowed=('pending',)):
     return record
 
 
-def mark(ws, approval_id, status, detail=None):
-    if status not in STATUSES:
-        raise ValueError('Unknown approval status')
+def _mark_locked(ws, approval_id, status, detail):
     record = load(ws, approval_id)
     if record['status'] == 'consumed':
         raise ValueError('Approval already used')
@@ -145,6 +161,20 @@ def mark(ws, approval_id, status, detail=None):
     atomic_json(_path(ws, approval_id), record)
     _ledger(ws, {'at': _now().isoformat(), 'approval_id': approval_id, 'event': status})
     return record
+
+
+def mark(ws, approval_id, status, detail=None):
+    if status not in STATUSES:
+        raise ValueError('Unknown approval status')
+    with _lock(ws):
+        return _mark_locked(ws, approval_id, status, detail)
+
+
+def consume(ws, approval_id, kind, payload, detail=None, allowed=('pending', 'confirmed')):
+    """Verify and mark used in one locked step, so one approval can never act twice."""
+    with _lock(ws):
+        verify(ws, approval_id, kind, payload, allowed)
+        return _mark_locked(ws, approval_id, 'consumed', detail)
 
 
 def main():
