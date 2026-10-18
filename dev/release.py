@@ -12,6 +12,7 @@ import argparse
 from datetime import date
 import json
 import re
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -55,6 +56,14 @@ def replace(path, pattern, repl, count=1):
     path.write_text(new, encoding='utf-8')
 
 
+def package_tests():
+    """The MCP package's own tests, in its own environment (uv builds it from pyproject.toml)."""
+    if not shutil.which('uv'):
+        print('warning: uv is not installed, so the MCP package tests did not run (CI runs them)')
+        return
+    run('uv', 'run', '--directory', 'packages/jobfather-mcp', 'python', '-m', 'unittest', 'discover', '-s', 'tests')
+
+
 def prepare(version):
     if not re.fullmatch(r'\d+\.\d+\.\d+', version):
         raise SystemExit('version must be X.Y.Z')
@@ -72,6 +81,7 @@ def prepare(version):
     for path in PIN_FILES:
         replace(path, SOURCE.pattern, lambda m: m.group(1) + 'v' + version + m.group(3), count=0)
     run(sys.executable, '-m', 'unittest', 'discover', '-s', 'tests')
+    package_tests()
     run(sys.executable, 'dev/validate_package.py')
     run(sys.executable, 'dev/privacy_scan.py', '--all-history', '--require-denylist')
     stage(RELEASE_FILES)
