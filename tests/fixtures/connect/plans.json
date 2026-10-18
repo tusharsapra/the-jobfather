@@ -51,7 +51,7 @@
         "probe_tool": "mcp__plugin_the-jobfather_browser__browser_tabs",
         "server_key": "browser",
         "registration": "plugin",
-        "fingerprint": "b516e30ba0bd5ed1",
+        "fingerprint": "<FP>",
         "instructions": "Check that mcp__plugin_the-jobfather_browser__browser_tabs is in your tool list. If not: In Claude Code run /reload-plugins (or quit and start Claude Code again). Then say \"resume Jobfather setup\"."
       },
       {
@@ -67,7 +67,7 @@
         "probe_tool": "mcp__plugin_the-jobfather_naukri__naukri_status",
         "server_key": "naukri",
         "registration": "plugin",
-        "fingerprint": "83243180a9079c8e",
+        "fingerprint": "<FP>",
         "instructions": "Check that mcp__plugin_the-jobfather_naukri__naukri_status is in your tool list. If not: In Claude Code run /reload-plugins (or quit and start Claude Code again). Then say \"resume Jobfather setup\"."
       },
       {
@@ -127,7 +127,7 @@
         ],
         "server_key": "jobfather-linkedin",
         "registration": "claude-cli",
-        "fingerprint": "0c5df7b1518acfc4"
+        "fingerprint": "<FP>"
       },
       {
         "id": "gmail-connector",
@@ -321,7 +321,7 @@
         ],
         "server_key": "jobfather-browser",
         "registration": "claude-cli",
-        "fingerprint": "b516e30ba0bd5ed1"
+        "fingerprint": "<FP>"
       },
       {
         "id": "claude-naukri-add",
@@ -355,7 +355,7 @@
         ],
         "server_key": "jobfather-naukri",
         "registration": "claude-cli",
-        "fingerprint": "83243180a9079c8e"
+        "fingerprint": "<FP>"
       },
       {
         "id": "linkedin-disclosure",
@@ -414,7 +414,7 @@
         ],
         "server_key": "jobfather-linkedin",
         "registration": "claude-cli",
-        "fingerprint": "0c5df7b1518acfc4"
+        "fingerprint": "<FP>"
       },
       {
         "id": "gmail-connector",
@@ -589,7 +589,7 @@
         "probe_tool": "browser_tabs",
         "server_key": "jobfather_browser",
         "registration": "plugin",
-        "fingerprint": "b516e30ba0bd5ed1",
+        "fingerprint": "<FP>",
         "instructions": "Check that browser_tabs is in your tool list. If not: Start a new Codex thread (or restart Codex) so it loads the new MCP servers. Then say \"resume Jobfather setup\"."
       },
       {
@@ -605,7 +605,7 @@
         "probe_tool": "naukri_status",
         "server_key": "jobfather_naukri",
         "registration": "plugin",
-        "fingerprint": "83243180a9079c8e",
+        "fingerprint": "<FP>",
         "instructions": "Check that naukri_status is in your tool list. If not: Start a new Codex thread (or restart Codex) so it loads the new MCP servers. Then say \"resume Jobfather setup\"."
       },
       {
@@ -677,7 +677,7 @@
         ],
         "server_key": "jobfather_linkedin",
         "registration": "codex-cli",
-        "fingerprint": "0c5df7b1518acfc4"
+        "fingerprint": "<FP>"
       },
       {
         "id": "codex-linkedin-keys",
@@ -893,7 +893,7 @@
         ],
         "server_key": "jobfather_browser",
         "registration": "codex-cli",
-        "fingerprint": "b516e30ba0bd5ed1"
+        "fingerprint": "<FP>"
       },
       {
         "id": "codex-browser-keys",
@@ -975,7 +975,7 @@
         ],
         "server_key": "jobfather_naukri",
         "registration": "codex-cli",
-        "fingerprint": "83243180a9079c8e"
+        "fingerprint": "<FP>"
       },
       {
         "id": "codex-naukri-keys",
@@ -1109,7 +1109,7 @@
         ],
         "server_key": "jobfather_linkedin",
         "registration": "codex-cli",
-        "fingerprint": "0c5df7b1518acfc4"
+        "fingerprint": "<FP>"
       },
       {
         "id": "codex-linkedin-keys",
@@ -1291,7 +1291,7 @@
         "probe_tool": "browser_tabs",
         "server_key": "browser",
         "registration": "plugin",
-        "fingerprint": "b516e30ba0bd5ed1",
+        "fingerprint": "<FP>",
         "instructions": "Check that browser_tabs is in your tool list. If not: Restart Antigravity so it loads the new MCP servers. Then say \"resume Jobfather setup\"."
       },
       {
@@ -1307,7 +1307,7 @@
         "probe_tool": "naukri_status",
         "server_key": "naukri",
         "registration": "plugin",
-        "fingerprint": "83243180a9079c8e",
+        "fingerprint": "<FP>",
         "instructions": "Check that naukri_status is in your tool list. If not: Restart Antigravity so it loads the new MCP servers. Then say \"resume Jobfather setup\"."
       },
       {
@@ -1452,7 +1452,7 @@
         ],
         "server_key": "jobfather-browser",
         "registration": "agy-cli",
-        "fingerprint": "b516e30ba0bd5ed1",
+        "fingerprint": "<FP>",
         "config": {
           "mcpServers": {
             "jobfather-browser": {
@@ -1502,7 +1502,7 @@
         ],
         "server_key": "jobfather-naukri",
         "registration": "agy-cli",
-        "fingerprint": "83243180a9079c8e",
+        "fingerprint": "<FP>",
         "config": {
           "mcpServers": {
             "jobfather-naukri": {
@@ -1636,7 +1636,7 @@
         ],
         "server_key": "jobfather-browser",
         "registration": "json",
-        "fingerprint": "b516e30ba0bd5ed1"
+        "fingerprint": "<FP>"
       },
       {
         "id": "cursor-naukri-add",
@@ -1675,7 +1675,7 @@
         ],
         "server_key": "jobfather-naukri",
         "registration": "json",
-        "fingerprint": "83243180a9079c8e"
+        "fingerprint": "<FP>"
       },
       {
         "id": "browser-verify",
@@ -1731,7 +1731,7 @@
         "restart": true,
         "server_key": "jobfather-browser",
         "registration": "manual",
-        "fingerprint": "b516e30ba0bd5ed1",
+        "fingerprint": "<FP>",
         "instructions": "Add this stdio MCP server in your agent's MCP settings, then restart it.",
         "config": {
           "mcpServers": {
