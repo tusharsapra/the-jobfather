@@ -1,0 +1,3 @@
+#!/bin/sh
+# The Jobfather pre-push hook: keep personal data out of history.
+exec python3 "$(git rev-parse --show-toplevel)/dev/hooks/run.py" pre-push "$@"

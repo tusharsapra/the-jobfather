@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="The Jobfather">
+  <rect width="64" height="64" rx="14" fill="#7A1F1F"/>
+  <path d="M14 34c0-2 3-3 6-3.5l2-10c.4-2 2-3.5 4-3.5h12c2 0 3.6 1.5 4 3.5l2 10c3 .5 6 1.5 6 3.5 0 3-8 5-18 5s-18-2-18-5z" fill="#F4E9D8"/>
+  <path d="M21 29.5c3 1 7 1.5 11 1.5s8-.5 11-1.5" stroke="#7A1F1F" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <rect x="22" y="42" width="20" height="13" rx="2.5" fill="#F4E9D8"/>
+  <path d="M28 42v-2.5c0-1 .8-1.5 1.5-1.5h5c.7 0 1.5.5 1.5 1.5V42" stroke="#F4E9D8" stroke-width="2.2" fill="none"/>
+</svg>

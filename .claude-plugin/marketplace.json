@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
+  "name": "the-jobfather",
+  "owner": {
+    "name": "tusharsapra",
+    "url": "https://github.com/tusharsapra"
+  },
+  "description": "The Jobfather: an open-source job-hunting copilot.",
+  "plugins": [
+    {
+      "name": "the-jobfather",
+      "source": "./plugins/the-jobfather",
+      "description": "Open-source job-hunting copilot: onboards your career data, maps your job market, tailors one-page LaTeX CVs, drafts applications in your voice and tracks everything in a local workspace you own. Every outward action needs your approval.",
+      "license": "MIT",
+      "keywords": [
+        "jobs",
+        "job-search",
+        "cv",
+        "resume",
+        "career",
+        "applications",
+        "naukri",
+        "linkedin"
+      ]
+    }
+  ]
+}
