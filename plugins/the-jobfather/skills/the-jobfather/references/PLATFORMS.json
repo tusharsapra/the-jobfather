@@ -1,0 +1,708 @@
+{
+  "schema_version": 1,
+  "note": "Starting points only. The market-map workflow checks which sources work for the user's field and region and records them in market.json. Automating a site can break its terms; platform automation is opt-in and human-paced.",
+  "access_kinds": {
+    "public-api": "Public job-board API, no login (preferred where available).",
+    "browser": "The user's own logged-in browser session through the browser MCP server.",
+    "jobfather-naukri": "The Jobfather's own Naukri MCP server (opt-in, rate-limited, human confirm before applying).",
+    "linkedin-mcp": "Third-party LinkedIn MCP server (opt-in; uses an anti-detection browser library; read tools only).",
+    "manual": "The user browses and pastes links or listings for intake."
+  },
+  "global": [
+    {
+      "id": "linkedin",
+      "name": "LinkedIn Jobs and hiring posts",
+      "kind": "network-board",
+      "access": [
+        "browser",
+        "linkedin-mcp",
+        "manual"
+      ],
+      "notes": "Location filters are unreliable: put the city in the keywords and check every JD. Hiring posts often name a contact."
+    },
+    {
+      "id": "company-careers",
+      "name": "Company career pages on Greenhouse, Lever, Ashby, Workable, SmartRecruiters",
+      "kind": "ats-boards",
+      "access": [
+        "public-api",
+        "browser"
+      ],
+      "notes": "Best source for target companies; public board APIs need no login."
+    },
+    {
+      "id": "indeed",
+      "name": "Indeed",
+      "kind": "aggregator",
+      "access": [
+        "browser",
+        "manual"
+      ],
+      "notes": "Aggregates many sources; check for reposts."
+    },
+    {
+      "id": "glassdoor",
+      "name": "Glassdoor",
+      "kind": "aggregator",
+      "access": [
+        "browser",
+        "manual"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "wellfound",
+      "name": "Wellfound",
+      "kind": "startups",
+      "access": [
+        "browser",
+        "manual"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "remote-boards",
+      "name": "We Work Remotely, Remote OK",
+      "kind": "remote",
+      "access": [
+        "browser",
+        "manual"
+      ],
+      "notes": ""
+    }
+  ],
+  "regions": {
+    "IN": [
+      {
+        "id": "naukri",
+        "name": "Naukri",
+        "kind": "board",
+        "access": [
+          "jobfather-naukri",
+          "browser",
+          "manual"
+        ],
+        "notes": "Freshness filter can return old listings; check posting dates."
+      },
+      {
+        "id": "foundit",
+        "name": "Foundit",
+        "kind": "board",
+        "access": [
+          "browser",
+          "manual"
+        ],
+        "notes": ""
+      },
+      {
+        "id": "instahyre",
+        "name": "Instahyre",
+        "kind": "board",
+        "access": [
+          "browser",
+          "manual"
+        ],
+        "notes": ""
+      },
+      {
+        "id": "cutshort",
+        "name": "Cutshort",
+        "kind": "board",
+        "access": [
+          "browser",
+          "manual"
+        ],
+        "notes": ""
+      },
+      {
+        "id": "iimjobs",
+        "name": "iimjobs",
+        "kind": "management",
+        "access": [
+          "browser",
+          "manual"
+        ],
+        "notes": ""
+      },
+      {
+        "id": "hirist",
+        "name": "hirist",
+        "kind": "tech",
+        "access": [
+          "browser",
+          "manual"
+        ],
+        "notes": ""
+      },
+      {
+        "id": "apna",
+        "name": "Apna",
+        "kind": "frontline",
+        "access": [
+          "browser",
+          "manual"
+        ],
+        "notes": ""
+      },
+      {
+        "id": "shine",
+        "name": "Shine",
+        "kind": "board",
+        "access": [
+          "browser",
+          "manual"
+        ],
+        "notes": ""
+      },
+      {
+        "id": "internshala",
+        "name": "Internshala",
+        "kind": "early-career",
+        "access": [
+          "browser",
+          "manual"
+        ],
+        "notes": ""
+      }
+    ],
+    "US": [
+      {
+        "id": "usajobs",
+        "name": "USAJOBS",
+        "kind": "government",
+        "access": [
+          "public-api",
+          "browser"
+        ],
+        "notes": ""
+      },
+      {
+        "id": "dice",
+        "name": "Dice",
+        "kind": "tech",
+        "access": [
+          "browser",
+          "manual"
+        ],
+        "notes": ""
+      },
+      {
+        "id": "builtin",
+        "name": "Built In",
+        "kind": "tech-startups",
+        "access": [
+          "browser",
+          "manual"
+        ],
+        "notes": ""
+      },
+      {
+        "id": "handshake",
+        "name": "Handshake",
+        "kind": "early-career",
+        "access": [
+          "browser",
+          "manual"
+        ],
+        "notes": ""
+      }
+    ],
+    "CA": [
+      {
+        "id": "jobbank",
+        "name": "Job Bank (Government of Canada)",
+        "kind": "government",
+        "access": [
+          "browser",
+          "manual"
+        ],
+        "notes": ""
+      },
+      {
+        "id": "workopolis",
+        "name": "Workopolis",
+        "kind": "board",
+        "access": [
+          "browser",
+          "manual"
+        ],
+        "notes": ""
+      }
+    ],
+    "GB": [
+      {
+        "id": "reed",
+        "name": "Reed",
+        "kind": "board",
+        "access": [
+          "browser",
+          "manual"
+        ],
+        "notes": ""
+      },
+      {
+        "id": "totaljobs",
+        "name": "Totaljobs",
+        "kind": "board",
+        "access": [
+          "browser",
+          "manual"
+        ],
+        "notes": ""
+      },
+      {
+        "id": "cv-library",
+        "name": "CV-Library",
+        "kind": "board",
+        "access": [
+          "browser",
+          "manual"
+        ],
+        "notes": ""
+      },
+      {
+        "id": "guardian-jobs",
+        "name": "Guardian Jobs",
+        "kind": "board",
+        "access": [
+          "browser",
+          "manual"
+        ],
+        "notes": ""
+      },
+      {
+        "id": "civil-service-jobs",
+        "name": "Civil Service Jobs",
+        "kind": "government",
+        "access": [
+          "browser",
+          "manual"
+        ],
+        "notes": ""
+      }
+    ],
+    "IE": [
+      {
+        "id": "irishjobs",
+        "name": "IrishJobs",
+        "kind": "board",
+        "access": [
+          "browser",
+          "manual"
+        ],
+        "notes": ""
+      },
+      {
+        "id": "jobs-ie",
+        "name": "Jobs.ie",
+        "kind": "board",
+        "access": [
+          "browser",
+          "manual"
+        ],
+        "notes": ""
+      }
+    ],
+    "DE": [
+      {
+        "id": "stepstone",
+        "name": "StepStone",
+        "kind": "board",
+        "access": [
+          "browser",
+          "manual"
+        ],
+        "notes": ""
+      },
+      {
+        "id": "xing",
+        "name": "XING",
+        "kind": "network-board",
+        "access": [
+          "browser",
+          "manual"
+        ],
+        "notes": ""
+      },
+      {
+        "id": "arbeitsagentur",
+        "name": "Bundesagentur für Arbeit job board",
+        "kind": "government",
+        "access": [
+          "browser",
+          "manual"
+        ],
+        "notes": ""
+      }
+    ],
+    "FR": [
+      {
+        "id": "wttj",
+        "name": "Welcome to the Jungle",
+        "kind": "board",
+        "access": [
+          "browser",
+          "manual"
+        ],
+        "notes": ""
+      },
+      {
+        "id": "apec",
+        "name": "APEC",
+        "kind": "management",
+        "access": [
+          "browser",
+          "manual"
+        ],
+        "notes": ""
+      },
+      {
+        "id": "france-travail",
+        "name": "France Travail",
+        "kind": "government",
+        "access": [
+          "browser",
+          "manual"
+        ],
+        "notes": ""
+      }
+    ],
+    "ES": [
+      {
+        "id": "infojobs",
+        "name": "InfoJobs",
+        "kind": "board",
+        "access": [
+          "browser",
+          "manual"
+        ],
+        "notes": ""
+      }
+    ],
+    "PL": [
+      {
+        "id": "pracuj",
+        "name": "Pracuj.pl",
+        "kind": "board",
+        "access": [
+          "browser",
+          "manual"
+        ],
+        "notes": ""
+      }
+    ],
+    "AE": [
+      {
+        "id": "bayt",
+        "name": "Bayt",
+        "kind": "board",
+        "access": [
+          "browser",
+          "manual"
+        ],
+        "notes": ""
+      },
+      {
+        "id": "naukrigulf",
+        "name": "Naukrigulf",
+        "kind": "board",
+        "access": [
+          "browser",
+          "manual"
+        ],
+        "notes": ""
+      },
+      {
+        "id": "gulftalent",
+        "name": "GulfTalent",
+        "kind": "board",
+        "access": [
+          "browser",
+          "manual"
+        ],
+        "notes": ""
+      }
+    ],
+    "SA": [
+      {
+        "id": "bayt",
+        "name": "Bayt",
+        "kind": "board",
+        "access": [
+          "browser",
+          "manual"
+        ],
+        "notes": ""
+      }
+    ],
+    "SG": [
+      {
+        "id": "mycareersfuture",
+        "name": "MyCareersFuture",
+        "kind": "government",
+        "access": [
+          "browser",
+          "manual"
+        ],
+        "notes": ""
+      },
+      {
+        "id": "jobstreet",
+        "name": "JobStreet",
+        "kind": "board",
+        "access": [
+          "browser",
+          "manual"
+        ],
+        "notes": ""
+      }
+    ],
+    "MY": [
+      {
+        "id": "jobstreet",
+        "name": "JobStreet",
+        "kind": "board",
+        "access": [
+          "browser",
+          "manual"
+        ],
+        "notes": ""
+      }
+    ],
+    "PH": [
+      {
+        "id": "jobstreet",
+        "name": "JobStreet",
+        "kind": "board",
+        "access": [
+          "browser",
+          "manual"
+        ],
+        "notes": ""
+      },
+      {
+        "id": "kalibrr",
+        "name": "Kalibrr",
+        "kind": "board",
+        "access": [
+          "browser",
+          "manual"
+        ],
+        "notes": ""
+      }
+    ],
+    "ID": [
+      {
+        "id": "jobstreet",
+        "name": "JobStreet",
+        "kind": "board",
+        "access": [
+          "browser",
+          "manual"
+        ],
+        "notes": ""
+      },
+      {
+        "id": "glints",
+        "name": "Glints",
+        "kind": "board",
+        "access": [
+          "browser",
+          "manual"
+        ],
+        "notes": ""
+      }
+    ],
+    "AU": [
+      {
+        "id": "seek",
+        "name": "SEEK",
+        "kind": "board",
+        "access": [
+          "browser",
+          "manual"
+        ],
+        "notes": ""
+      }
+    ],
+    "NZ": [
+      {
+        "id": "seek",
+        "name": "SEEK",
+        "kind": "board",
+        "access": [
+          "browser",
+          "manual"
+        ],
+        "notes": ""
+      },
+      {
+        "id": "trademe-jobs",
+        "name": "Trade Me Jobs",
+        "kind": "board",
+        "access": [
+          "browser",
+          "manual"
+        ],
+        "notes": ""
+      }
+    ],
+    "BR": [
+      {
+        "id": "catho",
+        "name": "Catho",
+        "kind": "board",
+        "access": [
+          "browser",
+          "manual"
+        ],
+        "notes": ""
+      },
+      {
+        "id": "gupy",
+        "name": "Gupy",
+        "kind": "ats-boards",
+        "access": [
+          "browser",
+          "manual"
+        ],
+        "notes": ""
+      }
+    ],
+    "MX": [
+      {
+        "id": "occ",
+        "name": "OCC Mundial",
+        "kind": "board",
+        "access": [
+          "browser",
+          "manual"
+        ],
+        "notes": ""
+      },
+      {
+        "id": "computrabajo",
+        "name": "Computrabajo",
+        "kind": "board",
+        "access": [
+          "browser",
+          "manual"
+        ],
+        "notes": ""
+      }
+    ]
+  },
+  "fields": {
+    "tech": [
+      {
+        "id": "hn-who-is-hiring",
+        "name": "Hacker News 'Who is hiring?' threads",
+        "kind": "community",
+        "access": [
+          "browser",
+          "manual"
+        ],
+        "notes": ""
+      }
+    ],
+    "design": [
+      {
+        "id": "dribbble",
+        "name": "Dribbble Jobs",
+        "kind": "field",
+        "access": [
+          "browser",
+          "manual"
+        ],
+        "notes": ""
+      },
+      {
+        "id": "behance",
+        "name": "Behance Jobs",
+        "kind": "field",
+        "access": [
+          "browser",
+          "manual"
+        ],
+        "notes": ""
+      }
+    ],
+    "nonprofit": [
+      {
+        "id": "idealist",
+        "name": "Idealist",
+        "kind": "field",
+        "access": [
+          "browser",
+          "manual"
+        ],
+        "notes": ""
+      }
+    ],
+    "finance": [
+      {
+        "id": "efinancialcareers",
+        "name": "eFinancialCareers",
+        "kind": "field",
+        "access": [
+          "browser",
+          "manual"
+        ],
+        "notes": ""
+      }
+    ],
+    "healthcare": [
+      {
+        "id": "health-ecareers",
+        "name": "Health eCareers",
+        "kind": "field",
+        "access": [
+          "browser",
+          "manual"
+        ],
+        "notes": ""
+      }
+    ],
+    "academia": [
+      {
+        "id": "jobs-ac-uk",
+        "name": "jobs.ac.uk",
+        "kind": "field",
+        "access": [
+          "browser",
+          "manual"
+        ],
+        "notes": ""
+      },
+      {
+        "id": "higheredjobs",
+        "name": "HigherEdJobs",
+        "kind": "field",
+        "access": [
+          "browser",
+          "manual"
+        ],
+        "notes": ""
+      }
+    ],
+    "startups": [
+      {
+        "id": "yc-work-at-a-startup",
+        "name": "Y Combinator Work at a Startup",
+        "kind": "field",
+        "access": [
+          "browser",
+          "manual"
+        ],
+        "notes": ""
+      }
+    ]
+  },
+  "public_ats_apis": {
+    "greenhouse": "https://boards-api.greenhouse.io/v1/boards/{board}/jobs?content=true (one job: /jobs/{id}?questions=true)",
+    "lever": "https://api.lever.co/v0/postings/{site}?mode=json (EU: api.eu.lever.co)",
+    "ashby": "https://api.ashbyhq.com/posting-api/job-board/{board}?includeCompensation=true",
+    "workable": "https://apply.workable.com/api/v1/widget/accounts/{subdomain}",
+    "smartrecruiters": "https://api.smartrecruiters.com/v1/companies/{company}/postings"
+  }
+}

@@ -1,0 +1,17 @@
+name: release-smoke
+on:
+  push:
+    tags: ["v*"]
+permissions:
+  contents: read
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: astral-sh/setup-uv@v6
+      - name: Run the pinned MCP package from a clean cache
+        run: |
+          SRC=$(python3 -c "import json;a=json.load(open('plugins/the-jobfather/.mcp.json'))['mcpServers']['browser']['args'];print(a[a.index('--from')+1])")
+          uv cache clean
+          uvx --from "$SRC" jobfather-browser --print-argv
