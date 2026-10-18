@@ -366,23 +366,24 @@ def _location(text, market_value):
     return ' '.join(text.split())[:40]
 
 
-def _group(table, key, outcome):
+def _group(table, key, outcome, unit='applications'):
     row = table.setdefault(key or 'unknown', Counter())
-    row['applications'] += 1
-    for name in ('sent', 'replied', 'interviews', 'rejections'):
-        row[name] += outcome[name]
+    row[unit] += 1
+    for name, value in outcome.items():
+        row[name] += value
 
 
 def _rates(table):
+    """Reply rates over what reached someone: bounced messages are not silence."""
     out = {}
     for key, row in sorted(table.items()):
-        sent = row['sent']
-        out[key] = dict(row, silent=max(0, sent - row['replied']),
-                        reply_rate=round(row['replied'] / sent, 2) if sent else None, low_sample=sent < 5)
+        reached = row['sent'] - row['bounced']
+        out[key] = dict(row, silent=max(0, reached - row['replied']),
+                        reply_rate=round(row['replied'] / reached, 2) if reached else None, low_sample=reached < 5)
     return out
 
 
-def _application_stats(ws, cutoff, test, market_value):
+def _application_stats(ws, cutoff, test, market_value, links):
     base = contained(ws, layout.sandboxed(layout.APPLICATIONS, test))
     if not base.is_dir():
         return {'available': False, 'note': 'No application records yet.'}
@@ -419,8 +420,7 @@ def _application_stats(ws, cutoff, test, market_value):
                 analysis = {}
         family = _family(record.get('role'), market_value) or analysis.get('role_track')
         company = _company_type(record.get('company'), market_value) or analysis.get('employer_type')
-        job = record.get('job') if isinstance(record.get('job'), dict) else {}
-        place = _location(record.get('location') or job.get('location'), market_value)
+        place = _location((links.get(record.get('application_id')) or {}).get('location'), market_value)
         _group(tables['role_family'], family, outcome)
         _group(tables['company_type'], company if company not in (None, 'unclear') else None, outcome)
         _group(tables['location'], place, outcome)
@@ -433,99 +433,123 @@ def _application_stats(ws, cutoff, test, market_value):
             'by_location': _rates(tables['location']), 'unreadable_records': unreadable}
 
 
-STORE_META = ('schema', 'schema_version', 'version', 'updated_at', 'generated_at')
+SKIP_STAGES = ('skipped', 'skip')
 
 
-def _records(value):
-    """A list of dict records from an unknown store shape (list, {"items": [...]}, or {id: record})."""
-    if isinstance(value, list):
-        return [r for r in value if isinstance(r, dict)]
-    if not isinstance(value, dict):
-        return None
-    for key in ('items', 'records', 'contacts', 'messages', 'threads', 'outreach', 'entries'):
-        inner = value.get(key)
-        if isinstance(inner, list):
-            return [r for r in inner if isinstance(r, dict)]
-        if isinstance(inner, dict) and inner and all(isinstance(v, dict) for v in inner.values()):
-            return list(inner.values())
-    rest = [v for k, v in value.items() if k not in STORE_META]
-    return rest if rest and all(isinstance(v, dict) for v in rest) else None
-
-
-def _first_time(record, keys):
-    for key in keys:
-        when = _when(record.get(key))
-        if when:
-            return when
-    return None
-
-
-def _outreach_stats(ws, cutoff):
-    path = contained(ws, layout.OUTREACH)
+def _store(ws, relative, test, key=None):
+    """(value, note) for one script-owned JSON store; value is None when missing or unreadable."""
+    path = contained(ws, layout.sandboxed(relative, test))
     if not path.is_file():
-        return {'available': False, 'note': 'No outreach log yet.'}
+        return None, None
     try:
-        records = _records(read_json(path))
+        value = read_json(path)
     except (ValueError, OSError, UnicodeDecodeError):
-        return {'available': False, 'note': 'jobs/outreach.json is not readable JSON.'}
-    if records is None:
-        return {'available': False, 'note': 'jobs/outreach.json has a shape this version does not read.'}
-    by_status, sent, replied, total = Counter(), 0, 0, 0
-    for record in records:
-        when = _first_time(record, ('sent_at', 'created_at', 'at', 'updated_at'))
+        return None, '%s is not readable JSON.' % relative
+    if not isinstance(value, dict) or value.get('schema_version') != 1 or (key and not isinstance(value.get(key), list)):
+        return None, '%s has a shape this version does not read.' % relative
+    return value, None
+
+
+def _links(registry, outreach):
+    """application_id -> registry row: the registry's own link, else a single-job outreach record."""
+    rows = {r['job_id']: r for r in (registry or {}).get('jobs', []) if isinstance(r, dict) and isinstance(r.get('job_id'), str)}
+    links = {r['application_id']: r for r in rows.values() if isinstance(r.get('application_id'), str)}
+    for record in (outreach or {}).get('outreach', []):
+        app_id = record.get('application_id') if isinstance(record, dict) else None
+        if isinstance(app_id, str) and app_id not in links and isinstance(record.get('job_ids'), list):
+            jobs = [rows[j] for j in record['job_ids'] if isinstance(j, str) and j in rows]
+            if len(jobs) == 1:
+                links[app_id] = jobs[0]
+    return links
+
+
+def _signals(state):
+    """outreach_id -> the mail signals the pipeline matched to it (replies, bounces, decisions)."""
+    found, signals = {}, (state or {}).get('signals')
+    for item in (signals.values() if isinstance(signals, dict) else ()):
+        message = item.get('message') if isinstance(item, dict) else None
+        if isinstance(message, dict) and isinstance(item.get('outreach_id'), str):
+            found.setdefault(item['outreach_id'], set()).add(message.get('signal'))
+    return found
+
+
+def _outreach_stats(store, note, cutoff, market_value, signals):
+    if store is None:
+        return {'available': False, 'note': note or 'No outreach log yet.'}
+    by_status, totals = Counter(), Counter()
+    tables = {'type': {}, 'role_family': {}, 'company_type': {}}
+    for record in store['outreach']:
+        if not isinstance(record, dict):
+            continue
+        sent = record.get('sent') if isinstance(record.get('sent'), dict) else {}
+        when = _when(sent.get('sent_at')) or _when(record.get('created_at'))
         if cutoff and when and when < cutoff:
             continue
-        total += 1
-        status = str(record.get('status') or record.get('state') or 'unknown').casefold()
+        status = record.get('status') if isinstance(record.get('status'), str) else 'unknown'
+        totals['records'] += 1
         by_status[status] += 1
-        got_reply = bool(record.get('replied_at') or record.get('reply_at') or record.get('replied') is True or
-                         status in ('replied', 'reply', 'responded', 'interview', 'referred', 'answered'))
-        if got_reply or record.get('sent_at') or status in ('sent', 'delivered', 'bounced', 'followed-up', 'follow-up-sent'):
-            sent += 1
-            replied += int(got_reply)
-    return {'available': True, 'records': total, 'by_status': dict(by_status), 'sent': sent, 'replied': replied,
-            'reply_rate': round(replied / sent, 2) if sent else None}
+        if status not in ('sent', 'bounced'):
+            continue  # drafts, deleted drafts and cancellations were never sent
+        got = signals.get(record.get('outreach_id'), set())
+        replied = bool(got & REPLY_SIGNALS)
+        outcome = {'sent': 1, 'bounced': int(status == 'bounced' and not replied), 'replied': int(replied),
+                   'interviews': int(bool(got & {'interview', 'offer'})), 'rejections': int('rejection' in got)}
+        for name, value in outcome.items():
+            totals[name] += value
+        roles = record.get('roles') if isinstance(record.get('roles'), list) else []
+        families = {_family(r, market_value) for r in roles if isinstance(r, str)} - {None}
+        family = families.pop() if len(families) == 1 else ('mixed' if families else None)
+        _group(tables['type'], record.get('outreach_type'), outcome, 'messages')
+        _group(tables['role_family'], family, outcome, 'messages')
+        _group(tables['company_type'], _company_type(record.get('company'), market_value), outcome, 'messages')
+    reached = totals['sent'] - totals['bounced']
+    return {'available': True, 'records': totals['records'], 'by_status': dict(by_status), 'sent': totals['sent'],
+            'bounced': totals['bounced'], 'replied': totals['replied'], 'interviews': totals['interviews'],
+            'rejections': totals['rejections'], 'silent': max(0, reached - totals['replied']),
+            'reply_rate': round(totals['replied'] / reached, 2) if reached else None,
+            'by_type': _rates(tables['type']), 'by_role_family': _rates(tables['role_family']),
+            'by_company_type': _rates(tables['company_type'])}
 
 
-SKIP_KEYS = ('priority', 'stage', 'status', 'decision', 'verdict', 'label')
-REASON_KEYS = ('skip_reason', 'reason', 'why', 'rationale', 'reasons', 'recommendation', 'gaps')
+def _short(text):
+    text = ' '.join(str(text or '').split())
+    return text[:100] if text else 'no reason recorded'
 
 
-def _skips(value, found, depth=0):
-    if depth > 6:
-        return
-    if isinstance(value, dict):
-        marker = any(isinstance(value.get(k), str) and value[k].strip().casefold() in ('skip', 'skipped')
-                     for k in SKIP_KEYS)
-        if marker:
-            reason = next((value[k] for k in REASON_KEYS if value.get(k)), None)
-            if isinstance(reason, list):
-                reason = '; '.join(x for x in reason if isinstance(x, str))
-            key = value.get('job_id') or value.get('id') or id(value)
-            found.setdefault(key, (' '.join(str(reason).split())[:100] if reason else 'no reason recorded',
-                                   _first_time(value, ('at', 'saved_at', 'updated_at', 'decided_at', 'created_at'))))
-        for item in value.values():
-            _skips(item, found, depth + 1)
-    elif isinstance(value, list):
-        for item in value:
-            _skips(item, found, depth + 1)
-
-
-def _skip_stats(ws, cutoff):
-    found, seen = {}, False
-    for rel in (layout.REGISTRY, layout.PIPELINE_STATE):
-        path = contained(ws, rel)
-        if path.is_file():
-            seen = True
-            try:
-                _skips(read_json(path), found)
-            except (ValueError, OSError, UnicodeDecodeError):
-                continue
-    if not seen:
+def _skip_stats(registry, state, cutoff):
+    """Jobs triaged as Skip (recommendation + gaps) and jobs the user moved to a skipped stage."""
+    if registry is None and state is None:
         return {'available': False, 'note': 'No saved jobs or priorities yet.'}
-    reasons = Counter(reason for reason, when in found.values() if not (cutoff and when and when < cutoff))
-    return {'available': True, 'skipped': sum(reasons.values()),
-            'top_reasons': [{'reason': r, 'count': c} for r, c in reasons.most_common(10)]}
+    found, gaps, sources = {}, Counter(), Counter()
+    priorities = (state or {}).get('priorities')
+    for job_id, item in (priorities.items() if isinstance(priorities, dict) else ()):
+        if not isinstance(item, dict) or item.get('priority') != 'Skip':
+            continue
+        when = _when(item.get('updated_at'))
+        if cutoff and when and when < cutoff:
+            continue
+        found[job_id] = _short(item.get('recommendation'))
+        sources['triage'] += 1
+        for gap in item.get('gaps') if isinstance(item.get('gaps'), list) else ():
+            if isinstance(gap, str) and gap.strip():
+                gaps[_short(gap)] += 1
+    for row in (registry or {}).get('jobs', []):
+        if not isinstance(row, dict) or not isinstance(row.get('workflow_status'), str):
+            continue
+        if row['workflow_status'].strip().casefold() not in SKIP_STAGES or row.get('job_id') in found:
+            continue
+        moves = [h for h in row.get('history') or [] if isinstance(h, dict) and h.get('action') == 'stage'
+                 and h.get('to') == row['workflow_status']]
+        when = _when(moves[-1].get('at')) if moves else _when(row.get('updated_at')) or _when(row.get('created_at'))
+        if cutoff and when and when < cutoff:
+            continue
+        notes = row.get('user_notes') if isinstance(row.get('user_notes'), str) else ''
+        found[row.get('job_id') or id(row)] = _short(next((line for line in notes.splitlines() if line.strip()), ''))
+        sources['stage'] += 1
+    reasons = Counter(found.values())
+    return {'available': True, 'skipped': len(found), 'by_source': dict(sources),
+            'top_reasons': [{'reason': r, 'count': c} for r, c in reasons.most_common(10)],
+            'top_gaps': [{'gap': g, 'count': c} for g, c in gaps.most_common(10)]}
 
 
 def stats(ws=None, days=30, test=False):
@@ -539,12 +563,16 @@ def stats(ws=None, days=30, test=False):
     except (ValueError, OSError):
         market_value = {}
     learning = Counter(i.get('status') for i in items(ws))
+    registry, registry_note = _store(ws, layout.REGISTRY, test, 'jobs')
+    outreach, outreach_note = _store(ws, layout.OUTREACH, test, 'outreach')
+    state, state_note = _store(ws, layout.PIPELINE_STATE, test)
     result = {'window_days': days or None, 'since': cutoff.isoformat() if cutoff else None,
-              'applications': _application_stats(ws, cutoff, test, market_value),
-              'outreach': _outreach_stats(ws, cutoff), 'skips': _skip_stats(ws, cutoff),
+              'applications': _application_stats(ws, cutoff, test, market_value, _links(registry, outreach)),
+              'outreach': _outreach_stats(outreach, outreach_note, cutoff, market_value, _signals(state)),
+              'skips': _skip_stats(registry, state, cutoff),
               'learning': {s: learning.get(s, 0) for s in STATUSES}}
     notes = [section['note'] for section in (result['applications'], result['outreach'], result['skips'])
-             if section.get('note')]
+             if section.get('note')] + [n for n in (registry_note, state_note) if n]
     if result['applications'].get('available') and (result['applications']['sent'] or 0) < 5:
         notes.append('Fewer than 5 sent applications in this window: treat rates as anecdotes, not trends.')
     result['notes'] = notes

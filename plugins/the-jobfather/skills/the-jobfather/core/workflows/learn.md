@@ -27,9 +27,10 @@ When the user edits drafts before sending (often), compare drafts with the sent 
 
 ## 3. Weekly review
 `python3 SKILL/scripts/learn.py stats --days 30`: replies, interviews, rejections and silence by
-role family, location and company type, plus skip reasons. Propose at most five specific changes
-(market titles to drop or add, exclusions, follow-up timing, a writing rule), each with its
-evidence. Save only approved ones.
+role family, location and company type; outreach by message type (bounces are counted apart, never
+as silence); skip reasons and the gaps behind them. Rates on fewer than 5 messages are anecdotes.
+Propose at most five specific changes (market titles to drop or add, exclusions, follow-up timing,
+a writing rule), each with its evidence. Save only approved ones.
 
 ## LEARNED.md
 `learning/LEARNED.md` is the short list of active rules the router loads at the start of each
