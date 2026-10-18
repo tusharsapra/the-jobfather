@@ -21,7 +21,9 @@ everything and hand over the link and the files.
    option matches only; consent only when approved; self-identification declines unless the user
    chose otherwise; uploads only workspace PDFs; the user clicks the final Submit.
 4. Record the result: `job_intake.py record-submission --job-id … --application-id … --file
-   RECEIPT.json --platform HOST` (evidence: confirmation page text and URL).
+   <run>/receipt.json --platform HOST` (the receipt carries the confirmation page text and URL and
+   the approval id). After a timeout or a closed window, ask the user whether they submitted; if
+   they did, record it as `user-reported`.
 
 ## Naukri (opt-in)
 `naukri_prepare_apply` → show the summary (job, resume used: the one already on the user's Naukri
