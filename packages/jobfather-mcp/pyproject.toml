@@ -30,6 +30,7 @@ Repository = "https://github.com/tusharsapra/the-jobfather"
 
 [project.scripts]
 jobfather-browser = "jobfather_mcp.browser_launcher:main"
+jobfather-naukri = "jobfather_mcp.naukri.server:main"
 jobfather-proxy = "jobfather_mcp.proxy:main"
 
 [tool.hatch.build.targets.wheel]

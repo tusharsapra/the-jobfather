@@ -998,7 +998,7 @@
             "JOBFATHER_HOME"
           ],
           "startup_timeout_sec": 120,
-          "tool_timeout_sec": 300,
+          "tool_timeout_sec": 420,
           "enabled_tools": [
             "naukri_status",
             "naukri_login",

@@ -6,7 +6,7 @@ which job titles and keywords your field really uses, finds and tracks openings,
 LaTeX CV for each job, and writes applications and follow-ups that sound like you. It works for any
 field and any region, and nothing is sent or submitted until you approve it.
 
-> v0.1.0. Naukri support arrives in v0.2.0.
+> v0.2.0 adds Naukri, through The Jobfather's own opt-in Naukri server.
 
 ## Why I built it
 
@@ -70,14 +70,15 @@ in your workspace that you can read, and any change can be undone.
   titles employers use, the seniority levels, must-have skills mapped to your experience, company
   types, locations, where to search and what to skip.
 - Finds and tracks jobs from company career pages (Greenhouse, Lever and Ashby job boards),
-  LinkedIn, pasted links and screenshots, all in one tracker workbook you can edit by hand.
+  LinkedIn, Naukri, pasted links and screenshots, all in one tracker workbook you can edit by hand.
 - Tailors a one-page CV for each job. The design and your facts stay fixed; the summary, the chosen
   bullets and the skills change. Every PDF is checked (one page, fonts embedded, nothing cut off),
   and you see it before it's saved. CVs support Latin-script languages for now.
 - Writes applications, cover letters, recruiter replies, LinkedIn notes and follow-ups in your
   voice, checked against your own writing rules and a humanizer pass.
 - Fills Greenhouse application forms from an answer plan you approve, then waits for you to click
-  Submit. Other application systems get guided filling under the same rules.
+  Submit. Other application systems get guided filling under the same rules. On Naukri it applies
+  only after you approve that job and click Submit on a confirm page it opens.
 - Reads replies in your mailbox, if you connect it, matches them to your applications and tells you
   what needs attention and when to follow up.
 
@@ -92,6 +93,7 @@ in your workspace that you can read, and any change can be undone.
 | A TeX distribution with pdfLaTeX (TeX Live, MacTeX or MiKTeX) and Poppler | Build and check the one-page CV PDF | For CVs |
 | A Gmail connector (the claude.ai connector in Claude Code, the Gmail plugin in Codex) | Reads replies, captures your real email signature, saves drafts | Optional |
 | [mcp-server-linkedin](https://github.com/stickerdaniel/linkedin-mcp-server) | LinkedIn job search, read-only behind an allowlist | Optional |
+| The Jobfather's Naukri server | Naukri search, job details, recommended and saved jobs, and applying with your click | Optional, built in |
 | Greenhouse, Lever and Ashby public job-board APIs | Listings straight from company career pages, no login | Built in |
 | [humanizer](https://github.com/blader/humanizer) by Siqi Chen | A checklist that keeps the writing sounding like a person | Bundled |
 
@@ -137,6 +139,7 @@ Ask in plain words, for example:
 - "Set up The Jobfather" or "Import my CV and LinkedIn export"
 - "Which job titles should I be searching for?"
 - "Find data analyst jobs posted this week in Toronto"
+- "Search Naukri for marketing manager roles from the last three days"
 - "Save these links to my tracker" (or paste screenshots)
 - "Rank my saved jobs" or "What needs my attention?"
 - "Tailor my CV for this job" or "Write the application email"
@@ -148,7 +151,7 @@ Ask in plain words, for example:
 
 Everything about you lives in your workspace folder: your profile, CV master, voice rules, market
 map, applications, tracker and change history. The Jobfather's code stores none of it and uploads
-none of it. The services you choose to connect (your mailbox, LinkedIn, the AI agent you run it in)
+none of it. The services you choose to connect (your mailbox, LinkedIn, Naukri, the AI agent you run it in)
 see only what a task needs. [PRIVACY.md](PRIVACY.md) has the details.
 
 ## How it keeps you in control
@@ -157,7 +160,7 @@ see only what a task needs. [PRIVACY.md](PRIVACY.md) has the details.
   separately, and each switch is a logged change you can undo.
 - Every send or submit needs your approval of that exact item. The approval is tied to the content,
   expires after 15 minutes and works once.
-- On application forms you click Submit yourself.
+- On application forms and on the Naukri confirm page, you click Submit yourself.
 - Facts come from your profile, each with its source. It asks you about anything it doesn't know,
   and it ignores instructions hidden inside job ads.
 - Browser automation uses your own logins in a normal Chrome window, at a slow, steady pace with
@@ -169,8 +172,8 @@ see only what a task needs. [PRIVACY.md](PRIVACY.md) has the details.
 ```text
 plugins/the-jobfather/skills/the-jobfather/   the skill: SKILL.md, router, workflows, references,
                                               Python scripts, CV template, workspace templates
-packages/jobfather-mcp/                       MCP servers: browser launcher and allowlist proxy
-                                              (run with uvx); the Naukri server joins in v0.2.0
+packages/jobfather-mcp/                       MCP servers: browser launcher, allowlist proxy and the
+                                              clean-room Naukri server (run with uvx)
 examples/demo-workspace/                      a fully fictional user, used by tests and docs
 tests/                                        tests that never touch a real workspace
 dev/                                          maintainer tools, including the privacy scanner

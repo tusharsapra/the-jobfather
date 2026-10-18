@@ -68,7 +68,7 @@ def prepare(version):
         path.write_text(json.dumps(data, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
     replace(PYPROJECT, r'(?m)^version\s*=\s*"[^"]+"', 'version = "%s"' % version)
     replace(INIT, r'__version__\s*=\s*"[^"]+"', '__version__ = "%s"' % version)
-    replace(REPO / 'CHANGELOG.md', r'(?m)^## \d+\.\d+\.\d+ \(unreleased\)', '## %s (%s)' % (version, date.today().isoformat()))
+    replace(REPO / 'CHANGELOG.md', r'(?m)^## (?:\d+\.\d+\.\d+ \(unreleased\)|Unreleased)$', '## %s (%s)' % (version, date.today().isoformat()))
     for path in PIN_FILES:
         replace(path, SOURCE.pattern, lambda m: m.group(1) + 'v' + version + m.group(3), count=0)
     run(sys.executable, '-m', 'unittest', 'discover', '-s', 'tests')
