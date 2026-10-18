@@ -1,0 +1,35 @@
+{
+  "findings": [
+    {
+      "rule": "denylist-name",
+      "path": "README.md",
+      "match_sha256": "46b289459c520bf1364f746d91bf2715ca39de697256cb0724f72b4ba6812a32",
+      "why": "The maintainer's public credit, at their request"
+    },
+    {
+      "rule": "denylist-name",
+      "path": "README.md",
+      "match_sha256": "e66f4b0753ea605c82d8d512d5a15aa02fb2940092a7175ad70ff98c116aacab",
+      "why": "The maintainer's public credit, at their request"
+    },
+    {
+      "rule": "denylist-name",
+      "path": "README.md",
+      "match_sha256": "ec6137b8a30237fd7b16ca18d26a068d440a9e54372347a68a72791144c8cedf",
+      "why": "The maintainer's public credit, at their request"
+    },
+    {
+      "rule": "denylist-name",
+      "path": "LICENSE",
+      "match_sha256": "46b289459c520bf1364f746d91bf2715ca39de697256cb0724f72b4ba6812a32",
+      "why": "The maintainer's public credit, at their request"
+    },
+    {
+      "rule": "denylist-name",
+      "path": "packages/jobfather-mcp/LICENSE",
+      "match_sha256": "46b289459c520bf1364f746d91bf2715ca39de697256cb0724f72b4ba6812a32",
+      "why": "The maintainer's public credit, at their request"
+    }
+  ],
+  "binaries": []
+}

@@ -20,6 +20,7 @@
 !/examples/
 !/packages/
 !/plugins/
+!/docs/
 /.agents/*
 !/.agents/plugins/
 /.agents/plugins/*
