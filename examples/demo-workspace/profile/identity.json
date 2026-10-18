@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "full_name": "Alex Rivera",
+  "preferred_name": "Alex",
+  "file_prefix": "Alex_Rivera",
+  "headline": "Senior Data Analyst | SQL, Python, dbt, Tableau",
+  "contacts": {
+    "email": "alex.rivera@mail.example",
+    "phone": "+1 416-555-0142",
+    "location": "Toronto, ON",
+    "links": [
+      {
+        "label": "LinkedIn",
+        "url": "https://www.linkedin.com/in/example"
+      },
+      {
+        "label": "Portfolio",
+        "url": "https://alexrivera.example"
+      }
+    ]
+  },
+  "cv_contacts": [
+    "phone",
+    "email",
+    "location",
+    "link:LinkedIn",
+    "link:Portfolio"
+  ],
+  "locale": {
+    "country": "CA",
+    "language": "en-CA",
+    "babel": "canadian",
+    "timezone": "America/Toronto",
+    "utc_offset_fallback": "-05:00",
+    "currency": "CAD",
+    "paper": "Letter",
+    "present_label": "Present"
+  },
+  "mail": {
+    "provider": "gmail",
+    "account": "alex.rivera@mail.example",
+    "signature_name": "Alex"
+  }
+}

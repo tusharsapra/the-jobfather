@@ -1,0 +1,251 @@
+{
+  "schema_version": 1,
+  "taxonomy": {
+    "employer_type": {
+      "values": {
+        "in_house": "Hiring for its own analytics team",
+        "consultancy": "Analytics consultancy serving clients",
+        "agency": "Marketing or data agency",
+        "public_sector": "Government or public body"
+      }
+    },
+    "role_track": {
+      "values": {
+        "analytics": "Product or business analytics",
+        "analytics_engineering": "dbt/warehouse modelling",
+        "bi_reporting": "Dashboards and reporting",
+        "hybrid": "Mix of the above"
+      }
+    }
+  },
+  "role_families": [
+    {
+      "id": "data-analytics",
+      "name": "Data analytics",
+      "status": "core",
+      "cv_variant": "data-analytics",
+      "titles": [
+        {
+          "title": "Data Analyst",
+          "status": "core",
+          "source": "user-confirmed"
+        },
+        {
+          "title": "Senior Data Analyst",
+          "status": "core",
+          "source": "user-confirmed"
+        },
+        {
+          "title": "Analytics Analyst",
+          "status": "core",
+          "source": "inferred-from-JDs"
+        }
+      ],
+      "synonyms": [
+        "BI Analyst",
+        "Business Intelligence Analyst"
+      ]
+    },
+    {
+      "id": "product-analytics",
+      "name": "Product analytics",
+      "status": "adjacent",
+      "cv_variant": "data-analytics",
+      "titles": [
+        {
+          "title": "Product Analyst",
+          "status": "adjacent",
+          "source": "inferred-from-JDs"
+        }
+      ]
+    },
+    {
+      "id": "analytics-engineering",
+      "name": "Analytics engineering",
+      "status": "stretch",
+      "titles": [
+        {
+          "title": "Analytics Engineer",
+          "status": "stretch",
+          "source": "researched"
+        }
+      ]
+    },
+    {
+      "id": "clerical",
+      "name": "Clerical data roles",
+      "status": "excluded",
+      "titles": [
+        {
+          "title": "Data Entry Clerk",
+          "status": "excluded",
+          "source": "user-confirmed"
+        }
+      ]
+    }
+  ],
+  "seniority": {
+    "band": {
+      "min_years": 4,
+      "max_years": 9
+    },
+    "stretch_years": 2,
+    "junior_floor_years": 3
+  },
+  "skills": {
+    "must": [
+      {
+        "name": "SQL",
+        "evidence": [
+          "LKM-02",
+          "HBH-02"
+        ],
+        "source": "inferred-from-JDs"
+      },
+      {
+        "name": "Python",
+        "evidence": [
+          "LKM-01"
+        ],
+        "source": "inferred-from-JDs"
+      },
+      {
+        "name": "Tableau",
+        "evidence": [
+          "LKM-02"
+        ],
+        "source": "inferred-from-JDs"
+      }
+    ],
+    "nice": [
+      {
+        "name": "dbt",
+        "evidence": [
+          "LKM-02"
+        ],
+        "source": "researched"
+      },
+      {
+        "name": "Experimentation",
+        "evidence": [
+          "LKM-03"
+        ],
+        "source": "researched"
+      }
+    ],
+    "never_done": [
+      {
+        "name": "Spark",
+        "source": "user-confirmed",
+        "confirmed_at": "2026-09-01"
+      }
+    ]
+  },
+  "company_types": [
+    {
+      "id": "in_house",
+      "where_they_post": [
+        "company careers pages",
+        "LinkedIn"
+      ],
+      "outreach": "Apply on the careers page; email the hiring manager only with a published address.",
+      "typical_titles": [
+        "Data Analyst",
+        "Senior Data Analyst"
+      ],
+      "cv_variant": "data-analytics"
+    }
+  ],
+  "target_companies": [
+    {
+      "name": "Example Corp",
+      "type": "in_house",
+      "careers_url": "https://boards.greenhouse.io/examplecorp",
+      "ats": "greenhouse",
+      "board_token": "examplecorp",
+      "source": "researched"
+    },
+    {
+      "name": "Acme Analytics",
+      "type": "consultancy",
+      "careers_url": "https://jobs.lever.co/acme",
+      "ats": "lever",
+      "board_token": "acme",
+      "source": "researched"
+    }
+  ],
+  "geography": {
+    "locations": [
+      {
+        "name": "Toronto",
+        "match": [
+          "toronto",
+          "gta",
+          "mississauga"
+        ],
+        "rank": 1,
+        "disclose_relocation": false
+      },
+      {
+        "name": "Remote (Canada)",
+        "match": [
+          "remote"
+        ],
+        "rank": 2
+      }
+    ],
+    "remote": "open",
+    "timezone": "America/Toronto"
+  },
+  "platforms": [
+    {
+      "id": "linkedin",
+      "enabled": true,
+      "time_window_days": 7,
+      "notes": "Location filter is unreliable: put the city in the keywords and check each JD."
+    },
+    {
+      "id": "company-careers",
+      "enabled": true,
+      "notes": "Public ATS job boards for target companies."
+    }
+  ],
+  "queries": [
+    {
+      "id": "core-titles",
+      "platform": "linkedin",
+      "query": "(\"Data Analyst\" OR \"Senior Data Analyst\" OR \"Analytics Analyst\") NOT (\"Data Entry\")",
+      "location": "Toronto",
+      "posted_within_days": 7,
+      "source": "user-confirmed"
+    }
+  ],
+  "exclusions": [
+    {
+      "kind": "title",
+      "value": "Data Entry",
+      "source": "user-confirmed",
+      "confirmed_at": "2026-09-01"
+    },
+    {
+      "kind": "seniority",
+      "value": "Director and above",
+      "source": "user-confirmed",
+      "confirmed_at": "2026-09-01"
+    }
+  ],
+  "scoring": {
+    "weights": {
+      "title": 3,
+      "must_skills": 3,
+      "seniority": 2,
+      "location": 2,
+      "nice_skills": 1,
+      "freshness": 1
+    }
+  },
+  "evidence": {
+    "postings_analysed": 24,
+    "analysed_at": "2026-09-01"
+  }
+}
