@@ -25,6 +25,7 @@ CONNECT = REPO / 'plugins' / 'the-jobfather' / 'skills' / 'the-jobfather' / 'scr
 PIN_FILES = MCP_FILES + (CONNECT,)  # connect.py's fallback serves skills-folder installs
 PYPROJECT = REPO / 'packages' / 'jobfather-mcp' / 'pyproject.toml'
 INIT = REPO / 'packages' / 'jobfather-mcp' / 'src' / 'jobfather_mcp' / '__init__.py'
+RELEASE_FILES = MANIFESTS + (PYPROJECT, INIT, REPO / 'CHANGELOG.md') + PIN_FILES
 SOURCE = re.compile(r'(git\+https://github\.com/tusharsapra/the-jobfather@)([0-9a-f]{40}|v\d+\.\d+\.\d+)(#subdirectory=packages/jobfather-mcp)')
 
 
@@ -33,6 +34,11 @@ def git(*args, capture=True):
     if result.returncode:
         raise SystemExit('git %s failed: %s' % (' '.join(args), (result.stderr or '').strip()))
     return (result.stdout or '').strip()
+
+
+def stage(paths):
+    """Stage exactly the files a release step edits, never stray work in the tree."""
+    git('add', '--', *[str(Path(p).relative_to(REPO)) for p in paths])
 
 
 def run(*cmd):
@@ -54,8 +60,8 @@ def prepare(version):
         raise SystemExit('version must be X.Y.Z')
     if git('rev-parse', '--abbrev-ref', 'HEAD') != 'main':
         raise SystemExit('release from main')
-    if git('status', '--porcelain'):
-        raise SystemExit('working tree must be clean')
+    if git('status', '--porcelain', '--untracked-files=no'):
+        raise SystemExit('commit or stash your changes first (untracked files are left alone)')
     for path in MANIFESTS:
         data = json.loads(path.read_text(encoding='utf-8'))
         data['version'] = version
@@ -68,7 +74,7 @@ def prepare(version):
     run(sys.executable, '-m', 'unittest', 'discover', '-s', 'tests')
     run(sys.executable, 'dev/validate_package.py')
     run(sys.executable, 'dev/privacy_scan.py', '--all-history', '--require-denylist')
-    git('add', '-A')
+    stage(RELEASE_FILES)
     git('commit', '-q', '-m', 'Release v%s' % version)
     print('Prepared release commit %s. Next: python3 dev/release.py pin' % git('rev-parse', 'HEAD'))
 
@@ -82,7 +88,7 @@ def pin():
     for path in PIN_FILES:
         replace(path, SOURCE.pattern, lambda mm: mm.group(1) + sha + mm.group(3), count=0)
     run(sys.executable, 'dev/validate_package.py', '--release')
-    git('add', '-A')
+    stage(PIN_FILES)
     git('commit', '-q', '-m', 'Pin MCP sources to %s' % sha[:12])
     git('tag', '-a', 'v' + m.group(1), '-m', 'The Jobfather v' + m.group(1))
     print('Pinned to %s and tagged v%s. Review, then: git push --atomic origin main v%s' % (sha, m.group(1), m.group(1)))
