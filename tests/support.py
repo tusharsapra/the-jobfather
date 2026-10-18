@@ -15,6 +15,17 @@ if str(SCRIPTS) not in sys.path:
     sys.path.insert(0, str(SCRIPTS))
 
 
+_TOOL_DIRS = None
+
+
+def _tool_dirs():
+    global _TOOL_DIRS
+    if _TOOL_DIRS is None:
+        import pdf_tools
+        _TOOL_DIRS = sorted({str(Path(p).parent) for p in pdf_tools.resolve().values() if p})
+    return _TOOL_DIRS
+
+
 class DemoWorkspace:
     """Copy the demo into a temp folder and point every lookup at it.
 
@@ -30,11 +41,16 @@ class DemoWorkspace:
         shutil.copytree(str(source), str(self.root), ignore=shutil.ignore_patterns('README.md'))
         home = base / 'home'
         home.mkdir()
+        tool_dirs = _tool_dirs()  # resolve real TeX/Poppler before HOME moves
         self.env = mock.patch.dict(os.environ, {
             'JOBFATHER_HOME': str(self.root), 'JOBFATHER_TEST': '1', 'HOME': str(home),
             'XDG_CONFIG_HOME': str(home / '.config'), 'APPDATA': str(home / 'AppData'),
             'USERPROFILE': str(home)})
         self.env.start()
+        if tool_dirs:
+            import local
+            local.machine_file().parent.mkdir(parents=True, exist_ok=True)
+            local.atomic_json(local.machine_file(), {'tool_bin_paths': tool_dirs})
         cfg = json.loads((self.root / 'config.json').read_bytes().decode('utf-8'))
         cfg['evaluation_mode'] = evaluation
         (self.root / 'config.json').write_bytes((json.dumps(cfg, indent=2) + '\n').encode('utf-8'))
