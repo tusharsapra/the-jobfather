@@ -130,12 +130,12 @@ class Denylist:
                 window = norm[max(0, m.start() - 40):m.end() + 40]
                 if any(a in window and m.group(0) in a for a in self.allow):
                     continue
-                yield 'denylist-' + kind, m.start()
+                yield 'denylist-' + kind, m.start(), m.group(0)
         if self.digits:
             for m in re.finditer(r'\+?\d[\d\s().-]{5,}\d', norm):
                 digits = re.sub(r'\D', '', m.group(0))
                 if any(len(digits) >= len(d) and digits[-len(d):] == d for d in self.digits):
-                    yield 'denylist-phone', m.start()
+                    yield 'denylist-phone', m.start(), digits
 
 
 # ---------------------------------------------------------------- findings
@@ -188,9 +188,11 @@ class Scanner:
         self.findings: list[Finding] = []
 
     def allowed(self, rule: str, where: str, matched: str) -> bool:
+        """dev/privacy-allow.json: one exact file (blob suffix ignored), one rule, one exact match."""
         digest = hashlib.sha256(matched.encode('utf-8')).hexdigest()
+        path = re.sub(r'@[0-9a-f]{10}$', '', where)
         for item in self.allow['findings']:
-            if item.get('rule') in (rule, '*') and where.endswith(item.get('path', '\0')) and item.get('match_sha256') in (digest, '*'):
+            if item.get('rule') == rule and path == item.get('path') and item.get('match_sha256') == digest:
                 return True
         return False
 
@@ -235,12 +237,13 @@ class Scanner:
             for m in re.finditer(r'[A-Za-z_][A-Za-z0-9_]{3,}', text):
                 if hashlib.sha256(m.group(0).casefold().encode()).hexdigest() in self.taint:
                     self.add('taint', where, text, m.start(), len(m.group(0)))
-        for rule, index in self.denylist.scan(text):
-            self.add(rule, where, text, index, 0)
+        for rule, index, matched in self.denylist.scan(text):
+            if not self.allowed(rule, where, matched):  # a chosen public credit, matched exactly
+                self.add(rule, where, text, index, 0)
 
     # ---- names
     def scan_name(self, where: str) -> None:
-        for rule, _ in self.denylist.scan(where.replace('/', ' / ')):
+        for rule, _, _ in self.denylist.scan(where.replace('/', ' / ')):
             self.findings.append(Finding(rule + '-filename', where, 0, ''))
 
     # ---- blobs
