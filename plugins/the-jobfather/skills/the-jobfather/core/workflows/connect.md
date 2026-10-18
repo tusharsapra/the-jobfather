@@ -27,8 +27,10 @@ Patchright, a browser library built to avoid bot detection. Say so before offeri
 
 ## 3. Plan, consent, run
 `connect.py plan --host HOST --services browser,naukri,linkedin,gmail [--linkedin-mode mcp]`
-writes the steps. Show each step in one line (what it changes, how to undo). Run each only with
-consent: `connect.py run --plan PLAN --step ID --consent "<their words>"`.
+writes the steps to `<workspace>/.state/connect-plan.json` (it detects the install mode; override
+with `--install plugin|skills|dev`). Show each step in one line (what it changes, how to undo).
+Run each only with consent: `connect.py run --plan <that file> --step ID --consent "<their words>"`.
+`connect.py disable --platform naukri|linkedin` turns an opt-in off again.
 - Plugin installs register the browser and Naukri servers automatically.
 - Skills-folder installs register them with the host's own CLI (`claude mcp add-json`,
   `codex mcp add`, `agy mcp add`), plus tool allowlists and an approval prompt for applying.
