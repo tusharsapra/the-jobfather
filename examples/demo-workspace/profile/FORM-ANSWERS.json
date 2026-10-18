@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "answers": {
+    "years-of-sql-experience": {
+      "question": "How many years of SQL experience do you have?",
+      "answer": "6",
+      "scope": "global",
+      "confirmed_at": "2026-09-01",
+      "source": "user"
+    },
+    "how-did-you-hear-about-us": {
+      "question": "How did you hear about this role?",
+      "answer": "Company careers page",
+      "scope": "global",
+      "confirmed_at": "2026-09-01",
+      "source": "user"
+    }
+  }
+}

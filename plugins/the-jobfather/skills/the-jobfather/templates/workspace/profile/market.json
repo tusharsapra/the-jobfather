@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "taxonomy": {},
+  "role_families": [],
+  "seniority": {},
+  "skills": {
+    "must": [],
+    "nice": [],
+    "never_done": []
+  },
+  "company_types": [],
+  "target_companies": [],
+  "geography": {
+    "locations": [],
+    "remote": null
+  },
+  "platforms": [],
+  "queries": [],
+  "exclusions": [],
+  "scoring": {
+    "weights": {}
+  },
+  "evidence": {
+    "postings_analysed": 0,
+    "analysed_at": null
+  }
+}

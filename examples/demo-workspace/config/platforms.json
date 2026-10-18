@@ -1,0 +1,23 @@
+{
+  "schema": "the-jobfather/platforms@1",
+  "naukri": {
+    "enabled": false,
+    "acknowledged": null,
+    "limits": {}
+  },
+  "linkedin": {
+    "enabled": false,
+    "mode": "browser",
+    "acknowledged": null
+  },
+  "gmail": {
+    "mode": "drafts_only"
+  },
+  "ats": {
+    "greenhouse": {
+      "enabled": true,
+      "submit_mode": "user_click",
+      "daily_cap": 15
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "full_name": "",
+  "preferred_name": "",
+  "file_prefix": "",
+  "headline": "",
+  "contacts": {
+    "email": "",
+    "phone": "",
+    "location": "",
+    "links": []
+  },
+  "cv_contacts": [
+    "phone",
+    "email",
+    "location",
+    "link:LinkedIn",
+    "link:Portfolio"
+  ],
+  "locale": {
+    "country": "",
+    "language": "en",
+    "babel": "english",
+    "timezone": "",
+    "utc_offset_fallback": "",
+    "currency": "",
+    "paper": "A4",
+    "present_label": "Present"
+  },
+  "mail": {
+    "provider": "gmail",
+    "account": "",
+    "signature_name": ""
+  }
+}

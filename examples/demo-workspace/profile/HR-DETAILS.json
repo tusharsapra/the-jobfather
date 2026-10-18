@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "owner": "ws-demo00000000000a",
+  "note": "Values you confirmed for forms and recruiter questions. null means unknown: The Jobfather asks instead of guessing.",
+  "current_location": {
+    "value": "Toronto, ON",
+    "confirmed_at": "2026-09-01"
+  },
+  "current_compensation": {
+    "value": null,
+    "currency": null,
+    "period": null,
+    "structure": null,
+    "confirmed_at": null
+  },
+  "expected_compensation": {
+    "value": 105000,
+    "currency": "CAD",
+    "period": "year",
+    "structure": "base salary",
+    "confirmed_at": "2026-09-01"
+  },
+  "minimum_compensation": {
+    "value": null,
+    "currency": null,
+    "period": null,
+    "confirmed_at": null
+  },
+  "notice_period": {
+    "value": "2 weeks",
+    "confirmed_at": "2026-09-01"
+  },
+  "resignation_status": {
+    "value": null,
+    "confirmed_at": null
+  },
+  "last_working_date": {
+    "value": null,
+    "confirmed_at": null
+  },
+  "earliest_start_date": {
+    "value": null,
+    "confirmed_at": null
+  },
+  "interview_availability": {
+    "value": null,
+    "timezone": null,
+    "confirmed_at": null
+  },
+  "preferred_work_modes": {
+    "value": [
+      "hybrid",
+      "remote"
+    ],
+    "confirmed_at": "2026-09-01"
+  },
+  "preferred_locations": {
+    "value": [
+      "Toronto",
+      "Remote (Canada)"
+    ],
+    "confirmed_at": "2026-09-01"
+  },
+  "relocation_willingness": {
+    "value": false,
+    "confirmed_at": "2026-09-01"
+  },
+  "travel_willingness": {
+    "value": null,
+    "confirmed_at": null
+  },
+  "work_authorization": {
+    "value": "Canadian citizen",
+    "jurisdiction": "CA",
+    "confirmed_at": "2026-09-01"
+  },
+  "sponsorship_required": {
+    "value": false,
+    "jurisdiction": "CA",
+    "confirmed_at": "2026-09-01"
+  },
+  "reason_for_change": {
+    "value": null,
+    "confirmed_at": null
+  },
+  "highest_qualification": {
+    "value": "BSc Statistics",
+    "confirmed_at": "2026-09-01"
+  },
+  "self_identification": {
+    "value": "prefer-not-to-say",
+    "confirmed_at": null
+  },
+  "custom": {}
+}

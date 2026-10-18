@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "owner": "__WORKSPACE_ID__",
+  "note": "Values you confirmed for forms and recruiter questions. null means unknown: The Jobfather asks instead of guessing.",
+  "current_location": {
+    "value": null,
+    "confirmed_at": null
+  },
+  "current_compensation": {
+    "value": null,
+    "currency": null,
+    "period": null,
+    "structure": null,
+    "confirmed_at": null
+  },
+  "expected_compensation": {
+    "value": null,
+    "currency": null,
+    "period": null,
+    "structure": null,
+    "confirmed_at": null
+  },
+  "minimum_compensation": {
+    "value": null,
+    "currency": null,
+    "period": null,
+    "confirmed_at": null
+  },
+  "notice_period": {
+    "value": null,
+    "confirmed_at": null
+  },
+  "resignation_status": {
+    "value": null,
+    "confirmed_at": null
+  },
+  "last_working_date": {
+    "value": null,
+    "confirmed_at": null
+  },
+  "earliest_start_date": {
+    "value": null,
+    "confirmed_at": null
+  },
+  "interview_availability": {
+    "value": null,
+    "timezone": null,
+    "confirmed_at": null
+  },
+  "preferred_work_modes": {
+    "value": null,
+    "confirmed_at": null
+  },
+  "preferred_locations": {
+    "value": null,
+    "confirmed_at": null
+  },
+  "relocation_willingness": {
+    "value": null,
+    "confirmed_at": null
+  },
+  "travel_willingness": {
+    "value": null,
+    "confirmed_at": null
+  },
+  "work_authorization": {
+    "value": null,
+    "jurisdiction": null,
+    "confirmed_at": null
+  },
+  "sponsorship_required": {
+    "value": null,
+    "jurisdiction": null,
+    "confirmed_at": null
+  },
+  "reason_for_change": {
+    "value": null,
+    "confirmed_at": null
+  },
+  "highest_qualification": {
+    "value": null,
+    "confirmed_at": null
+  },
+  "self_identification": {
+    "value": "prefer-not-to-say",
+    "confirmed_at": null
+  },
+  "custom": {}
+}

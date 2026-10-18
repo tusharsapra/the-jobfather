@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "workspace_id": "__WORKSPACE_ID__",
+  "created_at": "__CREATED_AT__",
+  "pipeline": {
+    "rank_limit": 10,
+    "top": 5,
+    "research_days": 30,
+    "follow_up_days": 10,
+    "max_follow_ups": 2,
+    "sync_limit": 50,
+    "overlap_days": 2
+  },
+  "authorization_keywords": [],
+  "evaluation_mode": false
+}
