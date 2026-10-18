@@ -1,0 +1,366 @@
+[
+ {
+  "method": "POST",
+  "url": "https://www.naukri.com/jobapi/v2/search/recom-jobs",
+  "status": 200,
+  "body": {
+   "noOfJobs": 4,
+   "jobDetails": [
+    {
+     "title": "Garnet Iris harbor sierra",
+     "logoPath": "https://img.naukimg.com/logo_images/groups/v1/0000126.gif",
+     "logoPathV3": "https://img.naukimg.com/logo_images/groups/v1/0000126.gif",
+     "jobId": "069344404995",
+     "currency": "INR",
+     "footerPlaceholderLabel": "3 Days Ago",
+     "footerPlaceholderColor": "grey",
+     "companyName": "Lumen",
+     "isSaved": false,
+     "tagsAndSkills": "Meadow Basil,fjord,Willow Jasper,Ripple,THISTLE1,Flint Wren,Fable Quartz,Atlas",
+     "placeholders": [
+      {
+       "type": "experience",
+       "label": "5-9 Yrs"
+      },
+      {
+       "type": "salary",
+       "label": "Not disclosed"
+      },
+      {
+       "type": "location",
+       "label": "Glacier"
+      }
+     ],
+     "companyId": 19422,
+     "jdURL": "/job-listings-lumen-amber-canyon-yarrow-harbor-kestrel-5-to-9-years-069344404995",
+     "staticUrl": "orchid-summit-umber-00000",
+     "ambitionBoxData": {
+      "Url": "https://example.com/reviews/harbor-delta-ripple-pebble-dune-coral-reviews",
+      "ReviewsCount": 1836,
+      "AggregateRating": "3.9",
+      "Title": "Garnet Flint island Alder Garnet Amber Bramble ember Quartz"
+     },
+     "jobDescription": "Basil flint thistle maple hazel ripple / atlas-orchid HERON moss RIPPLE moss umber atlas,onyx willow fjord Yarrow-Lumen YARROW (Yarrow.summit) lichen Cedar GLACIER sierra xenon fable<br><br>Yarrow Basil: 2-7 years . Lichen: Garnet Willow nectar Indigo,Amber,maple delta velvet onyx (NECTAR drift)<br><br>Orchid Dune &amp; Willow . <br><br>Xenon Glacier : .",
+     "showMultipleApply": true,
+     "groupId": 9510,
+     "isTopGroup": 0,
+     "createdDate": 1792047246271,
+     "mode": "jp",
+     "board": "1",
+     "salaryDetail": {
+      "minimumSalary": 0,
+      "maximumSalary": 0,
+      "currency": "INR",
+      "hideSalary": true,
+      "variablePercentage": 0.0,
+      "minSalaryPerMonth": 0,
+      "maxSalaryPerMonth": 0,
+      "ctcBreakup": {}
+     },
+     "experienceText": "Juniper glacier",
+     "minimumExperience": "5",
+     "maximumExperience": "9",
+     "applyByTime": "4:24 PM",
+     "companyApplyJob": false,
+     "walkinJob": false,
+     "segmentedTemplateId": "prairie-4",
+     "questionnaireIdPresent": true,
+     "roleCategoryGid": "0983",
+     "todaysJob": false,
+     "jobAgentEligle": true,
+     "segmentedQuestions": false,
+     "saved": false
+    },
+    {
+     "title": "Fjord Velvet Sierra",
+     "logoPath": "https://img.naukimg.com/logo_images/groups/v1/0000127.gif",
+     "logoPathV3": "https://img.naukimg.com/logo_images/groups/v1/0000127.gif",
+     "jobId": "000354323213",
+     "currency": "INR",
+     "footerPlaceholderLabel": "2 Days Ago",
+     "footerPlaceholderColor": "grey",
+     "companyName": "Umber",
+     "isSaved": false,
+     "tagsAndSkills": "Flint,Juniper,Wren amber,Velvet dune,Ripple,Canyon,Glacier Ripple,Yarrow beacon",
+     "placeholders": [
+      {
+       "type": "experience",
+       "label": "3-8 Yrs"
+      },
+      {
+       "type": "salary",
+       "label": "Not disclosed"
+      },
+      {
+       "type": "location",
+       "label": "Glacier"
+      }
+     ],
+     "companyId": 122894,
+     "jdURL": "/job-listings-amber-canyon-canyon-nimbus-kestrel-3-to-8-years-000354323213",
+     "staticUrl": "lagoon-kelp-atlas-00000",
+     "ambitionBoxData": {
+      "Url": "https://example.com/reviews/nimbus-reviews",
+      "ReviewsCount": 542,
+      "AggregateRating": "3.4",
+      "Title": "Cedar Xenon basil Moss"
+     },
+     "jobDescription": "Maple valley ember-alder / dune lumen.  . Yarrow thistle garnet onyx bramble,ripple,zephyr moss<br><br>Wren Iris. <br><br>Fable nectar lumen fable summit prairie meadow. Kestrel delta heron. Harbor tundra wren thistle iris kelp umber. <br><br>Lagoon grove velvet Glacier garnet. Umber sierra harbor",
+     "showMultipleApply": false,
+     "groupId": 154447,
+     "isTopGroup": 0,
+     "createdDate": 1792144203000,
+     "mode": "crawled",
+     "board": "1",
+     "salaryDetail": {
+      "minimumSalary": 0,
+      "maximumSalary": 0,
+      "currency": "INR",
+      "hideSalary": true,
+      "variablePercentage": 0.0,
+      "minSalaryPerMonth": 0,
+      "maxSalaryPerMonth": 0,
+      "ctcBreakup": {}
+     },
+     "experienceText": "Beacon iris",
+     "minimumExperience": "3",
+     "maximumExperience": "8",
+     "applyByTime": "7:20 PM",
+     "companyApplyJob": true,
+     "walkinJob": false,
+     "companyApplyUrl": "https://www.naukri.com/cloudgateway-apply/apply-services/v0/apply/saveCompanyApply",
+     "applyRedirectUrl": "https://example.com/onyx-nimbus/lagoon/job/raven---drift---bramble/amber-canyon-canyon_060786",
+     "segmentedTemplateId": "prairie-4",
+     "questionnaireIdPresent": false,
+     "roleCategoryGid": "0983",
+     "todaysJob": false,
+     "jobAgentEligle": false,
+     "segmentedQuestions": false,
+     "saved": false
+    },
+    {
+     "title": "Drift Grove Island Summit - Jasper",
+     "logoPath": "https://img.naukimg.com/logo_images/groups/v1/0000128.gif",
+     "logoPathV3": "https://img.naukimg.com/logo_images/groups/v1/0000128.gif",
+     "jobId": "097686640778",
+     "currency": "INR",
+     "footerPlaceholderLabel": "4 Days Ago",
+     "footerPlaceholderColor": "grey",
+     "companyName": "Valley Summit Indigo",
+     "isSaved": false,
+     "tagsAndSkills": "harbor nimbus,amber,glacier garnet,fjord,nimbus,coral drift,meadow,jasper raven",
+     "placeholders": [
+      {
+       "type": "experience",
+       "label": "2-4 Yrs"
+      },
+      {
+       "type": "salary",
+       "label": "Not disclosed"
+      },
+      {
+       "type": "location",
+       "label": "Glacier"
+      }
+     ],
+     "companyId": 278423,
+     "jdURL": "/job-listings-kelp-amber-garnet-canyon-thistle-coral-tundra-cedar-ripple-xenon-kestrel-2-to-4-years-097686640778",
+     "staticUrl": "fjord-bramble-jasper-delta-iris-0000000",
+     "ambitionBoxData": {
+      "Url": "https://example.com/reviews/coral-reviews",
+      "ReviewsCount": 973,
+      "AggregateRating": "3.6",
+      "Title": "Valley Basil garnet Canyon"
+     },
+     "jobDescription": " Fable lichen / YARROW/Beacon / VELVET. 1-8 years orchid fable Amber glacier willow Heron. <br><br>Hazel umber raven QUARTZ tundra canyon BEACON,Xenon,Grove sierra - dune valley nimbus zephyr iris.",
+     "showMultipleApply": false,
+     "groupId": 8574146,
+     "isTopGroup": 0,
+     "createdDate": 1791980274000,
+     "mode": "crawled",
+     "board": "1",
+     "salaryDetail": {
+      "minimumSalary": 0,
+      "maximumSalary": 0,
+      "currency": "INR",
+      "hideSalary": true,
+      "variablePercentage": 0.0,
+      "minSalaryPerMonth": 0,
+      "maxSalaryPerMonth": 0,
+      "ctcBreakup": {}
+     },
+     "experienceText": "Beacon iris",
+     "minimumExperience": "2",
+     "maximumExperience": "4",
+     "applyByTime": "9:47 PM",
+     "companyApplyJob": true,
+     "walkinJob": false,
+     "companyApplyUrl": "https://www.naukri.com/cloudgateway-apply/apply-services/v0/apply/saveCompanyApply",
+     "applyRedirectUrl": "https://example.com/jobs/043257",
+     "segmentedTemplateId": "prairie-4",
+     "questionnaireIdPresent": false,
+     "roleCategoryGid": "0102",
+     "todaysJob": false,
+     "jobAgentEligle": false,
+     "segmentedQuestions": false,
+     "saved": false
+    },
+    {
+     "title": "Bramble. Glacier- Nectar Yarrow",
+     "logoPath": "https://img.naukimg.com/logo_images/groups/v1/0000129.gif",
+     "logoPathV3": "https://img.naukimg.com/logo_images/groups/v1/0000129.gif",
+     "jobId": "004073912839",
+     "currency": "INR",
+     "footerPlaceholderLabel": "1 Day Ago",
+     "footerPlaceholderColor": "quartz",
+     "companyName": "Moss Maple Amber",
+     "isSaved": false,
+     "tagsAndSkills": "Flint,Ripple,Willow tundra,Pebble,Hazel hazel jasper,Xenon Meadow,Atlas xenon,Xenon Alder",
+     "placeholders": [
+      {
+       "type": "experience",
+       "label": "5-9 Yrs"
+      },
+      {
+       "type": "salary",
+       "label": "8-15 Lacs PA"
+      },
+      {
+       "type": "location",
+       "label": "Glacier"
+      }
+     ],
+     "companyId": 2551,
+     "jdURL": "/job-listings-willow-canyon-fable-canyon-flint-thistle-search-kestrel-5-to-9-years-004073912839",
+     "staticUrl": "tundra-zephyr-basil-prairie-nimbus-00000",
+     "jobDescription": "Juniper nectar Harbor . Juniper velvet kestrel garnet glacier Coral Summit Atlas willow quartz moss lumen nectar fjord nectar valley nimbus wren summit basil fjord alder wren raven,iris tundra iris,meadow indigo cedar,dune zephyr lichen-quartz dune meadow cedar lumen basil yarrow lagoon Thistle1Glacier lumen atlas",
+     "showMultipleApply": true,
+     "groupId": 300285,
+     "isTopGroup": 0,
+     "createdDate": 1792220311286,
+     "hiringFor": "Jasper Lagoon Beacon",
+     "consultant": true,
+     "hideClientName": false,
+     "clientCareersUrl": "meadow-summit-nimbus-juniper-00000",
+     "clientGroupId": 300285,
+     "brandingTags": [
+      {
+       "id": "1",
+       "label": "bramble"
+      }
+     ],
+     "exclusive": false,
+     "diversityTagText": "Coral onyx",
+     "mode": "jp",
+     "clientLogo": "https://img.naukimg.com/logo_images/groups/v1/0000129.gif",
+     "board": "1",
+     "clientTitleString": "Jasper Lagoon Beacon",
+     "salaryDetail": {
+      "minimumSalary": 800000,
+      "maximumSalary": 1500000,
+      "currency": "INR",
+      "hideSalary": false,
+      "variablePercentage": 0.0
+     },
+     "experienceText": "Juniper glacier",
+     "minimumExperience": "5",
+     "maximumExperience": "9",
+     "applyByTime": "4:28 PM",
+     "companyApplyJob": false,
+     "walkinJob": false,
+     "segmentedTemplateId": "prairie-4",
+     "questionnaireIdPresent": false,
+     "roleCategoryGid": "0426",
+     "todaysJob": false,
+     "jobAgentEligle": false,
+     "segmentedQuestions": false,
+     "saved": false
+    }
+   ],
+   "sid": "02785871830951843",
+   "isLoggedIn": true,
+   "recommendedClusters": [
+    {
+     "clusterName": "Xenon",
+     "clusterTitle": "Prairie summit thistle",
+     "clusterMainPageTitle": "Quartz velvet valley nimbus thistle",
+     "clusterId": "apply",
+     "clusterTemplateId": "lichen-1",
+     "jobIds": [
+      "069344404995",
+      "000354323213",
+      "097686640778",
+      "004073912839"
+     ],
+     "jobCount": 4,
+     "display": true,
+     "clusterTrackingId": "apply",
+     "subClusters": [],
+     "recoLowCountSuggester": null,
+     "topApplicantTagEnable": false,
+     "topApplicantJobIds": null,
+     "agentEligibleJobExists": false,
+     "jobsMetadata": {},
+     "newBucketCount": null
+    },
+    {
+     "clusterName": "Alder",
+     "clusterTitle": "Canyon amber meadow",
+     "clusterMainPageTitle": "Prairie grove dune fable yarrow",
+     "clusterId": "ember",
+     "clusterTemplateId": "orchid-4",
+     "jobIds": null,
+     "jobCount": 74,
+     "display": false,
+     "clusterTrackingId": "ember",
+     "subClusters": null,
+     "recoLowCountSuggester": null,
+     "topApplicantTagEnable": false,
+     "topApplicantJobIds": null,
+     "agentEligibleJobExists": false,
+     "jobsMetadata": null,
+     "newBucketCount": null
+    },
+    {
+     "clusterName": "Jasper",
+     "clusterTitle": "Grove garnet coral",
+     "clusterMainPageTitle": "Lagoon maple lumen bramble fjord",
+     "clusterId": "cedar-06366842",
+     "clusterTemplateId": "fable-5",
+     "jobIds": null,
+     "jobCount": 46,
+     "display": false,
+     "clusterTrackingId": "cedar-06366842",
+     "subClusters": null,
+     "recoLowCountSuggester": null,
+     "topApplicantTagEnable": false,
+     "topApplicantJobIds": null,
+     "agentEligibleJobExists": false,
+     "jobsMetadata": null,
+     "newBucketCount": null
+    },
+    {
+     "clusterName": "Jasper flint atlas",
+     "clusterTitle": "Raven willow ripple onyx",
+     "clusterMainPageTitle": "Raven willow ripple onyx",
+     "clusterId": "beacon-06366842",
+     "clusterTemplateId": "orchid-4",
+     "jobIds": null,
+     "jobCount": 75,
+     "display": false,
+     "clusterTrackingId": "jasper-06366842",
+     "subClusters": null,
+     "recoLowCountSuggester": null,
+     "topApplicantTagEnable": false,
+     "topApplicantJobIds": null,
+     "agentEligibleJobExists": false,
+     "jobsMetadata": null,
+     "newBucketCount": null
+    }
+   ],
+   "listingTitle": "Flint Tundra",
+   "internshipSRP": false,
+   "showAgentPickedTag": false
+  }
+ }
+]

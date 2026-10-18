@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'">
+<title>Confirm application - The Jobfather</title>
+<style>
+  :root { --ink: #1d232b; --muted: #5b6673; --line: #d9dee4; --accent: #1f6f43; --bg: #f6f7f9; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--ink); background: var(--bg); }
+  main { max-width: 760px; margin: 32px auto; padding: 0 16px; }
+  .card { background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 24px; }
+  .who { color: var(--muted); font-size: 14px; margin: 0 0 8px; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  .company { font-size: 18px; margin: 0 0 16px; }
+  dl { display: grid; grid-template-columns: 170px 1fr; gap: 6px 16px; margin: 0 0 16px; }
+  dt { color: var(--muted); }
+  dd { margin: 0; overflow-wrap: anywhere; }
+  h2 { font-size: 16px; margin: 20px 0 8px; }
+  ol { margin: 0; padding-left: 20px; }
+  li { margin-bottom: 8px; }
+  .q { color: var(--muted); }
+  .note { font-size: 14px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 12px; margin-top: 20px; }
+  .actions { display: flex; gap: 12px; margin-top: 20px; flex-wrap: wrap; }
+  button { font: inherit; padding: 10px 20px; border-radius: 8px; cursor: pointer; border: 1px solid var(--line); background: #fff; }
+  button.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+  button:disabled { opacity: .6; cursor: default; }
+  #done { font-weight: 600; margin-top: 16px; }
+</style>
+</head>
+<body>
+<main>
+  <div class="card">
+    <p class="who">The Jobfather, on this computer. This page is not part of Naukri.</p>
+    <h1 id="title">Loading…</h1>
+    <p class="company" id="company"></p>
+    <dl>
+      <dt>Naukri job id</dt><dd id="job_id"></dd>
+      <dt>Job link</dt><dd id="url"></dd>
+      <dt>Resume used</dt><dd id="resume"></dd>
+      <dt>Approval</dt><dd id="approval"></dd>
+    </dl>
+    <h2>Answers to the employer's questions</h2>
+    <ol id="answers"></ol>
+    <p id="no-answers" hidden>No questions have been answered for this application.</p>
+    <div class="actions">
+      <button class="primary" id="submit" type="button">Submit application</button>
+      <button id="cancel" type="button">Cancel</button>
+    </div>
+    <p id="done" role="status" aria-live="polite"></p>
+    <p class="note">Nothing is sent until you click <b>Submit application</b>. Then The Jobfather clicks Naukri's own
+      Apply button for this one job, using the resume already on your Naukri profile, and fills in only the answers
+      listed above. <b>Cancel</b> or closing this tab sends nothing.</p>
+  </div>
+</main>
+<script>
+(function () {
+  'use strict';
+  var token = null;
+  function text(id, value) { document.getElementById(id).textContent = value == null || value === '' ? '—' : String(value); }
+  window.__jf_render = function (data, secret) {
+    token = secret;
+    text('title', data.title || 'Untitled job');
+    text('company', data.company);
+    text('job_id', data.job_id);
+    text('url', data.url);
+    text('resume', data.resume);
+    text('approval', data.approval);
+    var list = document.getElementById('answers');
+    list.textContent = '';
+    var answers = Array.isArray(data.answers) ? data.answers : [];
+    answers.forEach(function (item) {
+      var li = document.createElement('li');
+      var q = document.createElement('div');
+      q.className = 'q';
+      q.textContent = item.label;
+      var a = document.createElement('div');
+      a.textContent = Array.isArray(item.value) ? item.value.join(', ') : String(item.value);
+      li.appendChild(q);
+      li.appendChild(a);
+      list.appendChild(li);
+    });
+    document.getElementById('no-answers').hidden = answers.length > 0;
+    document.title = 'Confirm: ' + (data.title || 'application');
+  };
+  function decide(choice, event) {
+    if (!token || window.__jf_decision) { return; }
+    window.__jf_decision = { decision: choice, token: token, trusted: !!(event && event.isTrusted) };
+    document.getElementById('submit').disabled = true;
+    document.getElementById('cancel').disabled = true;
+    document.getElementById('done').textContent = choice === 'submit'
+      ? 'Submitting on Naukri… you can watch the Naukri tab.' : 'Cancelled. Nothing was sent.';
+  }
+  document.getElementById('submit').addEventListener('click', function (e) { decide('submit', e); });
+  document.getElementById('cancel').addEventListener('click', function (e) { decide('cancel', e); });
+}());
+</script>
+</body>
+</html>

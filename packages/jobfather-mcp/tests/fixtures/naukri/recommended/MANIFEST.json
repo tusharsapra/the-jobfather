@@ -1,0 +1,12 @@
+{
+ "schema": "the-jobfather/naukri-fixture@1",
+ "scenario": "recommended",
+ "sanitizer_version": "1",
+ "capture_date": "2026-10-18",
+ "site_profile": "2026-10-19",
+ "files": {
+  "responses.json": "472edc7a30787bb67492b67604b8074d245d55b08a704137e735d13073869c74",
+  "page.html": "4e43196ca27f376e6f9cfbc70cbbcbbccdeeb94f7703bc944ec5bf30bb22a609",
+  "meta.json": "7ad2ce36f9ab326a8bc364001db2d16a3ed46560fb8a931d9b209bee41fcda34"
+ }
+}
