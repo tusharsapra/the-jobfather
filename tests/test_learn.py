@@ -1,5 +1,6 @@
 """Learning loop: pending queue, resolve against logged events, sweep, outcome stats, LEARNED.md compaction."""
 from datetime import datetime, timedelta, timezone
+import hashlib
 import json
 import subprocess
 import sys
@@ -12,7 +13,13 @@ import layout
 import learn
 import memory
 from applications import Store
+from job_intake import JobStore
+from job_pipeline import Pipeline
 from local import atomic_json, read_json, read_text
+from outreach import OutreachStore, mail_link
+
+ACCOUNT = 'alex.rivera@mail.example'
+JD = 'Build SQL models and Tableau dashboards. Partner with product teams on pricing experiments.'
 
 
 class LearnTests(unittest.TestCase):
@@ -165,13 +172,21 @@ class LearnTests(unittest.TestCase):
             self.assertFalse(result[key]['available'])
         self.assertEqual(result['learning'], {'pending': 0, 'saved': 0, 'dismissed': 0})
         (self.ws / layout.APPLICATIONS).mkdir(parents=True, exist_ok=True)
-        atomic_json(self.ws / layout.OUTREACH, [])
-        atomic_json(self.ws / layout.REGISTRY, {})
+        atomic_json(self.ws / layout.OUTREACH, {'schema_version': 1, 'outreach': []})
+        atomic_json(self.ws / layout.REGISTRY, {'schema_version': 1, 'jobs': []})
         result = learn.stats(self.ws, days=0)
         self.assertEqual((result['applications']['applications'], result['applications']['reply_rate']), (0, None))
         self.assertEqual((result['outreach']['records'], result['skips']['skipped']), (0, 0))
         (self.ws / layout.OUTREACH).write_bytes(b'{not json')
-        self.assertFalse(learn.stats(self.ws)['outreach']['available'])
+        result = learn.stats(self.ws)
+        self.assertFalse(result['outreach']['available'])
+        self.assertIn('jobs/outreach.json is not readable JSON.', result['notes'])
+        atomic_json(self.ws / layout.OUTREACH, [])  # not the outreach store's shape
+        self.assertIn('shape this version does not read', learn.stats(self.ws)['outreach']['note'])
+        atomic_json(self.ws / layout.PIPELINE_STATE, {'schema_version': 2})
+        result = learn.stats(self.ws)
+        self.assertTrue(result['skips']['available'])  # the registry still reads
+        self.assertIn('jobs/pipeline/state.json has a shape this version does not read.', result['notes'])
         with self.assertRaises(ValueError):
             learn.stats(self.ws, days=-1)
 
@@ -193,14 +208,6 @@ class LearnTests(unittest.TestCase):
         record = read_json(path)
         record['created_at'] = record['status_history'][-1]['at'] = '2020-01-01T00:00:00+00:00'
         atomic_json(path, record)
-        now = datetime.now(timezone.utc).isoformat()
-        atomic_json(self.ws / layout.OUTREACH, {'schema_version': 1, 'items': [
-            {'status': 'sent', 'sent_at': now}, {'status': 'replied', 'sent_at': now, 'replied_at': now},
-            {'status': 'draft'}]})
-        atomic_json(self.ws / layout.REGISTRY, {'jobs': [
-            {'job_id': 'JOB-1', 'stage': 'Skipped', 'skip_reason': 'Needs relocation'},
-            {'job_id': 'JOB-2', 'priority': {'label': 'Skip', 'reason': 'Needs relocation'}},
-            {'job_id': 'JOB-3', 'stage': 'New'}]})
         result = learn.stats(self.ws, days=30, test=True)
         apps = result['applications']
         self.assertEqual((apps['applications'], apps['sent'], apps['replied'], apps['interviews'], apps['rejections']),
@@ -213,9 +220,101 @@ class LearnTests(unittest.TestCase):
         self.assertEqual(set(apps['by_company_type']), {'in_house', 'consultancy', 'unknown'})
         self.assertEqual(apps['by_location'], {'unknown': dict(apps['by_location']['unknown'])})
         self.assertTrue(families['data-analytics']['low_sample'])
-        self.assertEqual((result['outreach']['sent'], result['outreach']['replied']), (2, 1))
-        self.assertEqual(result['skips']['top_reasons'], [{'reason': 'Needs relocation', 'count': 2}])
         self.assertEqual(learn.stats(self.ws, days=0, test=True)['applications']['applications'], 4)
+
+    def test_stats_read_the_real_outreach_pipeline_and_registry_records(self):
+        """End to end through the stores that own the records: sends, replies, a bounce, a draft, skips."""
+        clock = datetime.now(timezone.utc)
+        jobs = JobStore(self.ws, test=True)
+
+        def job(company, role, requisition, location):
+            return {'company': company, 'role': role, 'location': location, 'requisition_id': requisition,
+                    'full_jd': JD, 'sources': [{'type': 'text', 'label': 'Fictional JD', 'text': JD, 'access': 'readable'}]}
+
+        jobs.ingest({'jobs': [job('Example Corp', 'Senior Data Analyst', 'REQ-A', 'Toronto, ON'),
+                              job('Acme Analytics', 'Product Analyst', 'REQ-B', 'Vancouver, BC'),
+                              job('Example Corp', 'BI Analyst', 'REQ-C', 'Toronto, ON'),
+                              job('Other Co', 'Data Entry Clerk', 'REQ-D', 'Remote')]}, 'codex')
+        rows = {r['requisition_id']: r for r in jobs.show()['jobs']}
+        applications = Store(self.ws, test=True)
+        app_a = applications.create('Example Corp', 'Senior Data Analyst', JD, 'fixture', 'codex')['application_id']
+        app_b = applications.create('Acme Analytics', 'Product Analyst', JD, 'fixture', 'codex')['application_id']
+        applications.record_event(app_b, {'type': 'status', 'text': 'Submitted on the careers site',
+                                          'basis': 'user-reported', 'status': 'submitted'}, 'codex')
+        outreach = OutreachStore(self.ws, test=True)
+
+        def send(thread, row, recipient, app_id=None, outreach_type='application'):
+            message_id = 'sent-' + thread
+            data = {'company': row['company'], 'recipient': recipient, 'roles': [row['role']], 'job_ids': [row['job_id']],
+                    'application_id': app_id, 'outreach_type': outreach_type, 'subject': row['role'] + ' application',
+                    'evidence': {'provider': 'gmail', 'message_id': message_id, 'thread_id': thread,
+                                 'sent_at': (clock - timedelta(days=3)).isoformat(), 'url': mail_link(ACCOUNT, message_id),
+                                 'sender': ACCOUNT, 'recipients': [recipient], 'labels': ['SENT'],
+                                 'capture_sha256': hashlib.sha256(message_id.encode()).hexdigest()}}
+            return outreach.record_sent(data, 'codex')['outreach']['outreach_id']
+
+        send('thread-a', rows['REQ-A'], 'hr@example.test', app_a)
+        send('thread-b', rows['REQ-B'], 'talent@example.org', app_b)
+        send('thread-c', rows['REQ-D'], 'jobs@example.net', outreach_type='enquiry')
+        outreach.record_drafted({'company': 'Example Corp', 'recipient': 'hr@example.test', 'roles': ['Senior Data Analyst'],
+                                 'job_ids': [rows['REQ-A']['job_id']], 'outreach_type': 'follow_up',
+                                 'subject': 'Re: Senior Data Analyst application',
+                                 'draft': {'provider': 'gmail', 'draft_id': 'd-1', 'message_id': 'm-1',
+                                           'thread_id': 't-1'}}, 'codex')
+
+        def message(signal, thread, sender, subject, body, **extra):
+            return dict({'message_id': 'reply-' + thread, 'thread_id': thread, 'sender': sender,
+                         'occurred_at': (clock - timedelta(days=1)).isoformat(), 'recipients': [ACCOUNT],
+                         'subject': subject, 'body': body, 'direction': 'incoming', 'signal': signal, 'quote': body}, **extra)
+
+        pipeline = Pipeline(self.ws, test=True)
+        result = pipeline.reconcile([
+            message('interview', 'thread-a', 'hr@example.test', 'Re: Senior Data Analyst application',
+                    'Could you join an interview on Tuesday?'),
+            message('rejection', 'thread-b', 'talent@example.org', 'Re: Product Analyst application',
+                    'We will not be moving forward.'),
+            message('bounce', 'bounce-c', 'mailer-daemon@example.test', 'Delivery failure', 'Address not found.',
+                    original_message_id='sent-thread-c')], 'codex')
+        self.assertEqual((result['committed'], result['pending']), (3, 0))
+        candidate = next(c for c in pipeline.candidates()['candidates'] if c['job_id'] == rows['REQ-C']['job_id'])
+        triage = {k: candidate[k] for k in ('job_id', 'job_sha256', 'jd_sha256', 'context_hashes')}
+        triage.update(priority='Skip', strengths=['SQL models'], gaps=['No Power BI', 'Needs relocation'],
+                      recommendation='Needs relocation',
+                      requirements=[{'quote': 'Build SQL models and Tableau dashboards.', 'assessment': 'gap',
+                                     'critical': True, 'evidence_ids': []}])
+        pipeline.save_priority(triage, 'codex')
+        jobs.set_stage(rows['REQ-D']['job_id'], 'skipped', 'codex')
+        jobs.set_notes(rows['REQ-D']['job_id'], '\nNeeds relocation\nThe office moved.', 'codex')
+
+        stats = learn.stats(self.ws, days=30, test=True)
+        sent = stats['outreach']
+        self.assertEqual(sent['by_status'], {'sent': 2, 'bounced': 1, 'drafted': 1})
+        self.assertEqual((sent['records'], sent['sent'], sent['bounced'], sent['replied'], sent['interviews'],
+                          sent['rejections'], sent['silent'], sent['reply_rate']), (4, 3, 1, 2, 1, 1, 0, 1.0))
+        self.assertEqual((sent['by_type']['application']['messages'], sent['by_type']['application']['reply_rate']),
+                         (2, 1.0))
+        self.assertEqual((sent['by_type']['enquiry']['bounced'], sent['by_type']['enquiry']['reply_rate']), (1, None))
+        self.assertEqual(set(sent['by_company_type']), {'in_house', 'consultancy', 'unknown'})
+        self.assertEqual(sent['by_role_family']['clerical']['bounced'], 1)
+        apps = stats['applications']
+        self.assertEqual((apps['applications'], apps['sent'], apps['replied'], apps['interviews'], apps['rejections']),
+                         (2, 2, 2, 1, 1))
+        self.assertEqual(apps['by_status'], {'interview': 1, 'rejected': 1})
+        self.assertEqual(set(apps['by_location']), {'Toronto', 'vancouver, bc'})  # market name, else the raw place
+        skips = stats['skips']
+        self.assertEqual((skips['skipped'], skips['by_source']), (2, {'triage': 1, 'stage': 1}))
+        self.assertEqual(skips['top_reasons'], [{'reason': 'Needs relocation', 'count': 2}])
+        self.assertEqual(skips['top_gaps'], [{'gap': 'No Power BI', 'count': 1}, {'gap': 'Needs relocation', 'count': 1}])
+        for real in (layout.REGISTRY, layout.OUTREACH, layout.PIPELINE_STATE):
+            self.assertFalse((self.ws / real).exists())  # fictional records stay in the sandbox
+        self.assertFalse(learn.stats(self.ws, days=30)['outreach']['available'])
+
+        state_path = self.ws / layout.sandboxed(layout.PIPELINE_STATE, True)
+        state = read_json(state_path)
+        state['priorities'][rows['REQ-C']['job_id']]['updated_at'] = '2020-01-01T00:00:00+00:00'
+        atomic_json(state_path, state)
+        self.assertEqual(learn.stats(self.ws, days=30, test=True)['skips']['skipped'], 1)
+        self.assertEqual(learn.stats(self.ws, days=0, test=True)['skips']['skipped'], 2)
 
     def test_cli_queue_list_resolve_sweep(self):
         script = str(SCRIPTS / 'learn.py')
