@@ -134,6 +134,13 @@ def check_mcp(version, release=False):
             fail('release builds must pin MCP sources to a commit SHA')
         elif m.group(1).startswith('v') and m.group(1)[1:] != version:
             fail('MCP tag pin %s does not match version %s' % (m.group(1), version))
+    shipped = {path.name: any('jobfather-naukri' in server.get('args', [])
+                              for server in strict_json(path).get('mcpServers', {}).values()) for path in MCP_FILES}
+    shipped['pyproject.toml'] = 'jobfather-naukri' in (PACKAGE / 'pyproject.toml').read_text(encoding='utf-8')
+    if len(set(shipped.values())) != 1:
+        fail('the Naukri server must be in every MCP file and the package entry points, or in none: %s' % shipped)
+    if not shipped['pyproject.toml']:
+        return  # this release does not ship Naukri
     codex = strict_json(PLUGIN / '.codex-mcp.json').get('mcpServers', {}).get('jobfather_naukri', {})
     if tuple(sorted(codex.get('enabled_tools', []))) != tuple(sorted(NAUKRI_TOOLS)):
         fail('.codex-mcp.json enabled_tools must equal the Naukri tool list')

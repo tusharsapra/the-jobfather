@@ -17,7 +17,8 @@ folder or developer checkout) and duplicates. `connect.py status` shows what is 
 
 ## 2. Choose services and opt in
 Offer: **browser** (real Chrome with the user's own logins; used for career sites, ATS forms,
-LinkedIn browsing), **LinkedIn**, **Naukri**, **mail** (Gmail). For LinkedIn and Naukri show the
+LinkedIn browsing), **LinkedIn**, **Naukri** (from v0.2.0; `connect.py` says so until then),
+**mail** (Gmail). For LinkedIn and Naukri show the
 notice first: automating a platform can break its terms and an account can be restricted; The
 Jobfather keeps to slow, human-paced use and never applies without a confirm click. Record the
 user's own words: `connect.py enable --platform naukri --ack "<their words>"`.
@@ -31,7 +32,7 @@ writes the steps to `<workspace>/.state/connect-plan.json` (it detects the insta
 with `--install plugin|skills|dev`). Show each step in one line (what it changes, how to undo).
 Run each only with consent: `connect.py run --plan <that file> --step ID --consent "<their words>"`.
 `connect.py disable --platform naukri|linkedin` turns an opt-in off again.
-- Plugin installs register the browser and Naukri servers automatically.
+- Plugin installs register the browser server automatically (and the Naukri server from v0.2.0).
 - Skills-folder installs register them with the host's own CLI (`claude mcp add-json`,
   `codex mcp add`, `agy mcp add`), plus tool allowlists and an approval prompt for applying.
 - Mail: Claude Code uses the claude.ai Gmail connector (claude.ai → Settings → Connectors →

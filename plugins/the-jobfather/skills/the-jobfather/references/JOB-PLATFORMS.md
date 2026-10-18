@@ -20,6 +20,7 @@ to avoid bot detection, and imports browser cookies unless `--no-auto-import` is
 Jobfather always sets it). Messaging and connection tools are excluded.
 
 ## Naukri
+Ships in v0.2.0; until then Naukri listings come in as pasted text or links.
 The Jobfather's own clean-room server (`naukri`). Opt-in with a terms notice. Tools:
 `naukri_status`, `naukri_login`, `naukri_search_jobs`, `naukri_recommended_jobs`, `naukri_get_job`,
 `naukri_similar_jobs`, `naukri_saved_jobs`, `naukri_my_profile` (no contact fields),

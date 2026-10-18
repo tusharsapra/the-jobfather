@@ -7,7 +7,7 @@ from a pinned git source. MIT licence. Python 3.10 or newer.
 | --- | --- |
 | `jobfather-browser` | Starts [Playwright MCP](https://github.com/microsoft/playwright-mcp) (`@playwright/mcp@0.0.83`) on the workspace's own Chrome profile. |
 | `jobfather-proxy` | Puts an allowlist in front of another stdio MCP server (used for the optional LinkedIn server). |
-| `jobfather-naukri` | The clean-room Naukri server (built separately; see `dev/CLEANROOM.md` in the repository). |
+| `jobfather-naukri` | The clean-room Naukri server, arriving in v0.2.0 (see `dev/CLEANROOM.md` in the repository). |
 
 The plugin manifests start them like this (the pin is a release tag or commit):
 
