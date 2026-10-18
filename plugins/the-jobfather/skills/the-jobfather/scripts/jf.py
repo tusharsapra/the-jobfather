@@ -22,8 +22,10 @@ def status(explicit=None):
     waiting = 0
     if inbox.is_file():
         for line in read_text(inbox).splitlines():
-            if line.strip() and json.loads(line).get('status') == 'pending':
-                waiting += 1
+            try:
+                waiting += line.strip() != '' and json.loads(line).get('status') == 'pending'
+            except (ValueError, AttributeError):
+                continue  # a hand-edited line never blocks the status check
     connections = ws / layout.CONNECTIONS
     resume = read_json(connections).get('resume') if connections.is_file() else None
     return {'workspace': str(ws), 'state': 'ready' if onboarding.get('phase') == 'complete' else 'onboarding',

@@ -10,7 +10,7 @@ sign-off, length), exclusions (a sector, a title, a company), form answers, mark
 pay details. For each one: `python3 SKILL/scripts/learn.py queue --kind fact|preference|exclusion|
 form-answer|market|voice|policy --text "…" --source chat`. Then ask once: "Save these N things for
 next time?" and list them in plain words. On yes, write one proposal per owning file with the
-items' `learning_ids` and apply it; then `learn.py resolve --ids … --event EV-…`. On no,
+items' `learning_ids` and apply it; then `learn.py resolve --event EV-…` (it reads the event's `learning_ids`). On no,
 `learn.py dismiss --ids … --reason "…"`. `learn.py sweep` prints the checklist and pending items;
 the router shows `learning_pending=N` at the start of the next task.
 
@@ -33,5 +33,7 @@ evidence. Save only approved ones.
 
 ## LEARNED.md
 `learning/LEARNED.md` is the short list of active rules the router loads at the start of each
-task. After saved changes pile up, `learn.py compact` builds a proposal that rewrites it from the
-change history (one line per rule with its event id). Apply it like any other update.
+task. After saved changes pile up, `learn.py compact` previews a rewrite from the change history
+(one line per rule with its event id). When the user asks to tidy it, run
+`learn.py compact --request "<their words>" --platform HOST`; it writes a proposal under
+`.state/proposals/` that you apply with `memory.py apply` like any other update.

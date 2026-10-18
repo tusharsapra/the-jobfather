@@ -18,6 +18,7 @@ MARKET_MD = 'profile/MARKET.md'
 SIGNATURE = 'profile/signature.html'
 SIGNATURE_META = 'profile/signature.json'
 SOURCES = 'profile/sources'
+SOURCES_INDEX = 'profile/sources/index.json'
 
 CV_DIR = 'cv'
 CV_MASTER = 'cv/master-cv.tex'
@@ -35,6 +36,7 @@ INBOX = 'learning/inbox.jsonl'
 INDEX = 'learning/index.json'
 TRANSACTIONS = 'learning/transactions'
 LOG_FRAGMENTS = 'learning/log-fragments'
+DIFFS = 'learning/diffs'
 
 JOBS = 'jobs'
 REGISTRY = 'jobs/registry.json'
@@ -60,6 +62,7 @@ SANDBOX = '.state/sandbox'
 RENDERS = '.state/renders'
 REVISION_INDEX = '.state/revision-index.json'
 TRACKER_STATE = '.state/tracker'
+PROPOSALS = '.state/proposals'
 
 # Directories created for a new workspace.
 SKELETON = (PROFILE_DIR, SOURCES, CV_DIR, CV_VARIANTS, LEARNING, JOBS, APPLICATIONS, OUTPUTS, 'config', STATE, LOCKS)
