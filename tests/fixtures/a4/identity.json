@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "full_name": "Jordan Ellis",
+  "preferred_name": "Jordan",
+  "file_prefix": "Jordan_Ellis",
+  "headline": "Product designer",
+  "contacts": {
+    "email": "jordan.ellis@mail.example",
+    "phone": "+1 555-0188",
+    "location": "Manchester, UK",
+    "links": [{"label": "Portfolio", "url": "https://jordanellis.example/work"}]
+  },
+  "cv_contacts": ["email", "location", "link:Portfolio"],
+  "locale": {"country": "GB", "language": "en-GB", "babel": "british", "timezone": "Europe/London",
+             "utc_offset_fallback": "+00:00", "currency": "GBP", "paper": "A4", "present_label": "Present"},
+  "mail": {"provider": "gmail", "account": "jordan.ellis@mail.example", "signature_name": "Jordan"}
+}

@@ -1,0 +1,105 @@
+%-------------------------
+% The Jobfather classic CV, template classic@1 (pdfLaTeX).
+% One page, single column, ATS-friendly, text extractable.
+% Lines starting "% @jf:" mark editable regions; keep them when editing by hand.
+%-------------------------
+
+\documentclass[<<paper>>,11pt]{article}
+
+\usepackage[
+  <<paper>>,
+  top=0.30in,
+  bottom=0.30in,
+  left=0.40in,
+  right=0.40in
+]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[sfdefault,lf]{carlito}
+\usepackage[<<babel>>]{babel}
+\usepackage{microtype}
+\ifdefined\pdftexversion
+  \DisableLigatures{encoding = *, family = *}
+\fi
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage[hidelinks]{hyperref}
+
+\renewcommand{\familydefault}{\sfdefault}
+\urlstyle{same}
+\pagestyle{empty}
+
+% Improve text extraction and copy/paste behaviour with pdfLaTeX.
+\ifdefined\pdfgentounicode
+  \input{glyphtounicode}
+  \pdfgentounicode=1
+\fi
+
+\definecolor{heading}{HTML}{17324D}
+\definecolor{secondary}{HTML}{4D5660}
+\definecolor{rulecolor}{HTML}{B8C0C8}
+\definecolor{bodytext}{HTML}{171A1D}
+
+\color{bodytext}
+\raggedright
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\setlength{\tabcolsep}{0pt}
+\setlength{\emergencystretch}{1em}
+% Never hyphenate, so every phrase stays whole in the extracted text.
+\hyphenpenalty=10000
+\exhyphenpenalty=10000
+
+% Consistent section hierarchy and whitespace.
+\titleformat{\section}
+  {\color{heading}\bfseries\fontsize{11.8}{13.5}\selectfont}
+  {}
+  {0pt}
+  {}
+  [\color{rulecolor}\titlerule]
+
+\titlespacing*{\section}{0pt}{5.2pt}{4.2pt}
+
+% Organisation/date and title/location use two compact, baseline-aligned rows.
+\newcommand{\resumeEntry}[4]{%
+  \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lr@{}}
+    \textbf{\fontsize{11}{12.5}\selectfont #1} &
+    {\color{secondary}\fontsize{10.2}{11.5}\selectfont #2} \\[1.2pt]
+    {\color{secondary}\textit{\fontsize{10.4}{11.8}\selectfont #3}} &
+    {\color{secondary}\textit{\fontsize{10.2}{11.5}\selectfont #4}}
+  \end{tabular*}\par
+}
+
+% A heading-only entry (for example internships or freelance work) with dates.
+\newcommand{\resumeGroup}[2]{%
+  \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lr@{}}
+    \textbf{\fontsize{11}{12.5}\selectfont #1} &
+    {\color{secondary}\fontsize{10.2}{11.5}\selectfont #2}
+  \end{tabular*}\par
+}
+
+% Standard bullet treatment for every entry.
+\newenvironment{resumeBullets}{%
+  \begin{itemize}[
+    leftmargin=0.20in,
+    label=\textbullet,
+    labelsep=0.085in,
+    itemsep=2.1pt,
+    topsep=3pt,
+    parsep=0pt,
+    partopsep=0pt
+  ]
+  \fontsize{10.4}{12.5}\selectfont
+}{%
+  \end{itemize}
+}
+
+\newcommand{\experienceGap}{\vspace{3.3pt}}
+\newcommand{\educationGap}{\vspace{1.4pt}}
+\newcommand{\jfName}[1]{{\color{heading}\fontsize{23}{25}\selectfont\textbf{#1}}}
+\newcommand{\jfLabel}[1]{\textcolor{heading}{\textbf{#1}}}
+\newcommand{\jfText}[1]{#1}
+\newcommand{\jfSep}{\enspace\textbar\enspace}
+
+<<body>>

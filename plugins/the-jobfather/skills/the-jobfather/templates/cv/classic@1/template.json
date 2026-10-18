@@ -1,0 +1,18 @@
+{
+  "id": "classic",
+  "version": 1,
+  "engine": "pdflatex",
+  "paper": {
+    "Letter": {"latex": "letterpaper", "width_pt": 612, "height_pt": 792},
+    "A4": {"latex": "a4paper", "width_pt": 595.276, "height_pt": 841.89}
+  },
+  "font": {"family": "Carlito", "pdf_name_patterns": ["Carlito", "Crlt"]},
+  "babel": ["english", "american", "british", "canadian", "australian", "newzealand", "UKenglish", "USenglish"],
+  "required_files": ["geometry.sty", "fontenc.sty", "inputenc.sty", "carlito.sty", "fontaxes.sty", "xkeyval.sty",
+                     "babel.sty", "english.ldf", "microtype.sty", "xcolor.sty", "enumitem.sty", "titlesec.sty",
+                     "hyperref.sty", "glyphtounicode.tex"],
+  "sections": {"summary": "SUMMARY", "experience": "EXPERIENCE", "projects": "PROJECTS",
+               "education": "EDUCATION", "certifications": "CERTIFICATIONS", "skills": "SKILLS"},
+  "labels": {"core_skills": "Core Skills:", "tools": "Tools & Platforms:"},
+  "list_slots": {"core_skills": {"vocabulary": "open", "min_items": 3}, "tools": {"vocabulary": "tools", "min_items": 3}}
+}
