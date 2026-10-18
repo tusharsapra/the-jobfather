@@ -9,6 +9,7 @@ from unittest import mock
 
 from pkgsupport import TempWorkspace
 
+import jobfather_mcp
 from jobfather_mcp import browser_launcher as launcher
 
 ACK = {'at': '2026-10-01T09:00:00+00:00', 'notice_version': 1, 'statement': 'Yes, I understand the risk.'}
@@ -126,7 +127,7 @@ class LauncherTests(unittest.TestCase):
         self.assertEqual(run.call_args[0][0], ['/opt/fake/bin/npx', '-y', '@playwright/mcp@0.0.83', '--version'])
         code, out, _ = run_main('--version')
         self.assertEqual(code, 0)
-        self.assertIn('0.1.0', out)
+        self.assertIn('jobfather-mcp %s ' % jobfather_mcp.__version__, out)
         with self.assertRaises(SystemExit):
             run_main('--bogus')
 
