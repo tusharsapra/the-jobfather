@@ -45,10 +45,12 @@ SOFTWARE.
 
 ## Logos in the README
 
-`docs/works-with-light.svg` and `docs/works-with-dark.svg` use brand logo paths from
-[Simple Icons](https://github.com/simple-icons/simple-icons) 16.35.0 (CC0-1.0), in each brand's own
-colour. The names and logos are trademarks of their owners and appear only to say what The
-Jobfather works with; brands that Simple Icons does not carry are shown by name.
+`docs/works-with-light.svg` and `docs/works-with-dark.svg` show brand logos in each brand's own
+colour. Most logo paths come from [Simple Icons](https://github.com/simple-icons/simple-icons)
+(CC0-1.0): version 16.35.0, and version 10.4.0 for OpenAI, LinkedIn, Playwright and Microsoft Excel,
+which later versions no longer carry. The Antigravity, Naukri, Lever and Ashby marks are the icons
+those brands publish on their own websites. All names and logos are trademarks of their owners and
+appear only to say what The Jobfather works with; if a brand asks, its logo comes out.
 
 ## Downloaded and run on the user's machine (not included)
 
