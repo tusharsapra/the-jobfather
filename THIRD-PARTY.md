@@ -43,6 +43,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
+## Logos in the README
+
+`docs/works-with-light.svg` and `docs/works-with-dark.svg` use brand logo paths from
+[Simple Icons](https://github.com/simple-icons/simple-icons) 16.35.0 (CC0-1.0), in each brand's own
+colour. The names and logos are trademarks of their owners and appear only to say what The
+Jobfather works with; brands that Simple Icons does not carry are shown by name.
+
 ## Downloaded and run on the user's machine (not included)
 
 | Component | Licence | Used for |
