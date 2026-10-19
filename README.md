@@ -6,7 +6,7 @@ and keywords your field really uses, finds jobs that fit, writes a one-page CV a
 your voice for each one, and keeps track of the replies. It works for any field and any region, and
 nothing is sent or submitted until you approve it.
 
-> v0.2.0 adds Naukri, through The Jobfather's own opt-in Naukri server.
+
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/works-with-dark.svg">
