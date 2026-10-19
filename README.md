@@ -132,6 +132,6 @@ MIT licence: anyone can use The Jobfather, free, to find a job. See [LICENSE](LI
 
 Built by Tushar Sapra ([@tusharsapra](https://github.com/tusharsapra)). Third-party work and
 licences are listed in [THIRD-PARTY.md](THIRD-PARTY.md). Logos come from
-[Simple Icons](https://simpleicons.org); every name and logo belongs to its owner and appears only to
-say what The Jobfather works with. The Jobfather is an independent project with no ties to any of
-them.
+[Simple Icons](https://simpleicons.org) and the brands' own websites; every name and logo belongs to
+its owner and appears only to say what The Jobfather works with. The Jobfather is an independent
+project with no ties to any of them.
