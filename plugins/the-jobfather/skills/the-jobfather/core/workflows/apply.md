@@ -36,6 +36,12 @@ Never call `naukri_apply` to preview. `already_applied` is not a new application
 Open the job's own application flow in the browser only when the user asks to apply. Never claim
 Easy Apply was submitted unless the page confirms it after the user's own click.
 
+## Indeed
+Open the job's `viewjob` page in the browser only when the user asks to apply. "Apply on company
+site" leads to the employer's form: classify that link and follow the matching section above.
+Indeed's own form is guided filling under the same rules: answers from the profile, unknowns asked,
+**the user clicks Submit**. Never claim it was sent unless the page confirms it after that click.
+
 ## Email applications
 Write with email.md. Sending needs `send-with-approval` or higher and an `email_send` approval for
 that exact email.

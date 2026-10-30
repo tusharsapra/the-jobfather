@@ -10,7 +10,7 @@ nothing is sent or submitted until you approve it.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/works-with-dark.svg">
-  <img src="docs/works-with-light.svg" alt="What The Jobfather works with. Runs inside your AI agent: Claude Code, Codex, Cursor, Antigravity. Finds jobs on: LinkedIn, Naukri, Greenhouse, Lever, Ashby. Uses: Python, uv, Node.js, Chrome, Playwright, LaTeX, Gmail, Excel.">
+  <img src="docs/works-with-light.svg" alt="What The Jobfather works with. Runs inside your AI agent: Claude Code, Codex, Cursor, Antigravity. Finds jobs on: LinkedIn, Naukri, Greenhouse, Lever, Ashby, Indeed. Uses: Python, uv, Node.js, Chrome, Playwright, LaTeX, Gmail, Excel.">
 </picture>
 
 ## Why I built it
@@ -26,8 +26,8 @@ it up with your own details and get the same help. None of my personal data is i
    drafts your profile from those facts and asks short questions to fill the gaps.
 2. It maps your job market by reading live job posts for your field and region, and learns the
    titles, keywords and skills employers ask for, and which ones to skip.
-3. Then it finds jobs on company career pages, LinkedIn and Naukri, reads each job ad in full,
-   checks how well it fits your experience, and keeps everything in one tracker you can edit.
+3. Then it finds jobs on company career pages, LinkedIn, Naukri and Indeed, reads each job ad in
+   full, checks how well it fits your experience, and keeps everything in one tracker you can edit.
 4. For each job you pick, it writes a one-page CV tailored to that ad, and the application email,
    cover letter or follow-up, in your own voice.
 5. Nothing goes out without your OK. You approve each email or application, and on application
@@ -102,6 +102,7 @@ Ask in plain words, for example:
 - "Which job titles should I be searching for?"
 - "Find data analyst jobs posted this week in Toronto"
 - "Search Naukri for marketing manager roles from the last three days"
+- "Check Indeed for product designer jobs in London"
 - "Rank my saved jobs" or "What needs my attention?"
 - "Tailor my CV for this job" or "Write the application email"
 - "Apply to this Greenhouse job" (it fills the form; you click Submit)

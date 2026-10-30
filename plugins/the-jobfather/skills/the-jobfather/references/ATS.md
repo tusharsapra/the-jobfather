@@ -18,6 +18,7 @@ links (`grnh.se`, `lnkd.in`, `bit.ly`, …) with HEAD requests only.
 | workday, smartrecruiters, icims, keka, darwinbox, workable | their hosts (`myworkdayjobs.com`, `myworkdaysite.com`, `apply.workable.com`, …) | none |
 | google_forms | `docs.google.com/forms`, `forms.gle` | none |
 | linkedin, naukri, iimjobs, internshala | their hosts (`lnkd.in` too) | none: use their own workflows |
+| indeed | `indeed.com` and its country sites (`in.`, `uk.`, `ca.` …) | job key from `jk=` or `vjk=`; `apply_url` is that job's `viewjob?jk=` page |
 | email | `mailto:`, a bare address, or a job record with only an email | none |
 | company_site | anything else | none |
 

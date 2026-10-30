@@ -150,6 +150,26 @@ class JobIntakeTests(unittest.TestCase):
         self.assertEqual(normalize_url('https://www.linkedin.com/jobs/search/?currentJobId=4012345678&keywords=sql'),
                          'linkedin:job:4012345678')
 
+    def test_indeed_job_key_identifies_the_listing_across_url_formats(self):
+        key = 'indeed:job:0a1b2c3d4e5f6a7b'
+        for url in ('https://in.indeed.com/viewjob?jk=0a1b2c3d4e5f6a7b&from=serp&tk=x',
+                    'https://www.indeed.com/rc/clk?jk=0A1B2C3D4E5F6A7B&fccid=abc&vjs=3',
+                    'https://uk.indeed.com/m/viewjob?jk=0a1b2c3d4e5f6a7b',
+                    'https://ca.indeed.com/jobs?q=data+analyst&l=Toronto&vjk=0a1b2c3d4e5f6a7b'):
+            self.assertEqual(normalize_url(url), key)
+        # no job key: an ordinary URL (a search page or a company page is not one job)
+        self.assertEqual(normalize_url('https://www.indeed.com/jobs?q=analyst&utm_source=x'),
+                         'https://www.indeed.com/jobs?q=analyst')
+        self.assertEqual(normalize_url('https://notindeed.example/viewjob?jk=0a1b2c3d4e5f6a7b'),
+                         'https://notindeed.example/viewjob?jk=0a1b2c3d4e5f6a7b')
+        first = self.job(sources=[{'type': 'url', 'label': 'Indeed', 'access': 'readable',
+                                   'url': 'https://in.indeed.com/viewjob?jk=0a1b2c3d4e5f6a7b'}])
+        second = copy.deepcopy(first)
+        second['sources'][0]['url'] = 'https://in.indeed.com/rc/clk?jk=0a1b2c3d4e5f6a7b&from=vj'
+        self.ingest(first)
+        self.assertEqual(self.ingest(second)['added'], 0)
+        self.assertEqual(len(self.store.show()['jobs']), 1)
+
     def test_same_source_content_dedups_only_the_same_identity(self):
         text = 'Fictional opening. Two separate role descriptions are captured here.'
         source = [{'type': 'text', 'label': 'Copied listing', 'access': 'readable', 'text': text}]

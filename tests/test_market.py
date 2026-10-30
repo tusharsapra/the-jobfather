@@ -46,6 +46,11 @@ class MarketTests(unittest.TestCase):
         self.assertIn('"Data Analyst"', query)
         self.assertIn('NOT ("Data Entry Clerk"', query)
         self.assertNotIn('Analytics Engineer', query)  # stretch titles stay out of first-page searches
+        indeed = market.build_queries(DEMO_MARKET, 'indeed', 'Toronto')[0]
+        self.assertEqual(indeed['platform'], 'indeed')
+        self.assertIn('"Data Analyst"', indeed['query'])
+        self.assertIn(' -"Data Entry Clerk"', indeed['query'])
+        self.assertNotIn('NOT', indeed['query'])
 
 
 if __name__ == '__main__':

@@ -40,6 +40,8 @@ HOSTS = (
     ('naukri', ('naukri.com',)),
     ('iimjobs', ('iimjobs.com',)),
     ('internshala', ('internshala.com',)),
+    ('indeed', ('indeed.com', 'indeed.co.uk', 'indeed.co.in', 'indeed.ca', 'indeed.com.au', 'indeed.de',
+                'indeed.fr')),
 )
 FAMILIES = tuple(name for name, _ in HOSTS) + ('email', 'company_site')
 SHORT_LINKS = ('grnh.se', 'lnkd.in', 'forms.gle', 'bit.ly', 't.co', 'tinyurl.com', 'ow.ly', 'buff.ly', 'rb.gy',
@@ -49,6 +51,7 @@ URL_KEYS = ('application_url', 'apply_url', 'url')
 EMAIL_KEYS = ('application_email', 'apply_email', 'contact_email', 'email')
 BOARD = re.compile(r'^[A-Za-z0-9][A-Za-z0-9._-]{0,99}$')
 DIGITS = re.compile(r'^\d{1,20}$')
+INDEED_JOB_KEY = re.compile(r'^[0-9a-f]{16}$')
 UUID = re.compile(r'^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$')
 EMAIL = re.compile(r'^[^@\s<>:/]+@[^@\s<>:/]+\.[A-Za-z]{2,}$')
 REDIRECTS = (301, 302, 303, 307, 308)
@@ -149,6 +152,11 @@ def classify(url, record=None):
                            % (urllib.parse.quote(board), job))
         jid = (query.get('ashby_jid') or [''])[0]
         return _result(ats, None, jid.lower() if UUID.match(jid) else None, text)
+    if ats == 'indeed':
+        # jk (or vjk on a search page) is Indeed's job key; viewjob shows the full ad and its apply button
+        key = next((v[0].strip().lower() for k, v in query.items()
+                    if k.lower() in ('jk', 'vjk') and INDEED_JOB_KEY.match(v[0].strip().lower())), None)
+        return _result(ats, None, key, 'https://%s/viewjob?jk=%s' % (host, key) if key else text)
     return _result(ats or 'company_site', None, None, text)
 
 

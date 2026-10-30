@@ -38,7 +38,7 @@
         "browser",
         "manual"
       ],
-      "notes": "Aggregates many sources; check for reposts."
+      "notes": "Public search and job pages on the country site (in.indeed.com, uk.indeed.com, ca.indeed.com, www.indeed.com ...); no login needed to search. The job key (jk) identifies a job across URL forms. Sponsored cards and reposts repeat; 'apply on company site' jobs are better read on the employer's page. Stop at verification or blocks."
     },
     {
       "id": "glassdoor",

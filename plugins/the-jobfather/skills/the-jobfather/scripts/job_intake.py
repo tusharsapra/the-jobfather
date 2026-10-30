@@ -58,6 +58,8 @@ APP_ID = re.compile(r'APP-[0-9a-f]{12}')
 EMAIL = re.compile(r"[A-Za-z0-9.!#$%&'*+/=?^_`{|}~-]+@[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?"
                    r"(?:\.[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?)+")
 LINKEDIN_HOST = re.compile(r'(?:^|\.)linkedin\.com$')
+INDEED_HOST = re.compile(r'(?:^|\.)indeed\.(?:com|co\.[a-z]{2}|com\.[a-z]{2}|[a-z]{2})$')
+INDEED_JOB_KEY = re.compile(r'^[0-9a-f]{16}$')
 MAX_SOURCE_BYTES = 50 * 1024 * 1024
 MAX_NOTES = 10000
 SUBMITTED_STAGE = 'Applied'
@@ -164,7 +166,8 @@ def _email(value, field):
 
 
 def normalize_url(value):
-    """Canonical form for duplicate detection: tracking parameters removed, LinkedIn posts and jobs by ID."""
+    """Canonical form for duplicate detection: tracking parameters removed; LinkedIn posts and jobs and
+    Indeed jobs by ID."""
     if not isinstance(value, str):
         raise ValueError('URL must be text')
     parsed = urlsplit(value.strip())
@@ -184,6 +187,12 @@ def normalize_url(value):
                or re.search(r'(?:^|&)currentJobId=(\d+)', parsed.query))
         if job:
             return 'linkedin:job:' + job.group(1)
+    if INDEED_HOST.search(parsed.hostname.lower()):
+        # viewjob?jk=, rc/clk?jk=, m/viewjob?jk= and search pages with a selected job (vjk=) name one job
+        params = dict((key.lower(), val.strip().lower()) for key, val in parse_qsl(parsed.query))
+        key = next((params[k] for k in ('jk', 'vjk') if INDEED_JOB_KEY.match(params.get(k, ''))), None)
+        if key:
+            return 'indeed:job:' + key
     query = [(key, val) for key, val in parse_qsl(parsed.query, keep_blank_values=True)
              if not key.lower().startswith('utm_') and key.lower() not in TRACKING_PARAMS]
     return urlunsplit((parsed.scheme.lower(), parsed.netloc.lower(), parsed.path,

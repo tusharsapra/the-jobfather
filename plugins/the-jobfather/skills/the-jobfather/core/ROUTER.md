@@ -27,7 +27,7 @@ The user's data lives in their **workspace** (default `~/Jobfather`), never in S
 | connect / log in to LinkedIn, Naukri, Gmail, browser; doctor | connect.md | none |
 | fit, positioning, should I apply, JD analysis | fit.md | PROFILE, relevant EXPERIENCE, market.json taxonomy |
 | save these jobs / screenshots / links to my tracker | job-intake.md | supplied sources only |
-| search jobs, saved jobs, recommendations | job-platforms.md | search filters from market.json and PROFILE |
+| search jobs (career pages, LinkedIn, Naukri, Indeed), saved jobs, recommendations | job-platforms.md | search filters from market.json and PROFILE |
 | rank jobs, research a company, track replies, follow-ups due, "what needs my attention" | job-pipeline.md | compact pipeline output; relevant EXPERIENCE for triage |
 | apply to this job, submit, fill this application form | apply.md (+ forms.md) | PROFILE, HR-DETAILS, FORM-ANSWERS, relevant EXPERIENCE |
 | answer these form questions | forms.md | PROFILE, requested HR fields, FORM-ANSWERS, VOICE for prose |

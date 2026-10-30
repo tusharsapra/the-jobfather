@@ -9,8 +9,8 @@ Take titles, locations, seniority and exclusions from market.json (`market.py qu
 P --location L` gives a starting query) and the user's request. Ask only for a filter that blocks
 a useful search. One small first-page search per platform and title group; fetch full JDs only for
 relevant results. No network-wide scans, dozens of repeated queries or background loops.
-Platform filters are unreliable: put the location in the keywords and check each JD; check the
-real posting date. Never widen the date window to reach a number.
+Platform filters are unreliable: put the location in the keywords (on Indeed, its own location
+box) and check each JD; check the real posting date. Never widen the date window to reach a number.
 
 ## Sources
 - **Company career pages:** public job-board APIs (Greenhouse, Lever, Ashby, Workable,
@@ -27,6 +27,17 @@ real posting date. Never widen the date window to reach a number.
   out), `naukri_search_jobs`, `naukri_get_job`, `naukri_recommended_jobs`, `naukri_saved_jobs`,
   `naukri_similar_jobs`. The server spaces requests and caps daily use; `rate_limited` means wait.
   `checkpoint` or `blocked` means stop and tell the user; never retry.
+- **Indeed** (public pages; no connector and no login): the user's country site (`in.indeed.com`,
+  `uk.indeed.com`, `ca.indeed.com`, `www.indeed.com` …) through a direct read or the browser.
+  `market.py queries --platform indeed` gives the query (`-"term"` excludes). One first-page search
+  per title group; open each shortlisted job's `viewjob?jk=<key>` page for the full ad. A search
+  card is not a JD: keep its "posted" text exactly as shown and never infer the date or the JD
+  from it. Sponsored cards and reposts repeat: the job key (`jk`) is the identity, and
+  job-intake.md dedupes on it. Where Indeed says "apply on company site", look for the same
+  requisition on the employer's careers page and prefer that listing. A login wall, verification
+  page or block means stop on Indeed, tell the user and use the employer's careers page; never
+  bypass it. Indeed job-alert emails already in the user's mail can supply leads during a mail task
+  the user asked for; never create alerts or scheduled searches.
 - **Pasted links and listings** always work (job-intake.md).
 
 ## Results

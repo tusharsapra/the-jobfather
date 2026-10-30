@@ -3,6 +3,15 @@
 All notable changes to The Jobfather. Your own learning history lives in your workspace
 (`learning/CHANGELOG.md`), not here.
 
+## Unreleased
+
+- Indeed: job search on Indeed's public pages for the user's country site, with no login or
+  connector. Queries from the market map (`market.py queries --platform indeed`), full ads read
+  from each job's own page, "apply on company site" jobs read on the employer's page, and a stop at
+  any verification page or block. Intake dedupes Indeed jobs by job key across URL forms, the
+  application-link classifier recognises Indeed, and applying is a browser hand-off where you click
+  Submit.
+
 ## 0.2.0 (2026-10-19)
 
 - Naukri support: The Jobfather's own clean-room MCP server (`jobfather-naukri`), opt-in. Search

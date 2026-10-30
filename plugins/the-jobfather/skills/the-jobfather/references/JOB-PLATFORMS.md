@@ -27,6 +27,13 @@ The Jobfather's own clean-room server (`naukri`). Opt-in with a terms notice. To
 page), `naukri_close`. Fixed spacing between requests and daily caps; stops at any checkpoint.
 Applying uses the resume already on the user's Naukri profile, not a local PDF.
 
+## Indeed
+Public search and job pages on the user's country site, read directly or in the browser; no
+connector, no API and no login needed for searching. The job key (`jk`, 16 hex characters) names a
+job on every URL form (`viewjob`, `rc/clk`, `m/viewjob`, a search page's `vjk`); intake and the ATS
+classifier use it. Pages can show verification or block automated reads: stop and use the
+employer's careers page instead. Applying is a browser hand-off where the user clicks Submit.
+
 ## Mail
 Claude Code: claude.ai Gmail connector. Codex: `gmail@openai-curated`. Others: a Gmail MCP with the
 user's own OAuth client. Connectors cannot read Gmail's signature settings, so the real signature

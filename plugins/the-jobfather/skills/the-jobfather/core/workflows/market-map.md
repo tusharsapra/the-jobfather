@@ -12,8 +12,8 @@ claim IDs, locations and remote stance, and anything they ruled out.
 
 ## 2. Look at the real market (20-50 live postings in their region)
 Sources, cheapest first: public job-board APIs of plausible employers (`references/PLATFORMS.json`
-→ `public_ats_apis`), web search for current postings, then connected platforms (LinkedIn,
-Naukri) with one small first-page search per title. Read full JDs, not snippets. Note for each
+→ `public_ats_apis`), web search for current postings, then platforms (LinkedIn, Naukri when
+connected; Indeed's public pages) with one small first-page search per title. Read full JDs, not snippets. Note for each
 posting: title as written, seniority/years, must-have and nice-to-have skills, tools, company
 type, location/work mode, pay if published. Stop at about 50; never widen the date window to get
 more.

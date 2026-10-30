@@ -167,6 +167,11 @@ def build_queries(value, platform, location=None, limit_terms=6):
         return [{'platform': 'linkedin', 'query': query, 'location': location}]
     if platform == 'naukri':
         return [{'platform': 'naukri', 'query': t, 'location': location} for t in core[:3]]
+    if platform == 'indeed':
+        query = ' OR '.join(_quote(t) for t in core)
+        query = '(%s)' % query if len(core) > 1 else query
+        query += ''.join(' -' + _quote(t) for t in negative)
+        return [{'platform': 'indeed', 'query': query, 'location': location}]
     if platform == 'hiring-posts':
         return [{'platform': 'linkedin-posts', 'query': '(%s) (hiring OR vacancy OR openings)' % ' OR '.join(_quote(t) for t in core[:3]),
                  'location': location}]

@@ -62,7 +62,8 @@ fields. The store adds hashes, capture times, the platform and history; do not s
 
 - The whole batch is validated before anything is written; one bad row saves nothing.
 - URLs are compared without tracking parameters (`utm_*`, click IDs, LinkedIn tracking). LinkedIn
-  posts compare by activity ID and LinkedIn jobs by job ID, whatever the URL form.
+  posts compare by activity ID, LinkedIn jobs by job ID and Indeed jobs by job key (`jk`/`vjk`),
+  whatever the URL form.
 - A row is the same listing only when company, role, location and requisition all match AND a
   source matches (same normalized URL, text or file hash). Different roles in one post stay
   separate jobs. The same company, role and location from a different source becomes a separate
